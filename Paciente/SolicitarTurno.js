@@ -25,7 +25,7 @@ export default class SolicitarTurno extends Component {
         this.onChangeText = this.onChangeText.bind(this);
     }
     setDate(newDate) {
-      this.setState({ chosenDate: "Seleccione especialidad"});
+      this.setState({ chosenDate: "Seleccione una fecha"});
       this.setState({ select: newDate});
     }
     onChangeText(text) {
@@ -103,8 +103,9 @@ export default class SolicitarTurno extends Component {
       var date = new Date().getDate(); //Current Date
       var monthFut = new Date().getMonth() + 2; //Current Month + 2
       var year = new Date().getFullYear(); //Current Year
-      
-    return (
+      var mensaje = this.state.espe +"\n" +this.state.select.toString().substr(8,2)+' ' +this.state.select.toString().substr(0,3)+' ' + this.state.select.toString().substr(4,3) +"\n"  +  "Horario"
+      console.log(mensaje)
+      return (
         <ScrollView >
        
             <Text style={{fontSize:17, textAlign:'center', marginTop:20, marginBottom:10}}>SOLICITAR TURNO</Text>   

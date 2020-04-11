@@ -14,7 +14,7 @@ export default class InicioPaciente extends Component {
     super(props);
     this.state = { 
       showAlert: false,
-      es_deudor:false
+      es_deudor:false,
     };
   };
  
@@ -50,7 +50,8 @@ export default class InicioPaciente extends Component {
  
   render() {
     const {showAlert} = this.state;
-
+const mensaje= " Le notificamos que mantiene una deuda pendiente con el establecimiento al día de la fecha y por lo tanto, no podrá solicitar un nuevo turno hasta que la regularice." +"\n" +"\n" + " Contactese al 4778-9809 para informarse sobre los métodos de pago."
+console.log(mensaje)
     return (
       <Container>
         <ScrollView >
@@ -67,16 +68,14 @@ export default class InicioPaciente extends Component {
                 title="REGISTRA DEUDA"
                 titleStyle={{fontSize:18, color:'black'}}
                 messageStyle={{fontSize:14, lineHeight:18,color:'black', marginVertical:10,textAlign:'justify'}}
-                message=" Le notificamos que mantiene una deuda pendiente con el establecimiento al día de la fecha y por lo tanto, no podrá solicitar un nuevo turno hasta que la regularice.
-                                                                                                                         
-                Contactese al 4778-9809 para informarse sobre los métodos de pago."
+                message={mensaje}
                 
                 closeOnTouchOutside={true}
                 closeOnHardwareBackPress={false}
                 confirmButtonStyle={{paddingHorizontal:40, borderRadius:0, marginTop:10}}
                 showConfirmButton={true}
                 confirmButtonTextStyle={{fontSize:11,fontWeight:'bold'}}
-                contentContainerStyle={{height:260, marginBottom:100}}
+                contentContainerStyle={{height:280, marginBottom:100}}
                 confirmText="ACEPTAR"
                 confirmButtonColor="#e93922"
                 

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Ionicons } from '@expo/vector-icons';
 import { Platform, StyleSheet, Text, View, Image,TextInput ,Dimensions, TouchableOpacity,ScrollView, TouchableWithoutFeedback  } from 'react-native';
-import {createSwitchNavigator,createAppContainer } from 'react-navigation';
+import {createSwitchNavigator,createAppContainer, SafeAreaView  } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
 import DeudaAlert from './Paciente/DeudaAlert';
 import InicioPaciente from './Paciente/InicioPaciente'
@@ -9,7 +9,7 @@ import SolicitarTurno from './Paciente/SolicitarTurno'
 import SobreNosotros from './Paciente/SobreNosotros'
 import Historial from './Paciente/Historial'
 import InicioMedico from './Medico/InicioMedico'
-import { createDrawerNavigator } from 'react-navigation-drawer';
+import { createDrawerNavigator,DrawerItems } from 'react-navigation-drawer';
 const { width } = Dimensions.get('window');
 
 
@@ -50,6 +50,25 @@ class App extends Component {
   }
 }
 const CerrarSesion='Cerrar sesion';
+
+const CustomDrawerContentComponent = (props) => (
+  <ScrollView>
+    <SafeAreaView style={{flex:1}} forceInset={{ top: 'always', horizontal: 'never' }}>
+    <View style={{flex: 1 }}>
+    <Image style={{alignSelf:'center' ,justifyContent: 'center',height:width*0.1,width:width*0.45, marginTop:10, marginBottom:20}} source={require('./assets/Images/Logo.png')} />
+          <DrawerItems {...props} />
+    </View>
+    <TouchableOpacity style={{flexDirection: 'row', alignItems: 'center',marginTop:width}}>
+       <View style={{marginLeft:18, flexDirection:'row'}}> 
+        <Ionicons name="ios-log-out" size={24} color={'black'} />
+       <Text style={{marginLeft:25, marginTop:5, fontWeight:'bold'}}>  Cerrar sesión</Text>
+       </View>
+         
+    </TouchableOpacity>
+    </SafeAreaView>
+  </ScrollView>
+);
+
 const StMedico = createStackNavigator({
   InicioMedico:{
     screen:InicioMedico,
@@ -63,10 +82,35 @@ const StMedico = createStackNavigator({
      headerStyle:{backgroundColor:'#e93922'},
      headerTitleStyle:{color:'white', fontSize:14},
      headerTintColor:('white'),
-     headerRight:(<TouchableWithoutFeedback ><Ionicons name='ios-menu' size={28} color='white' style={{marginRight:12}}></Ionicons></TouchableWithoutFeedback>)
+     headerRight:(<TouchableOpacity onPress={()=>{navigation.openDrawer()}}><Ionicons name='ios-menu' size={28} color='white' style={{marginRight:12}}></Ionicons></TouchableOpacity>)
     }
   }
 });
+
+const dwMedico = createDrawerNavigator({
+  StMedico:{
+    screen:StMedico,
+    navigationOptions:()=>{
+      return{ title: ('Inicio'),
+       drawerIcon: ({ focused }) => (
+         <Ionicons name="md-home" size={24} color={focused ? "#e93922" : 'black'} />
+ 
+       ),}
+  },},
+},{
+  drawerPosition: 'right', 
+
+  contentComponent: CustomDrawerContentComponent,
+  contentOptions: {
+    activeTintColor: '#e93922',
+    itemsContainerStyle:{
+      marginVertical:10
+    }
+  }
+  
+})
+
+
 const contenedorHist = createStackNavigator({
   Historial:{
     screen:Historial,
@@ -158,19 +202,11 @@ const dwPaciente = createDrawerNavigator({
          <Ionicons name="md-clipboard" size={24} color={focused ? "#e93922" : 'black'} /> ),
         
   }}
-  }
-,
-CerrarSesion:{
-  screen:CerrarSesion,
-  navigationOptions:()=>{
-    return{ title: ('Cerrar sesión'),
-     drawerIcon: ({ focused }) => (
-       <Ionicons name="ios-log-out" size={24} color={focused ? "#e93922" : 'black'} /> ),
-      
-}}
-}}
+  }}
 ,{
-  drawerPosition: 'right',  
+  drawerPosition: 'right', 
+
+  contentComponent: CustomDrawerContentComponent,
   contentOptions: {
     activeTintColor: '#e93922',
     itemsContainerStyle:{
@@ -192,8 +228,9 @@ const SwRoot = createSwitchNavigator({
     screen:dwPaciente
   }, 
   StCont:{
-    screen:StMedico,
+    screen:dwMedico,
   }
 })
+
  
 export default createAppContainer(SwRoot)
