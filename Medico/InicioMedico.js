@@ -2,9 +2,33 @@ import {Calendar, CalendarList, Agenda} from 'react-native-calendars';
 import React, { Component } from 'react';
 import { Ionicons } from '@expo/vector-icons';
 import { Platform, StyleSheet, Text, View, Image,TextInput, Dimensions, TouchableOpacity, ScrollView  } from 'react-native';
-import {Footer, FooterTab, Container,Card, CardItem, Col} from 'native-base'
+import {Footer, FooterTab, Container,Card, CardItem, Col, Accordion,Content } from 'native-base'
 
 const { width } = Dimensions.get('window');
+class Historial extends Component {
+    render() {
+      return (
+        <View style={{flex:1, justifyContent:'center', alignItems:'center'}}>
+        <View style={{marginHorizontal:'5%', borderWidth:0.5, borderColor:'black', }}>
+        <Text style={{fontSize:18, textAlign:'center',marginTop:'5%'}}>HISTORIAL </Text>
+        <Text style={{marginTop:'5%',textAlign:'justify', fontSize:14, marginBottom:20, lineHeight:16, marginHorizontal:'5%'}}>
+          Texto HISTORIAL
+        </Text>
+        <Text style={{marginBottom:'5%',textAlign:'justify', fontSize:14, lineHeight:16, marginHorizontal:'5%'}}>
+          Contactese al 4778-9809 para informarse sobre los métodos de pago.
+        </Text>
+      </View>
+      <View style={{marginTop:60}}>
+            <TouchableOpacity onPress={() => {this.props.navigation.navigate('InicioPaciente')}}
+            style={{ width:230 ,alignSelf:'center', backgroundColor:'#e93922'}}>
+            <Text style={{marginVertical:10,fontSize:11, color:'white', textAlign:'center', fontWeight:'bold'}}>VER MIS TURNOS</Text>
+            </TouchableOpacity>
+        </View>
+        </View>
+      );
+    }
+  }
+  
 
 
 export default class InicioMedico extends Component {
@@ -34,17 +58,18 @@ export default class InicioMedico extends Component {
         return copy
         } 
     const dateAdd = addDays(today, 7);
+    
    
     return (
       <Container>
        
             <Text style={{fontSize:17, textAlign:'center', marginVertical:20}}>¡BIENVENIDO NOMBREMEDICO!</Text>
-           
+          {/* 
             <Card style={{width:width*0.95, alignSelf:"center", paddingVertical:10, paddingHorizontal:8, marginBottom:15}}>
                 <Text style={{fontSize:14, margin:8, textAlign:"justify",lineHeight:18 }}><Ionicons name='md-information-circle' size={18} color='#e93922'></Ionicons> Estimado: Le recordamos que solo podrá modificar los turnos una semana pasada a la fecha actual y aquellos que no hayan sido solicitados por algún paciente. </Text>
                 <Text style={{fontSize:14, margin:8, textAlign:"justify",lineHeight:18 }}> Solo podrá crear la agenda de los dos dos meses siguientes al corriente. </Text>
             </Card>
-            
+           */ }
             <Text style={{fontSize:14, marginLeft:'4%',color:'#e93922', marginBottom:15}}> <Ionicons name='md-calendar' size={16} color='#e93922'></Ionicons> AGENDA DE TURNOS</Text>
             <Agenda
             items={item}

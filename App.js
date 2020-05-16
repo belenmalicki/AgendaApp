@@ -9,11 +9,14 @@ import SolicitarTurno from './Paciente/SolicitarTurno'
 import SobreNosotros from './Paciente/SobreNosotros'
 import Historial from './Paciente/Historial'
 import InicioMedico from './Medico/InicioMedico'
+import PerfilPaciente from './Paciente/PerfilPaciente'
+import PerfilMedico from './Medico/PerfilMedico'
 import { createDrawerNavigator,DrawerItems } from 'react-navigation-drawer';
+import { Container, Header, Content, Item, Input } from 'native-base';
 const { width } = Dimensions.get('window');
 
 
-
+//VER TOAST DE NATIVE-BASE PARA CUANDO INGRESAN MAL LOS DATOS
 
 const instructions = Platform.select({
   ios: 'Press Cmd+R to reload,\n' + 'Cmd+D or shake for dev menu',
@@ -58,10 +61,10 @@ const CustomDrawerContentComponent = (props) => (
     <Image style={{alignSelf:'center' ,justifyContent: 'center',height:width*0.1,width:width*0.45, marginTop:10, marginBottom:20}} source={require('./assets/Images/Logo.png')} />
           <DrawerItems {...props} />
     </View>
-    <TouchableOpacity style={{flexDirection: 'row', alignItems: 'center',marginTop:width}}>
+    <TouchableOpacity style={{flexDirection: 'row', alignItems: 'center',marginTop:width*0.9}}>
        <View style={{marginLeft:18, flexDirection:'row'}}> 
         <Ionicons name="ios-log-out" size={24} color={'black'} />
-       <Text style={{marginLeft:25, marginTop:5, fontWeight:'bold'}}>  Cerrar sesión</Text>
+       <Text style={{marginLeft:25, marginTop:5 ,fontWeight:'bold'}}>  Cerrar sesión</Text>
        </View>
          
     </TouchableOpacity>
@@ -69,6 +72,24 @@ const CustomDrawerContentComponent = (props) => (
   </ScrollView>
 );
 
+const contenedorPerfilMed = createStackNavigator({
+  Historial:{
+    screen:PerfilMedico,
+    navigationOptions:()=>{
+      return{ headerTitle:'PERFIL' }
+    }
+
+  },
+},{
+    defaultNavigationOptions:({navigation})=> {
+      return{ 
+       headerStyle:{backgroundColor:'#e93922'},
+       headerTitleStyle:{color:'white', fontSize:14},
+       headerTintColor:('white'),
+       headerRight:(<TouchableWithoutFeedback onPress={() => navigation.openDrawer()}><Ionicons name='ios-menu' size={28} color='white' style={{marginRight:12}}></Ionicons></TouchableWithoutFeedback>)
+      }
+    }
+})
 const StMedico = createStackNavigator({
   InicioMedico:{
     screen:InicioMedico,
@@ -97,6 +118,16 @@ const dwMedico = createDrawerNavigator({
  
        ),}
   },},
+  contenedorPerfilMe:{
+    screen: contenedorPerfilMed,
+    navigationOptions:()=>{
+      return{ title: ('Perfil'),
+       drawerIcon: ({ focused }) => (
+         <Ionicons name="md-person" size={24} color={focused ? "#e93922" : 'black'} />
+ 
+       ),}
+  }
+  }
 },{
   drawerPosition: 'right', 
 
@@ -133,7 +164,25 @@ const contenedorSobreNos = createStackNavigator({
   SobreNosotros:{
     screen:SobreNosotros,
     navigationOptions:()=>{
-      return{ headerTitle:'SOBRE NOSOTROS' }
+      return{ headerTitle:'ACERCA DE' }
+    }
+
+  },
+},{
+    defaultNavigationOptions:({navigation})=> {
+      return{ 
+       headerStyle:{backgroundColor:'#e93922'},
+       headerTitleStyle:{color:'white', fontSize:14},
+       headerTintColor:('white'),
+       headerRight:(<TouchableWithoutFeedback onPress={() => navigation.openDrawer()}><Ionicons name='ios-menu' size={28} color='white' style={{marginRight:12}}></Ionicons></TouchableWithoutFeedback>)
+      }
+    }
+})
+const contenedorPerfil = createStackNavigator({
+  Perfil:{
+    screen:PerfilPaciente,
+    navigationOptions:()=>{
+      return{ headerTitle:'PERFIL' }
     }
 
   },
@@ -185,10 +234,19 @@ const dwPaciente = createDrawerNavigator({
        ),}
   },
 },
+Perfil:{
+screen:contenedorPerfil,
+navigationOptions:(navigation)=>{
+  return{ title: ('Perfil'),
+   drawerIcon: ({ focused }) => (
+     <Ionicons  name="md-person" size={24} color={focused ? "#e93922" : 'black'} /> ),
+    
+}}
+},
   SobreNosotros:{
     screen:contenedorSobreNos,
     navigationOptions:(navigation)=>{
-      return{ title: ('Sobre nosotros'),
+      return{ title: ('Acerca de'),
        drawerIcon: ({ focused }) => (
          <Ionicons  name="ios-medical" size={24} color={focused ? "#e93922" : 'black'} /> ),
         

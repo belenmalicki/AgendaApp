@@ -11,7 +11,7 @@ export default class Historial extends Component {
       <View style={{marginHorizontal:'5%', borderWidth:0.5, borderColor:'black', }}>
       <Text style={{fontSize:18, textAlign:'center',marginTop:'5%'}}>HISTORIAL </Text>
       <Text style={{marginTop:'5%',textAlign:'justify', fontSize:14, marginBottom:20, lineHeight:16, marginHorizontal:'5%'}}>
-        Texto HISTORIAL
+        Texto HISTORIALLL
       </Text>
       <Text style={{marginBottom:'5%',textAlign:'justify', fontSize:14, lineHeight:16, marginHorizontal:'5%'}}>
         Contactese al 4778-9809 para informarse sobre los métodos de pago.

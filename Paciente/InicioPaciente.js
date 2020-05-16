@@ -1,12 +1,15 @@
-import React, { Component } from 'react';
+import React, { Component, useState } from 'react';
 import { Ionicons } from '@expo/vector-icons';
-import { Platform, StyleSheet, Text, View, Image,Alert, Dimensions, TouchableOpacity, ScrollView  } from 'react-native';
+import { Platform, StyleSheet, Text, View, Image,Alert, Dimensions, TouchableOpacity, ScrollView, Button  } from 'react-native';
 import {Footer, FooterTab, Container} from 'native-base'
 import CardTurno from './CardsTurno'
 import AwesomeAlert from 'react-native-awesome-alerts';
+//import DateTimePicker from '@react-native-community/datetimepicker';
+import Ejemplo from './Ejemplo'
 
 
 const { width } = Dimensions.get('window');
+
 
 
 export default class InicioPaciente extends Component {
@@ -51,13 +54,17 @@ export default class InicioPaciente extends Component {
   render() {
     const {showAlert} = this.state;
 const mensaje= " Le notificamos que mantiene una deuda pendiente con el establecimiento al día de la fecha y por lo tanto, no podrá solicitar un nuevo turno hasta que la regularice." +"\n" +"\n" + " Contactese al 4778-9809 para informarse sobre los métodos de pago."
-console.log(mensaje)
     return (
       <Container>
         <ScrollView >
             <Text style={{fontSize:17, textAlign:'center', marginVertical:20}}>¡BIENVENIDO NOMBREUSUARIO!</Text>
             <Text style={{fontSize:14, marginLeft:'4%',color:'#e93922', marginBottom:15}}> <Ionicons name='md-calendar' size={16} color='#e93922'></Ionicons> PRÓXIMOS TURNOS</Text>
             <CardTurno /> 
+
+            <Ejemplo />
+
+
+
         </ScrollView>
         <Footer style={{backgroundColor:'white'}}>
         {this.solTurno()}

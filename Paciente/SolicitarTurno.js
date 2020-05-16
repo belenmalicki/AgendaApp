@@ -5,6 +5,18 @@ import {Card, CardItem, Col, DatePicker, Icon} from 'native-base'
 import { Divider } from 'react-native-elements';
 import { Dropdown } from 'react-native-material-dropdown';
 import CardSolicitarTurno from "./CardsSolicitarTurno"
+import CardDisponibilidadTurno from './CardDisponibilidadTurno'
+import AwesomeAlert from 'react-native-awesome-alerts';
+
+
+/*ESTADOS DE estadoTurnos
+1: Hay turno disponible en la fecha que eligió el paciente con el profesional elegido
+2: No hay turno disponible en esa fecha, te muestro las mas cercanas
+3: No hay turnos con el profesional elegido durante estos dos meses, te muestro otro prof. y lista espera profesional
+4: No podes elegir ese turno porque ya tenes un turno de esa especialidad en esa fecha
+5:No hay turnos disponibles en todos los dos meses: Lista de espera
+
+*/
 
 
 
@@ -18,7 +30,10 @@ export default class SolicitarTurno extends Component {
             corazon: false,
             chosenDate:' ',
             select: new Date(),
-            espe:' '
+            espe:' ',
+            estadoTurnos:1,
+            showAlert: false,
+            
             
         }
         this.setDate = this.setDate.bind(this);
@@ -37,6 +52,9 @@ export default class SolicitarTurno extends Component {
 
         if (this.state.corazon == false){
           this.setState({corazon: true})
+          this.setState({
+            showAlert: true
+          });
     
         }
         else{
@@ -45,6 +63,18 @@ export default class SolicitarTurno extends Component {
         }
     
     }
+    
+  showAlert = () => {
+    this.setState({
+      showAlert: true
+    });
+  };
+ 
+  hideAlert = () => {
+    this.setState({
+      showAlert: false
+    });
+  };
 
     buscar(){
 
@@ -57,13 +87,66 @@ export default class SolicitarTurno extends Component {
             </TouchableOpacity>  
          
           )
-      }else{
+      }if(this.state.espe!==' '){
+          if(this.state.estadoTurnos==1){
+              return(
+                  <View>
+                    <TouchableOpacity 
+                    style={{marginVertical:20, width:115 ,alignSelf:'flex-end', backgroundColor:'#e93922', marginRight:20}}>
+                        <Text style={{marginVertical:10,fontSize:11, color:'white', textAlign:'center', fontWeight:'bold'}}>BUSCAR</Text>
+                  </TouchableOpacity> 
+
+
+
+                    <View style={{backgroundColor:'#1f77a5',marginHorizontal:10, paddingLeft:8}}>
+                        <Text style={{fontSize:14, color:'white', backgroundColor:'#1f77a5',  marginVertical:5, fontWeight:"bold"}}>
+                            Solicite un turno para {this.state.espe}
+                        </Text>
+                  </View>
+                  <View style={{flexDirection:"row", marginLeft:20, marginTop:15}}>
+                <Text style={{fontSize:14,color:'#e93922', fontWeight:'bold'}}>
+                {this.state.select.toString().substr(8,2)} {this.state.select.toString().substr(0,3)} 
+                </Text>
+                <Text style={{fontSize:14, marginLeft:2}}>
+                {this.state.select.toString().substr(4,3)} 
+                </Text>
+              </View>
+                <CardSolicitarTurno />
+                    </View>
+                
+              )
+          }else if(this.state.estadoTurnos==2){
+            return(
+                <View>
+                  <TouchableOpacity 
+                  style={{marginVertical:20, width:115 ,alignSelf:'flex-end', backgroundColor:'#e93922', marginRight:20}}>
+                      <Text style={{marginVertical:10,fontSize:11, color:'white', textAlign:'center', fontWeight:'bold'}}>BUSCAR</Text>
+                </TouchableOpacity> 
+                <CardDisponibilidadTurno nro={this.state.estadoTurnos} />
+                  <View style={{backgroundColor:'#1f77a5',marginHorizontal:10, paddingLeft:8}}>
+                      <Text style={{fontSize:14, color:'white', backgroundColor:'#1f77a5',  marginVertical:5, fontWeight:"bold"}}>
+                          Solicite un turno para {this.state.espe}
+                      </Text>
+                </View>
+                <View style={{flexDirection:"row", marginLeft:20, marginTop:15}}>
+              <Text style={{fontSize:14,color:'#e93922', fontWeight:'bold'}}>
+              {this.state.select.toString().substr(8,2)} {this.state.select.toString().substr(0,3)} 
+              </Text>
+              <Text style={{fontSize:14, marginLeft:2}}>
+              {this.state.select.toString().substr(4,3)} 
+              </Text>
+            </View>
+              <CardSolicitarTurno />
+                  </View> 
+            )
+          }else if(this.state.estadoTurnos==3){
           return(
               <View>
                 <TouchableOpacity 
                 style={{marginVertical:20, width:115 ,alignSelf:'flex-end', backgroundColor:'#e93922', marginRight:20}}>
                     <Text style={{marginVertical:10,fontSize:11, color:'white', textAlign:'center', fontWeight:'bold'}}>BUSCAR</Text>
               </TouchableOpacity> 
+              <CardDisponibilidadTurno nro={this.state.estadoTurnos} />
                 <View style={{backgroundColor:'#1f77a5',marginHorizontal:10, paddingLeft:8}}>
                     <Text style={{fontSize:14, color:'white', backgroundColor:'#1f77a5',  marginVertical:5, fontWeight:"bold"}}>
                         Solicite un turno para {this.state.espe}
@@ -77,13 +160,33 @@ export default class SolicitarTurno extends Component {
             {this.state.select.toString().substr(4,3)} 
             </Text>
           </View>
-             <CardSolicitarTurno />
-
-                </View>
-             
-          )
-      }
-      }
+            <CardSolicitarTurno />
+                </View>  
+          )}else if(this.state.estadoTurnos==4){
+            return(
+                <View>
+                  <TouchableOpacity 
+                  style={{marginVertical:20, width:115 ,alignSelf:'flex-end', backgroundColor:'#e93922', marginRight:20}}>
+                      <Text style={{marginVertical:10,fontSize:11, color:'white', textAlign:'center', fontWeight:'bold'}}>BUSCAR</Text>
+                </TouchableOpacity> 
+                <CardDisponibilidadTurno nro={this.state.estadoTurnos} />
+                  </View> 
+          )}else if(this.state.estadoTurnos==5){
+              return(
+                  <View>
+                    <TouchableOpacity 
+                    style={{marginVertical:20, width:115 ,alignSelf:'flex-end', backgroundColor:'#e93922', marginRight:20}}>
+                        <Text style={{marginVertical:10,fontSize:11, color:'white', textAlign:'center', fontWeight:'bold'}}>BUSCAR</Text>
+                  </TouchableOpacity> 
+                  <CardDisponibilidadTurno nro={this.state.estadoTurnos} />
+                    </View>
+          )}
+    }else if(this.state.espe===' '){
+      <TouchableOpacity onPress={() => this.showAlert()}
+      style={{marginVertical:20, width:115 ,alignSelf:'flex-end', backgroundColor:'#e93922', marginRight:20}}>
+          <Text style={{marginVertical:10,fontSize:11, color:'white', textAlign:'center', fontWeight:'bold'}}>BUSCAR</Text>
+    </TouchableOpacity> 
+    }}
       
   render() {
     let especialidad = [{
@@ -105,8 +208,10 @@ export default class SolicitarTurno extends Component {
       var year = new Date().getFullYear(); //Current Year
       var mensaje = this.state.espe +"\n" +this.state.select.toString().substr(8,2)+' ' +this.state.select.toString().substr(0,3)+' ' + this.state.select.toString().substr(4,3) +"\n"  +  "Horario"
       console.log(mensaje)
+      const {showAlert} = this.state;
+      
       return (
-        <ScrollView >
+        <ScrollView style={{flex:1}} >
        
             <Text style={{fontSize:17, textAlign:'center', marginTop:20, marginBottom:10}}>SOLICITAR TURNO</Text>   
 
@@ -124,7 +229,7 @@ export default class SolicitarTurno extends Component {
                     
                     />
             </View> 
-
+     
             
             <View style={{marginLeft:'3%', flexDirection:"row", marginTop:18}}>
             <View style={{width:width*0.88}}>
@@ -151,7 +256,27 @@ export default class SolicitarTurno extends Component {
                 <Divider style={{ backgroundColor: "rgba(0, 0, 0, .38)",alignSelf:'center',width:width*0.9 }} />
                
             {this.buscar()}
-
+            <AwesomeAlert
+            show={showAlert}
+            showProgress={false}
+      
+            messageStyle={{fontSize:14, lineHeight:18,color:'black',textAlign:'center'}}
+            message="POR FAVOR, COMPLETE TODOS LOS CAMPOS"
+            
+            closeOnTouchOutside={true}
+            closeOnHardwareBackPress={false}
+            confirmButtonStyle={{paddingHorizontal:40, borderRadius:0, marginTop:10}}
+            showConfirmButton={true}
+            confirmButtonTextStyle={{fontSize:11,fontWeight:'bold'}}
+            //contentContainerStyle={{height:280, marginBottom:100}}
+            confirmText="ACEPTAR"
+            confirmButtonColor="#e93922"
+            
+            onConfirmPressed={() => {
+              this.hideAlert();
+              console.log('pressed')
+            }}
+    />
        
         </ScrollView>
     );
