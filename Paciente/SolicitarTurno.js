@@ -15,7 +15,6 @@ import AwesomeAlert from 'react-native-awesome-alerts';
 3: No hay turnos con el profesional elegido durante estos dos meses, te muestro otro prof. y lista espera profesional
 4: No podes elegir ese turno porque ya tenes un turno de esa especialidad en esa fecha
 5:No hay turnos disponibles en todos los dos meses: Lista de espera
-
 */
 
 
@@ -55,6 +54,7 @@ export default class SolicitarTurno extends Component {
           this.setState({
             showAlert: true
           });
+          
     
         }
         else{
@@ -68,12 +68,14 @@ export default class SolicitarTurno extends Component {
     this.setState({
       showAlert: true
     });
+    
   };
  
   hideAlert = () => {
     this.setState({
       showAlert: false
     });
+    
   };
 
     buscar(){
@@ -87,7 +89,7 @@ export default class SolicitarTurno extends Component {
             </TouchableOpacity>  
          
           )
-      }if(this.state.espe!==' '){
+      }else if(this.state.espe!==' '){
           if(this.state.estadoTurnos==1){
               return(
                   <View>
@@ -182,10 +184,13 @@ export default class SolicitarTurno extends Component {
                     </View>
           )}
     }else if(this.state.espe===' '){
+      //el boton desaparecia si lo apretabas sin elegir nada porque falto el return
+      return(
       <TouchableOpacity onPress={() => this.showAlert()}
       style={{marginVertical:20, width:115 ,alignSelf:'flex-end', backgroundColor:'#e93922', marginRight:20}}>
           <Text style={{marginVertical:10,fontSize:11, color:'white', textAlign:'center', fontWeight:'bold'}}>BUSCAR</Text>
-    </TouchableOpacity> 
+    </TouchableOpacity>
+    )
     }}
       
   render() {
@@ -211,7 +216,8 @@ export default class SolicitarTurno extends Component {
       const {showAlert} = this.state;
       
       return (
-        <ScrollView style={{flex:1}} >
+        //style no funciona con ScrollView, debe ser contentContainerStyle
+        <ScrollView contentContainerStyle={{flex:1}} >
        
             <Text style={{fontSize:17, textAlign:'center', marginTop:20, marginBottom:10}}>SOLICITAR TURNO</Text>   
 
@@ -254,6 +260,8 @@ export default class SolicitarTurno extends Component {
           
                 </View> 
                 <Divider style={{ backgroundColor: "rgba(0, 0, 0, .38)",alignSelf:'center',width:width*0.9 }} />
+                
+                
                
             {this.buscar()}
             <AwesomeAlert
@@ -274,7 +282,8 @@ export default class SolicitarTurno extends Component {
             
             onConfirmPressed={() => {
               this.hideAlert();
-              console.log('pressed')
+              //console.log('pressed')
+              // no muestra el pressed, solo toma una de las funciones
             }}
     />
        

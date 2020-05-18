@@ -11,6 +11,8 @@ import Historial from './Paciente/Historial'
 import InicioMedico from './Medico/InicioMedico'
 import PerfilPaciente from './Paciente/PerfilPaciente'
 import PerfilMedico from './Medico/PerfilMedico'
+import OlvidoContraseña from './Usuario/OlvidoContraseña'
+import NuevaContraseña from './Usuario/NuevaContraseña'
 import { createDrawerNavigator,DrawerItems } from 'react-navigation-drawer';
 import { Container, Header, Content, Item, Input } from 'native-base';
 const { width } = Dimensions.get('window');
@@ -26,7 +28,7 @@ const instructions = Platform.select({
 class App extends Component {
   render() {
     return (
-      <ScrollView>
+      <ScrollView contentContainerStyle={{flex:1,backgroundColor:'white'}}>
       <View style={{justifyContent:'center', alignItems:'center'}}>
       <Image style={{ justifyContent: 'center',alignItems: 'center',height:width*0.15, width:width*0.8, marginTop:'45%', marginBottom:'20%'}} source={require('./assets/Images/Logo.png')} />
         <TextInput  
@@ -38,7 +40,7 @@ class App extends Component {
           placeholder={'CONTRASEÑA'}
         />
         </View>
-      <TouchableOpacity style={{width:180 , marginTop:15, marginRight:'5%',alignSelf:'flex-end'}}>
+      <TouchableOpacity style={{width:180 , marginTop:15, marginRight:'5%',alignSelf:'flex-end'}} onPress={()=>{this.props.navigation.navigate('OlvidoContraseña')}}>
         <Text style={{color:'#e93922', fontSize:11, textAlign:'right',}}>¿OLVIDASTE TU CONTRASEÑA?</Text>
       </TouchableOpacity>
       <View style={{marginTop:60}}>
@@ -61,7 +63,7 @@ const CustomDrawerContentComponent = (props) => (
     <Image style={{alignSelf:'center' ,justifyContent: 'center',height:width*0.1,width:width*0.45, marginTop:10, marginBottom:20}} source={require('./assets/Images/Logo.png')} />
           <DrawerItems {...props} />
     </View>
-    <TouchableOpacity style={{flexDirection: 'row', alignItems: 'center',marginTop:width*0.9}}>
+    <TouchableOpacity style={{flexDirection: 'row', alignItems: 'center',marginTop:width*0.9}} onPress={()=>{props.navigation.navigate('App')}}>
        <View style={{marginLeft:18, flexDirection:'row'}}> 
         <Ionicons name="ios-log-out" size={24} color={'black'} />
        <Text style={{marginLeft:25, marginTop:5 ,fontWeight:'bold'}}>  Cerrar sesión</Text>
@@ -139,6 +141,36 @@ const dwMedico = createDrawerNavigator({
     }
   }
   
+})
+
+
+
+const contenedorApp = createStackNavigator(
+  {App:{
+    screen:App,
+    navigationOptions:()=>{
+      return{headerTitle:'',headerShown:false}
+    }
+  },
+  OlvidoContraseña:{
+    screen:OlvidoContraseña,
+    navigationOptions:()=>{
+      return{headerTitle:''}
+    }
+  },NuevaContraseña:{
+    screen:NuevaContraseña,
+    navigationOptions:()=>{
+      return{headerTitle:''}
+    }
+  },
+},{
+  defaultNavigationOptions:({Contraseña})=> {
+    return{ 
+      headerStyle:{backgroundColor:'#e93922'},
+      headerTitleStyle:{color:'white', fontSize:14},
+      headerTintColor:('white'),
+    }
+  }
 })
 
 
@@ -277,7 +309,7 @@ navigationOptions:(navigation)=>{
 
 const SwRoot = createSwitchNavigator({
   App:{
-    screen:App
+    screen:contenedorApp
   },
   DeudaAlert:{
     screen: DeudaAlert
