@@ -15,6 +15,7 @@ import OlvidoContraseña from './Usuario/OlvidoContraseña'
 import NuevaContraseña from './Usuario/NuevaContraseña'
 import { createDrawerNavigator,DrawerItems } from 'react-navigation-drawer';
 import { Container, Header, Content, Item, Input } from 'native-base';
+import * as Crypto from 'expo-crypto'
 const { width } = Dimensions.get('window');
 
 
@@ -25,7 +26,21 @@ const instructions = Platform.select({
   android: 'Double tap R on your keyboard to reload,\n' + 'Shake or press menu button for dev menu',
 });
 
+var Usuario='';
+var Contraseña='';
+
 class App extends Component {
+  hash = async()=> {
+  
+  const con = await Crypto.digestStringAsync(
+    Crypto.CryptoDigestAlgorithm.SHA256,
+    Contraseña
+  );
+  console.log(Usuario);
+  console.log(con);
+  this.props.navigation.navigate('InicioPaciente')
+}
+  
   render() {
     return (
       <ScrollView contentContainerStyle={{flex:1,backgroundColor:'white'}}>
@@ -34,17 +49,19 @@ class App extends Component {
         <TextInput  
         style={{fontSize:10, paddingLeft:10 ,justifyContent: 'center',alignItems: 'center', marginBottom:'10%',height: 20, width:width* 0.9 , borderWidth: 1, borderLeftColor:'white', borderRightColor:'white', borderTopColor:'white' }}
         placeholder={'NOMBRE DE USUARIO'}
+        onChangeText = {(us) => {Usuario=us}}
         />
         <TextInput  
         style={{fontSize:10,paddingLeft:10,justifyContent: 'center',alignItems: 'center', height: 20, width:width* 0.9 , borderWidth: 1, borderLeftColor:'white', borderRightColor:'white', borderTopColor:'white' }}
           placeholder={'CONTRASEÑA'}
+          onChangeText = {(pass) => {Contraseña=pass}}
         />
         </View>
       <TouchableOpacity style={{width:180 , marginTop:15, marginRight:'5%',alignSelf:'flex-end'}} onPress={()=>{this.props.navigation.navigate('OlvidoContraseña')}}>
         <Text style={{color:'#e93922', fontSize:11, textAlign:'right',}}>¿OLVIDASTE TU CONTRASEÑA?</Text>
       </TouchableOpacity>
       <View style={{marginTop:60}}>
-          <TouchableOpacity onPress={() => {this.props.navigation.navigate('InicioPaciente')}}
+          <TouchableOpacity onPress={() => {this.hash()}}
           style={{ width:230 ,alignSelf:'center', backgroundColor:'#e93922'}}>
           <Text style={{marginVertical:10,fontSize:11, color:'white', textAlign:'center', fontWeight:'bold'}}>INGRESAR</Text>
           </TouchableOpacity>
@@ -55,6 +72,10 @@ class App extends Component {
   }
 }
 const CerrarSesion='Cerrar sesion';
+
+
+
+
 
 const CustomDrawerContentComponent = (props) => (
   <ScrollView>
