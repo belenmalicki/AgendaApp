@@ -6,6 +6,26 @@ import { Text, View,TextInput,TouchableOpacity } from 'react-native';
 export default class OlvidoContraseña extends Component{
   constructor(props) {
     super(props);
+    this.state={
+      Usuario:'',
+      DNI:'',
+      Legajo:'',
+    }
+  };
+  onChangeUs = e => {
+    if (/^[a-zA-Z]+$/.test(e[e.length-1]) || e[e.length-1]=='@' || e[e.length-1]=='.') {
+      this.setState({Usuario:e})
+    }
+  };
+  onChangeDNI = e => {
+    if (/^[0-9]+$/.test(e[e.length-1])) {
+      this.setState({DNI:e})
+    }
+  };
+  onChangeNum = e => {
+    if (/^[0-9]+$/.test(e[e.length-1])) {
+      this.setState({Legajo:e})
+    }
   };
 
 
@@ -31,6 +51,8 @@ export default class OlvidoContraseña extends Component{
             maxLength={32}
             placeholder="NOMBRE DE USUARIO"
             placeholderTextColor="#cccccc"
+            value={this.state.Usuario}
+            onChangeText={(e)=>{this.onChangeUs(e)}}
           />
           </View>
           <View style={{flex:1,justifyContent:'center'}}>
@@ -44,6 +66,8 @@ export default class OlvidoContraseña extends Component{
             maxLength={32}
             placeholder="DNI"
             placeholderTextColor="#cccccc"
+            value={this.state.DNI}
+            onChangeText={(e)=>{this.onChangeDNI(e)}}
           />
           </View>
           <View style={{flex:1,justifyContent:'center'}}>
@@ -57,6 +81,8 @@ export default class OlvidoContraseña extends Component{
             maxLength={32}
             placeholder="NUMERÓ DE SOCIO"
             placeholderTextColor="#cccccc"
+            value={this.state.Legajo}
+            onChangeText={(e)=>{this.onChangeNum(e)}}
           />
           </View>
     

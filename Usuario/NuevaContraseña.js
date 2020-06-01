@@ -2,6 +2,23 @@ import React, { Component } from 'react';
 import { Text, View, TextInput,TouchableOpacity } from 'react-native';
 
 export default class NuevaContraseña extends Component{
+  constructor(props) {
+    super(props);
+    this.state={
+      Contraseña:'',
+      NuevaContraseña:'',
+    }
+  };
+  onChangePas = e => {
+    if (/^[a-zA-Z]+$/.test(e[e.length-1]) || /^[0-9]+$/.test(e[e.length-1])) {
+      this.setState({Contraseña:e})
+    }
+  };
+  onChangeNewPas = e => {
+    if (/^[a-zA-Z]+$/.test(e[e.length-1]) || /^[0-9]+$/.test(e[e.length-1])) {
+      this.setState({NuevaContraseña:e})
+    }
+  };
     render(){
         return(
             <View style={{flex:1,flexDirection:'column',justifyContent:'center',alignItems:'center',backgroundColor:'white'}}>
@@ -21,6 +38,9 @@ export default class NuevaContraseña extends Component{
             maxLength={32}
             placeholder="CONTRASEÑA"
             placeholderTextColor="#cccccc"
+            secureTextEntry={true}
+            value={this.state.Contraseña}
+            onChangeText={(e)=>{this.onChangePas(e)}}
           />
           </View>
           <View style={{flex:1,justifyContent:'center'}}>
@@ -34,6 +54,9 @@ export default class NuevaContraseña extends Component{
             maxLength={32}
             placeholder="CONFIRMAR CONTRASEÑA"
             placeholderTextColor="#cccccc"
+            secureTextEntry={true}
+            value={this.state.NuevaContraseña}
+            onChangeText={(e)=>{this.onChangeNewPas(e)}}
           />
           </View>
   <View style={{flex:3,width:150,justifyContent:'center'}}>
