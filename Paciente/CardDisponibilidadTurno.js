@@ -1,10 +1,22 @@
-import React, { Component } from 'react';
+import React, { Component,useState } from 'react';
 import { Ionicons } from '@expo/vector-icons';
 import { Platform, StyleSheet, Text, View, Image,TextInput, Dimensions, TouchableOpacity, ScrollView,TouchableHighlight  } from 'react-native';
 import {Card, CardItem, Col, DatePicker, Icon} from 'native-base'
+import { Overlay } from 'react-native-elements';
+import {withNavigation} from 'react-navigation';
 
+ function CardDisponibilidadTurno(props) {
+    const [visible, setVisible] = useState(false);
 
-export default function CardDisponibilidadTurno(props) {
+    const toggleOverlay = () => {
+      setVisible(!visible);
+      //console.log('No confirmó')
+    };
+    const toggleOverlayConf = () => {
+      setVisible(!visible);
+      props.navigation.navigate('InicioPaciente')
+      //console.log('Confirmó')
+    };
     if(props.nro==2){
         var titulo = 'NO HAY TURNOS DISPONIBLES'
         var texto= ' Lo sentimos, no hay turnos disponibles en la fecha seleccionada, le ofrecemos los turnos mas próximos a la misma.'
@@ -50,12 +62,22 @@ export default function CardDisponibilidadTurno(props) {
                 <Text style={{fontSize:12, textAlign:'justify', marginHorizontal:5}}>{texto}</Text>
             </CardItem>
             <CardItem style={{alignSelf:"center"}}>
-            <TouchableOpacity>
+            <TouchableOpacity onPress={toggleOverlay}>
                 <Text style={{fontSize:12, textAlign:'center',fontWeight:'bold' ,marginHorizontal:5, marginBottom:5, color:'#1F77A5'}}>{boton}</Text>
+             </TouchableOpacity>
+            <Overlay overlayStyle={{height:140}} isVisible={visible} >
+                <View>
+                <Text style={{textAlign:"center", marginTop:20,fontSize:13}}>SE HA SOLICITADO LA LISTA DE ESPERA CON EXITO</Text>
+        
+                <TouchableOpacity style={{backgroundColor:"#1F77A5", width:180, alignSelf:'center', marginTop:20}} onPress={toggleOverlayConf}>
+                    <Text style={{color:"white", fontWeight:"bold", fontSize:11, marginVertical:10, marginHorizontal:8, textAlign:'center' }}>VOLVER AL INICIO</Text>
                 </TouchableOpacity>
+                </View>
+             </Overlay>
             </CardItem>
         </Card>
     </View>
         );}
   }
   
+  export default withNavigation(CardDisponibilidadTurno)
