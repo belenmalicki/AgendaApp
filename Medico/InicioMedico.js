@@ -90,7 +90,6 @@ export default class InicioMedico extends Component {
                         <Card style={{width:width*0.85, alignSelf:"center", marginTop:10}} >
                             <CardItem style={{ marginTop:10, alignSelf:"center", flexDirection:"column"}}>
                                 <Image style={{alignSelf:"center",height:60, width:60, marginBottom:5 }} source={require('../assets/Images/calendar2.png')}/>
-                         
                                <Text style={{fontSize:14, textAlign:"center",}}>No hay turnos asginados.</Text>
                             </CardItem>
                             <CardItem style={{alignSelf:"center", marginBottom:10}}>

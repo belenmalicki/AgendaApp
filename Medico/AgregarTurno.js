@@ -12,15 +12,14 @@ export default class AgregarTurno extends Component {
     
         <Text style={{fontSize:18, textAlign:'center',marginTop:'5%'}}>AGREGAR TURNO </Text>
         <Text style={{fontSize:14, marginLeft:'4%',color:'#e93922', marginBottom:15}}> <Ionicons name='md-calendar' size={16} color='#e93922'></Ionicons> 9 Jueves<Text style={{fontSize:14,color:'black'}}> Abril</Text></Text>
-        <Text style={{marginBottom:'5%',textAlign:'justify', fontSize:14, lineHeight:16, marginHorizontal:'5%'}}>
-          Contactese al 4778-9809 para informarse sobre los métodos de pago.
-        </Text>
-      
-      <View style={{marginTop:60}}>
-            <TouchableOpacity onPress={() => {this.props.navigation.navigate('InicioPaciente')}}
-            style={{ width:230 ,alignSelf:'center', backgroundColor:'#e93922'}}>
-            <Text style={{marginVertical:10,fontSize:11, color:'white', textAlign:'center', fontWeight:'bold'}}>VER MIS TURNOS</Text>
-            </TouchableOpacity>
+        <Text style={{fontSize:12,  marginTop:20, marginBottom:20, marginLeft:20}}>Elija la especialidad</Text>
+
+        <Text style={{fontSize:12,  marginTop:20, marginBottom:20, marginLeft:20}}>Elija el horario del primer turno</Text>
+          
+        <Text style={{fontSize:12,  marginTop:20, marginBottom:20, marginLeft:20}}>Elija el horario del último turno</Text>  
+        <View style={{flexDirection:"row"}}>
+        <Text style={{fontSize:12,  marginTop:20, marginBottom:20, marginLeft:20}}>Elija la hora de almuerzo (opcional) </Text><TouchableOpacity>
+        <Image style={{ height:16, width:16}} source={require('../assets/Images/information.png')} /></TouchableOpacity>
         </View>
         </View>
       );
