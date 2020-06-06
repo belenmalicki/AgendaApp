@@ -15,7 +15,6 @@ import { Overlay } from 'react-native-elements';
 3: No hay turnos con el profesional elegido durante estos dos meses, te muestro otro prof. y lista espera profesional
 4: No podes elegir ese turno porque ya tenes un turno de esa especialidad en esa fecha
 5:No hay turnos disponibles en todos los dos meses: Lista de espera
-
 */
 
 
@@ -54,6 +53,7 @@ export default class SolicitarTurno extends Component {
 
         if (this.state.corazon == false){
           this.setState({corazon: true})
+
           this.setState({ showAlert: true});
     
         }
@@ -69,12 +69,14 @@ export default class SolicitarTurno extends Component {
     this.setState({
       showAlert: true
     });
+    
   };
  
   hideAlert = () => {
     this.setState({
       showAlert: false
     });
+    
   };
   abrirPop=()=>{
     if (this.state.corazon == false){
@@ -101,10 +103,10 @@ export default class SolicitarTurno extends Component {
          
           )
       }
-        
-      
+             
       
       else{
+
           if(this.state.estadoTurnos==1){
               return(
                   <View>
@@ -199,6 +201,7 @@ export default class SolicitarTurno extends Component {
                   <CardDisponibilidadTurno nro={this.state.estadoTurnos} />
                     </View>
           )}
+
     }/*else {
       <TouchableOpacity onPress={() => this.abrirPop()}
                 style={{marginTop:20, width:115 ,alignSelf:'flex-end', backgroundColor:'#e93922', marginRight:20}}>
@@ -245,7 +248,8 @@ export default class SolicitarTurno extends Component {
         ];
        console.log(this.state.textInputValuePr, 'especialidad')
       return (
-        <ScrollView style={{flex:1}} >
+        //style no funciona con ScrollView, debe ser contentContainerStyle
+        <ScrollView contentContainerStyle={{flex:1}} >
        
             <Text style={{fontSize:17, textAlign:'center', marginTop:20, marginBottom:10}}>SOLICITAR TURNO</Text>   
 
@@ -335,6 +339,7 @@ export default class SolicitarTurno extends Component {
               <Icon name={'caret-down'} type='FontAwesome'  style={{color:"rgba(0, 0, 0, .38)", fontSize:18,marginLeft:5  ,marginTop:25}}></Icon>
             </View> 
             <Divider style={{ backgroundColor: "rgba(0, 0, 0, .38)",alignSelf:'center',width:width*0.9 }} />
+
             {this.buscar()}
        { /*   <AwesomeAlert
             //show={showAlert}
@@ -354,7 +359,8 @@ export default class SolicitarTurno extends Component {
             
             onConfirmPressed={() => {
               this.hideAlert();
-              console.log('pressed')
+              //console.log('pressed')
+              // no muestra el pressed, solo toma una de las funciones
             }}
     />*/}
    <Overlay overlayStyle={{height:140}} isVisible={showAlert} >

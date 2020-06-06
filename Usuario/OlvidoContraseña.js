@@ -3,6 +3,7 @@ import { Text, View,TextInput,TouchableOpacity, Dimensions } from 'react-native'
 const { width } = Dimensions.get('window');
 
 
+
 export default class OlvidoContraseña extends Component{
   constructor(props) {
     super(props);
@@ -12,7 +13,6 @@ export default class OlvidoContraseña extends Component{
     render(){
         return(
             <View style={{flex:1,flexDirection:'column',justifyContent:'center',alignItems:'center',backgroundColor:'white'}}>
-     
       <Text style={{textAlign:"center", marginVertical:20}} >
           {"¿OLVIDÓ SU CONTRASEÑA?"}
           </Text>
@@ -33,6 +33,7 @@ export default class OlvidoContraseña extends Component{
             placeholderTextColor="#cccccc"
           />
           </View>
+
           <View style={{}}>
       <Text style={{fontSize:12,marginBottom:5}}>
         {"DNI"}

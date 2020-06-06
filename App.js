@@ -15,6 +15,8 @@ import InicioMedico from './Medico/InicioMedico'
 import PerfilMedico from './Medico/PerfilMedico'
 import OlvidoContraseña from './Usuario/OlvidoContraseña'
 import NuevaContraseña from './Usuario/NuevaContraseña'
+import { createDrawerNavigator,DrawerItems } from 'react-navigation-drawer';
+import { Container, Header, Content, Item, Input } from 'native-base';
 import * as Crypto from 'expo-crypto'
 const { width } = Dimensions.get('window');
 
