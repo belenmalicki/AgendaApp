@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Platform, StyleSheet, Text, View, Image,TextInput, Dimensions, TouchableOpacity,ScrollView  } from 'react-native';
+import { Platform, StyleSheet, Text, View, ImageBackground,TextInput, Dimensions, TouchableOpacity,ScrollView  } from 'react-native';
 import {Footer, FooterTab, Container, Col, Row} from 'native-base'
 import { Divider } from 'react-native-elements' 
 import { Ionicons } from '@expo/vector-icons';
@@ -11,8 +11,8 @@ export default class Perfil extends Component {
     return (
       <ScrollView style={{flex:1}}>
       
-      <Text style={{fontSize:18, textAlign:'center',marginTop:'5%'}}>PERFIL </Text>
-      
+      <Text style={{fontSize:18, textAlign:'center',marginTop:'5%'}}>Mi Perfil </Text>
+    {/*}  
       <View style={{backgroundColor:'pink', width:300, alignSelf: "center", height:195, marginTop:20, borderRadius:20}}>
             <Row size={40} style={{alignSelf:'flex-end'}}>
                 <Text  style={{textAlign:'right',marginTop:30, marginRight:30, fontSize:20 }}><Ionicons  name="ios-globe" size={24} color={'black'} /> OSDE </Text>
@@ -25,7 +25,23 @@ export default class Perfil extends Component {
                 <Text  style={{ marginLeft:15, fontSize:9, marginTop:12 }}>vto  </Text>
                 <Text  style={{ marginLeft:2, fontSize:11, marginTop:10, fontWeight:'bold' }}> 31/10/2020 </Text>
             </View>
-      </View>
+      </View>*/}
+      <ImageBackground style={{height:195, width:300, marginTop:20, alignSelf:"center"}}  source={require('../assets/Images/credencialMedico/Credencial_Medico.png')} >
+     <View >
+      <Text  style={{marginLeft:25, fontSize:12, marginTop:10, fontWeight:'bold', marginTop:100, letterSpacing:3, textAlign:'left'}}>Dra.  </Text>
+            <Text  style={{ marginLeft:25, fontSize:14, marginTop:10, fontWeight:'bold',letterSpacing:3 }}>ACOSTA DELFINA  </Text>
+            <View style={{ flexDirection:'row', marginBottom:10,justifyContent:"space-around",}}>
+              <View style={{ alignItems:"center"}}>
+                <Text  style={{ fontSize:12, marginTop:12 }}>Nro. Socio/a</Text>
+                <Text  style={{ fontSize:12, marginTop:5, fontWeight:'bold' }}>214.896</Text>
+                </View>
+                <View style={{ alignItems:"center"}}>
+                <Text  style={{  fontSize:12, marginTop:12 }}>Matrícula</Text>
+                <Text  style={{  fontSize:12, marginTop:5, fontWeight:'bold' }}>681.987</Text>
+                </View>
+            </View>
+        </View>
+      </ImageBackground>
       <Text style={{marginTop:'7%',textAlign:'justify', fontSize:14, marginBottom:15, lineHeight:16, marginHorizontal:'5%'}}>
         NOMBRE Y APELLIDO
       </Text>

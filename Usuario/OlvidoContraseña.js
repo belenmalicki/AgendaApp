@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import { Text, View, TextInput, TouchableOpacity } from 'react-native';
 import ApiController from '../controller/ApiController';
+import { Text, View,TextInput,TouchableOpacity, Dimensions } from 'react-native';
+const { width } = Dimensions.get('window');
 
 
 
@@ -13,7 +14,6 @@ export default class OlvidoContraseña extends Component {
       nrosoc: ''
     }
   };
-
 
   checkData() {
     const data = {
@@ -35,25 +35,23 @@ export default class OlvidoContraseña extends Component {
       alert('Los datos ingresados no son válidos.')
     }
   }
-
-
-  render() {
-    return (
-      <View style={{ flex: 1, flexDirection: 'column', justifyContent: 'center', alignItems: 'center', backgroundColor: 'white' }}>
-        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', width: 350 }}>
-          <Text >
-            {"¿OLVIDÓ SU CONTRASEÑA?"}
+  
+    render(){
+        return(
+            <View style={{flex:1,flexDirection:'column',justifyContent:'center',alignItems:'center',backgroundColor:'white'}}>
+      <Text style={{textAlign:"center", marginVertical:20}} >
+          {"¿OLVIDÓ SU CONTRASEÑA?"}
           </Text>
-          <Text >
-            {"Por Favor ingrese los siguientes datos para que pueda generar una nueva contraseña o comuniquese al +54 (011) 5777-3200."}
-          </Text>
-        </View>
-        <View style={{ flex: 1, justifyContent: 'center' }}>
-          <Text >
-            {"NOMBRE DE USUARIO"}
-          </Text>
-          <TextInput
-            style={{ backgroundColor: "white", height: 50, width: 350 }}
+          <Text style={{fontSize:14,textAlign:'justify', marginHorizontal:20, marginBottom:20}} >
+        {"Por Favor ingrese los siguientes datos para que pueda generar una nueva contraseña o comuniquese al +54 (011) 5777-3200."}
+      </Text>
+    
+      <View >
+      <Text style={{fontSize:12,marginBottom:5}} >
+        {"NOMBRE DE USUARIO"}
+      </Text>
+      <TextInput
+            style={{fontSize:10, paddingLeft:10 ,justifyContent: 'center',alignItems: 'center', marginBottom:'10%',height: 20, width:width* 0.9 , borderWidth: 1, borderLeftColor:'white', borderRightColor:'white', borderTopColor:'white'}}
             editable
             underlineColorAndroid="black"
             maxLength={32}
@@ -61,13 +59,14 @@ export default class OlvidoContraseña extends Component {
             placeholderTextColor="#cccccc"
             onChangeText={(text) => this.setState({ email: text })}
           />
-        </View>
-        <View style={{ flex: 1, justifyContent: 'center' }}>
-          <Text >
-            {"DNI"}
-          </Text>
-          <TextInput
-            style={{ backgroundColor: "white", height: 50, width: 350 }}
+          </View>
+
+          <View style={{}}>
+      <Text style={{fontSize:12,marginBottom:5}}>
+        {"DNI"}
+      </Text>
+      <TextInput
+            style={{fontSize:10, paddingLeft:10 ,justifyContent: 'center',alignItems: 'center', marginBottom:'10%',height: 20, width:width* 0.9 , borderWidth: 1, borderLeftColor:'white', borderRightColor:'white', borderTopColor:'white' }}
             editable
             underlineColorAndroid="black"
             maxLength={32}
@@ -75,17 +74,17 @@ export default class OlvidoContraseña extends Component {
             placeholderTextColor="#cccccc"
             onChangeText={(text) => this.setState({ dni: text })}
           />
-        </View>
-        <View style={{ flex: 1, justifyContent: 'center' }}>
-          <Text >
-            {"NUMERÓ DE SOCIO/ LEGAJO LABORAL"}
-          </Text>
-          <TextInput
-            style={{ backgroundColor: "white", height: 50, width: 350 }}
+          </View>
+          <View style={{}}>
+      <Text style={{fontSize:12,marginBottom:5}}>
+        {"NUMERO DE SOCIO"}
+      </Text>
+      <TextInput
+            style={{fontSize:10, paddingLeft:10 ,justifyContent: 'center',alignItems: 'center', marginBottom:'10%',height: 20, width:width* 0.9 , borderWidth: 1, borderLeftColor:'white', borderRightColor:'white', borderTopColor:'white' }}
             editable
             underlineColorAndroid="black"
             maxLength={32}
-            placeholder="NUMERÓ DE SOCIO"
+            placeholder="NUMERO DE SOCIO"
             placeholderTextColor="#cccccc"
             onChangeText={(text) => this.setState({ nrosoc: text })}
           />
