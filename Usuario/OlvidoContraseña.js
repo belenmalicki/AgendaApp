@@ -29,7 +29,7 @@ export default class OlvidoContraseña extends Component {
     if (response.status == 200) {
       response.json().then(usuario => {
         console.log(usuario)
-        this.props.navigation.navigate('NuevaContraseña')
+        this.props.navigation.navigate('NuevaContraseña', {usuario: usuario})
       })
     } else {
       alert('Los datos ingresados no son válidos.')
@@ -53,7 +53,6 @@ export default class OlvidoContraseña extends Component {
       <TextInput
             style={{fontSize:10, paddingLeft:10 ,justifyContent: 'center',alignItems: 'center', marginBottom:'10%',height: 20, width:width* 0.9 , borderWidth: 1, borderLeftColor:'white', borderRightColor:'white', borderTopColor:'white'}}
             editable
-            underlineColorAndroid="black"
             maxLength={32}
             placeholder="NOMBRE DE USUARIO"
             placeholderTextColor="#cccccc"
@@ -68,7 +67,6 @@ export default class OlvidoContraseña extends Component {
       <TextInput
             style={{fontSize:10, paddingLeft:10 ,justifyContent: 'center',alignItems: 'center', marginBottom:'10%',height: 20, width:width* 0.9 , borderWidth: 1, borderLeftColor:'white', borderRightColor:'white', borderTopColor:'white' }}
             editable
-            underlineColorAndroid="black"
             maxLength={32}
             placeholder="DNI"
             placeholderTextColor="#cccccc"
@@ -82,7 +80,6 @@ export default class OlvidoContraseña extends Component {
       <TextInput
             style={{fontSize:10, paddingLeft:10 ,justifyContent: 'center',alignItems: 'center', marginBottom:'10%',height: 20, width:width* 0.9 , borderWidth: 1, borderLeftColor:'white', borderRightColor:'white', borderTopColor:'white' }}
             editable
-            underlineColorAndroid="black"
             maxLength={32}
             placeholder="NUMERO DE SOCIO"
             placeholderTextColor="#cccccc"
