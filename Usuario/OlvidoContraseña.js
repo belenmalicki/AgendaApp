@@ -1,15 +1,41 @@
 import React, { Component } from 'react';
+import ApiController from '../controller/ApiController';
 import { Text, View,TextInput,TouchableOpacity, Dimensions } from 'react-native';
 const { width } = Dimensions.get('window');
 
 
 
-export default class OlvidoContraseña extends Component{
+export default class OlvidoContraseña extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      email: '',
+      dni: '',
+      nrosoc: ''
+    }
   };
 
+  checkData() {
+    const data = {
+      email: this.state.email,
+      dni: this.state.dni,
+      nro_socio: this.state.nrosoc
+    }
 
+    ApiController.verificarDatos(data, this.handleData.bind(this))
+  }
+
+  handleData(response) {
+    if (response.status == 200) {
+      response.json().then(usuario => {
+        console.log(usuario)
+        this.props.navigation.navigate('NuevaContraseña', {usuario: usuario})
+      })
+    } else {
+      alert('Los datos ingresados no son válidos.')
+    }
+  }
+  
     render(){
         return(
             <View style={{flex:1,flexDirection:'column',justifyContent:'center',alignItems:'center',backgroundColor:'white'}}>
@@ -27,10 +53,10 @@ export default class OlvidoContraseña extends Component{
       <TextInput
             style={{fontSize:10, paddingLeft:10 ,justifyContent: 'center',alignItems: 'center', marginBottom:'10%',height: 20, width:width* 0.9 , borderWidth: 1, borderLeftColor:'white', borderRightColor:'white', borderTopColor:'white'}}
             editable
-            underlineColorAndroid="black"
             maxLength={32}
             placeholder="NOMBRE DE USUARIO"
             placeholderTextColor="#cccccc"
+            onChangeText={(text) => this.setState({ email: text })}
           />
           </View>
 
@@ -41,10 +67,10 @@ export default class OlvidoContraseña extends Component{
       <TextInput
             style={{fontSize:10, paddingLeft:10 ,justifyContent: 'center',alignItems: 'center', marginBottom:'10%',height: 20, width:width* 0.9 , borderWidth: 1, borderLeftColor:'white', borderRightColor:'white', borderTopColor:'white' }}
             editable
-            underlineColorAndroid="black"
             maxLength={32}
             placeholder="DNI"
             placeholderTextColor="#cccccc"
+            onChangeText={(text) => this.setState({ dni: text })}
           />
           </View>
           <View style={{}}>
@@ -54,22 +80,22 @@ export default class OlvidoContraseña extends Component{
       <TextInput
             style={{fontSize:10, paddingLeft:10 ,justifyContent: 'center',alignItems: 'center', marginBottom:'10%',height: 20, width:width* 0.9 , borderWidth: 1, borderLeftColor:'white', borderRightColor:'white', borderTopColor:'white' }}
             editable
-            underlineColorAndroid="black"
             maxLength={32}
             placeholder="NUMERO DE SOCIO"
             placeholderTextColor="#cccccc"
+            onChangeText={(text) => this.setState({ nrosoc: text })}
           />
-          </View>
-    
-          <View style={{flex:1}}>
-          <TouchableOpacity onPress={() => {this.props.navigation.navigate('NuevaContraseña')}}
-          style={{ width:230 ,justifyContent:'center',alignSelf:'center', backgroundColor:'#e93922'}}>
-          <Text style={{marginVertical:10,fontSize:11, color:'white', textAlign:'center', fontWeight:'bold'}}>CONFIRMAR</Text>
+        </View>
+
+        <View style={{ flex: 1 }}>
+          <TouchableOpacity onPress={() => { this.checkData() }}
+            style={{ width: 230, justifyContent: 'center', alignSelf: 'center', backgroundColor: '#e93922' }}>
+            <Text style={{ marginVertical: 10, fontSize: 11, color: 'white', textAlign: 'center', fontWeight: 'bold' }}>CONFIRMAR</Text>
           </TouchableOpacity>
         </View>
-  
-    </View>
-        )
-    }
-    
+
+      </View>
+    )
+  }
+
 }
