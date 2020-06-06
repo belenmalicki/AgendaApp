@@ -1,15 +1,17 @@
 import React, { Component } from 'react';
 import { Ionicons } from '@expo/vector-icons';
-import { Platform, StyleSheet, Text, View, Image,TextInput ,Dimensions, TouchableOpacity,ScrollView, TouchableWithoutFeedback  } from 'react-native';
+import { Platform, Text, View, Image,TextInput ,Dimensions, TouchableOpacity,ScrollView, TouchableWithoutFeedback  } from 'react-native';
 import {createSwitchNavigator,createAppContainer, SafeAreaView  } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
+import { createDrawerNavigator,DrawerItems } from 'react-navigation-drawer';
 import DeudaAlert from './Paciente/DeudaAlert';
 import InicioPaciente from './Paciente/InicioPaciente'
 import SolicitarTurno from './Paciente/SolicitarTurno'
 import SobreNosotros from './Paciente/SobreNosotros'
 import Historial from './Paciente/Historial'
-import InicioMedico from './Medico/InicioMedico'
+import ConfirmarTurno from './Paciente/ConfirmarTurno'
 import PerfilPaciente from './Paciente/PerfilPaciente'
+import InicioMedico from './Medico/InicioMedico'
 import PerfilMedico from './Medico/PerfilMedico'
 import OlvidoContraseña from './Usuario/OlvidoContraseña'
 import NuevaContraseña from './Usuario/NuevaContraseña'
@@ -47,12 +49,12 @@ class App extends Component {
       <View style={{justifyContent:'center', alignItems:'center'}}>
       <Image style={{ justifyContent: 'center',alignItems: 'center',height:width*0.15, width:width*0.8, marginTop:'45%', marginBottom:'20%'}} source={require('./assets/Images/Logo.png')} />
         <TextInput  
-        style={{fontSize:10, paddingLeft:10 ,justifyContent: 'center',alignItems: 'center', marginBottom:'10%',height: 20, width:width* 0.9 , borderWidth: 1, borderLeftColor:'white', borderRightColor:'white', borderTopColor:'white' }}
+        style={{fontSize:11, paddingLeft:10 ,justifyContent: 'center',alignItems: 'center', marginBottom:'10%',height: 20, width:width* 0.9 , borderWidth: 1, borderLeftColor:'white', borderRightColor:'white', borderTopColor:'white' }}
         placeholder={'NOMBRE DE USUARIO'}
         onChangeText = {(us) => {Usuario=us}}
         />
         <TextInput  
-        style={{fontSize:10,paddingLeft:10,justifyContent: 'center',alignItems: 'center', height: 20, width:width* 0.9 , borderWidth: 1, borderLeftColor:'white', borderRightColor:'white', borderTopColor:'white' }}
+        style={{fontSize:11,paddingLeft:10,justifyContent: 'center',alignItems: 'center', height: 20, width:width* 0.9 , borderWidth: 1, borderLeftColor:'white', borderRightColor:'white', borderTopColor:'white',  }}
           placeholder={'CONTRASEÑA'}
           onChangeText = {(pass) => {Contraseña=pass}}
         />
@@ -71,6 +73,7 @@ class App extends Component {
     );
   }
 }
+
 const CerrarSesion='Cerrar sesion';
 
 
@@ -78,13 +81,13 @@ const CerrarSesion='Cerrar sesion';
 
 
 const CustomDrawerContentComponent = (props) => (
-  <ScrollView>
+
     <SafeAreaView style={{flex:1}} forceInset={{ top: 'always', horizontal: 'never' }}>
     <View style={{flex: 1 }}>
     <Image style={{alignSelf:'center' ,justifyContent: 'center',height:width*0.1,width:width*0.45, marginTop:10, marginBottom:20}} source={require('./assets/Images/Logo.png')} />
           <DrawerItems {...props} />
     </View>
-    <TouchableOpacity style={{flexDirection: 'row', alignItems: 'center',marginTop:width*0.9}} onPress={()=>{props.navigation.navigate('App')}}>
+    <TouchableOpacity style={{flexDirection: 'row', alignItems: 'center',marginTop:width*0.9, marginBottom:20}} onPress={()=>{props.navigation.navigate('App')}}>
        <View style={{marginLeft:18, flexDirection:'row'}}> 
         <Ionicons name="ios-log-out" size={24} color={'black'} />
        <Text style={{marginLeft:25, marginTop:5 ,fontWeight:'bold'}}>  Cerrar sesión</Text>
@@ -92,7 +95,7 @@ const CustomDrawerContentComponent = (props) => (
          
     </TouchableOpacity>
     </SafeAreaView>
-  </ScrollView>
+
 );
 
 const contenedorPerfilMed = createStackNavigator({
@@ -262,10 +265,13 @@ const StPaciente = createStackNavigator({
     navigationOptions:()=>{
       return{ headerTitle:'TURNOS',
  }
+    }},
+    ConfirmarTurno:{
+      screen:ConfirmarTurno,
+      navigationOptions:(navigation)=>{
+        return{ headerTitle:'CONFIRMAR',}
     }
-
-  },
-},{
+}},{
     defaultNavigationOptions:({navigation})=> {
       return{ 
        headerStyle:{backgroundColor:'#e93922'},
