@@ -58,7 +58,7 @@ export default class ModificarTurno extends Component {
             <Container>
                 <ScrollView >
                     <Text style={{fontSize:18, textAlign:'center',marginVertical:20}}>MODIFICAR TURNO </Text>
-                    <Text style={{fontSize:14, marginLeft:'4%',color:'#e93922', marginBottom:15}}> <Ionicons name='md-calendar' size={16} color='#e93922'></Ionicons> 9 Jueves<Text style={{fontSize:14,color:'black'}}> Abril</Text></Text>
+                    <Text style={{fontSize:14, marginLeft:'4%',color:'#e93922', marginBottom:15}}> <Ionicons name='md-calendar' size={16} color='#e93922'></Ionicons> 9 Martes<Text style={{fontSize:14,color:'black'}}> Junio</Text></Text>
                     <Text style={{fontSize:14,fontWeight:'bold' ,marginBottom:10, marginLeft:20}}>Agregar turnos</Text>
                     <View style={{flexDirection:"row" ,marginBottom:10, marginLeft:20}}>
                         <Text style={{fontSize:12 }}>Seleccione los turnos que desea agregar  </Text>
