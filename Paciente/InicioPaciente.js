@@ -59,15 +59,10 @@ const mensaje= " Le notificamos que mantiene una deuda pendiente con el establec
         <ScrollView >
             <Text style={{fontSize:17, textAlign:'center', marginVertical:20}}>¡BIENVENIDO NOMBREUSUARIO!</Text>
             <Text style={{fontSize:14, marginLeft:'4%',color:'#e93922', marginBottom:15}}> <Ionicons name='md-calendar' size={16} color='#e93922'></Ionicons> PRÓXIMOS TURNOS</Text>
-            <CardTurno /> 
-
-            <Ejemplo />
-
-
-
+            <CardTurno med="DRA. RODRIGUEZ, CARLA" esp="Cardióloga" hora="14.00" fecha=" " /> 
         </ScrollView>
         <Footer style={{backgroundColor:'white'}}>
-        {this.solTurno()}
+          {this.solTurno()}
         </Footer>
         <AwesomeAlert
                 show={showAlert}
