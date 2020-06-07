@@ -7,7 +7,7 @@ const { width } = Dimensions.get('window');
 
 export default class OlvidoContraseña extends Component {
   constructor(props) {
-    super(props);
+    super(props)
     this.state = {
       email: '',
       dni: '',
@@ -36,6 +36,20 @@ export default class OlvidoContraseña extends Component {
     }
   }
   
+  onChangeUs = e => {
+    if (/^[a-zA-Z]+$/.test(e[e.length-1]) || e[e.length-1]=='@' || e[e.length-1]=='.') {
+      this.setState({email: e})
+    }
+  };
+  onChangeDNI = e => {
+    if (/^[0-9]+$/.test(e[e.length-1])) {
+      this.setState({dni: e})
+    }
+  };
+  onChangeNum = e => {
+    if (/^[0-9]+$/.test(e[e.length-1])) {
+      this.setState({nrosoc: e})
+  
     render(){
         return(
             <View style={{flex:1,flexDirection:'column',justifyContent:'center',alignItems:'center',backgroundColor:'white'}}>
@@ -56,7 +70,9 @@ export default class OlvidoContraseña extends Component {
             maxLength={32}
             placeholder="NOMBRE DE USUARIO"
             placeholderTextColor="#cccccc"
-            onChangeText={(text) => this.setState({ email: text })}
+            value={this.state.Usuario}
+            onChangeText={(e)=>{this.onChangeUs(e)}}
+
           />
           </View>
 
@@ -70,7 +86,8 @@ export default class OlvidoContraseña extends Component {
             maxLength={32}
             placeholder="DNI"
             placeholderTextColor="#cccccc"
-            onChangeText={(text) => this.setState({ dni: text })}
+            value={this.state.DNI}
+            onChangeText={(e)=>{this.onChangeDNI(e)}}
           />
           </View>
           <View style={{}}>
@@ -83,7 +100,8 @@ export default class OlvidoContraseña extends Component {
             maxLength={32}
             placeholder="NUMERO DE SOCIO"
             placeholderTextColor="#cccccc"
-            onChangeText={(text) => this.setState({ nrosoc: text })}
+            value={this.state.Legajo}
+            onChangeText={(e)=>{this.onChangeNum(e)}}
           />
         </View>
 

@@ -3,6 +3,7 @@ import { Text, View, TextInput, TouchableOpacity } from 'react-native';
 import * as Crypto from 'expo-crypto'
 import ApiController from '../controller/ApiController';
 
+
 export default class NuevaContraseña extends Component {
   constructor(props) {
     super(props);
@@ -41,6 +42,17 @@ export default class NuevaContraseña extends Component {
     }
 
   }
+      
+      onChangePas = e => {
+    if (/^[a-zA-Z]+$/.test(e[e.length-1]) || /^[0-9]+$/.test(e[e.length-1])) {
+      this.setState({pass1: e})
+    }
+  };
+  onChangeNewPas = e => {
+    if (/^[a-zA-Z]+$/.test(e[e.length-1]) || /^[0-9]+$/.test(e[e.length-1])) {
+      this.setState({pass2: e})
+    }
+  };
 
   render() {
     const usuario = this.props.navigation.getParam('usuario', {})
@@ -61,7 +73,9 @@ export default class NuevaContraseña extends Component {
             maxLength={32}
             placeholder="CONTRASEÑA"
             placeholderTextColor="#cccccc"
-            onChangeText={(text) => this.setState({ pass1: text })}
+            secureTextEntry={true}
+            value={this.state.pass1}
+            onChangeText={(e)=>{this.onChangePas(e)}}
           />
         </View>
         <View style={{ flex: 1, justifyContent: 'center' }}>
@@ -74,7 +88,10 @@ export default class NuevaContraseña extends Component {
             maxLength={32}
             placeholder="CONFIRMAR CONTRASEÑA"
             placeholderTextColor="#cccccc"
-            onChangeText={(text) => this.setState({ pass2: text })}
+            secureTextEntry={true}
+            value={this.state.pass2}
+            onChangeText={(e)=>{this.onChangeNewPas(e)}}
+
           />
         </View>
         <View style={{ flex: 3, width: 150, justifyContent: 'center' }}>

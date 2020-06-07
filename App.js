@@ -28,18 +28,24 @@ const instructions = Platform.select({
   android: 'Double tap R on your keyboard to reload,\n' + 'Shake or press menu button for dev menu',
 });
 
-var Usuario = '';
-var Contraseña = '';
 
 class App extends Component {
+  constructor(props){
+    super(props)
+    this.state={
+        usuario:'',
+        password:'',
+    }
+  }
+  
   hash = async () => {
 
     const con = await Crypto.digestStringAsync(
       Crypto.CryptoDigestAlgorithm.SHA256,
-      Contraseña
+      this.state.password
     );
     let data = {
-      email: Usuario,
+      email: this.state.usuario,
       password: con
     }
     console.log(data)
@@ -58,6 +64,17 @@ class App extends Component {
     }
   }
 
+onChangeUs = e => {
+  if (/^[a-zA-Z]+$/.test(e[e.length-1]) || e[e.length-1]=='@' || e[e.length-1]=='.') {
+    this.setState({usuario:e})
+  }
+};
+onChangePas = e => {
+  if (/^[a-zA-Z]+$/.test(e[e.length-1]) || /^[0-9]+$/.test(e[e.length-1])) {
+    this.setState({password:e})
+  }
+};
+
 
   render() {
     return (
@@ -67,12 +84,15 @@ class App extends Component {
         <TextInput  
         style={{fontSize:11, paddingLeft:10 ,justifyContent: 'center',alignItems: 'center', marginBottom:'10%',height: 20, width:width* 0.9 , borderWidth: 1, borderLeftColor:'white', borderRightColor:'white', borderTopColor:'white' }}
         placeholder={'NOMBRE DE USUARIO'}
-        onChangeText = {(us) => {Usuario=us}}
+        value={this.state.usuario}
+        onChangeText = {(e)=>{this.onChangeUs(e)}}
         />
         <TextInput  
         style={{fontSize:11,paddingLeft:10,justifyContent: 'center',alignItems: 'center', height: 20, width:width* 0.9 , borderWidth: 1, borderLeftColor:'white', borderRightColor:'white', borderTopColor:'white',  }}
           placeholder={'CONTRASEÑA'}
-          onChangeText = {(pass) => {Contraseña=pass}}
+          value={this.state.password}
+          onChangeText = {(e) => {this.onChangePas(e)}}
+          secureTextEntry={true}
         />
         </View>
         <TouchableOpacity style={{ width: 180, marginTop: 15, marginRight: '5%', alignSelf: 'flex-end' }} onPress={() => { this.props.navigation.navigate('OlvidoContraseña') }}>
