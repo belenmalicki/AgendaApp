@@ -51,7 +51,8 @@ export default class InicioMedico extends Component {
 
     var item = {'2020-04-04':[{esp:'Oculista', time:'9.00  - 12.00'}],
                 '2020-05-22': [{esp: 'Cardiologia', time:'9.00  - 12.00'}],
-                '2020-05-23': [{esp: 'Ginecologia', time:'14.00 - 18.00'}],}
+                '2020-06-23': [{esp: 'Ginecologia', time:'14.00 - 18.00'}],
+            }
     function addDays(date, days) {
         const copy = new Date(Number(date))
         copy.setDate(date.getDate() + days)
@@ -93,7 +94,7 @@ export default class InicioMedico extends Component {
                                <Text style={{fontSize:14, textAlign:"center",}}>No hay turnos asginados.</Text>
                             </CardItem>
                             <CardItem style={{alignSelf:"center", marginBottom:10}}>
-                                <TouchableOpacity><Text style={{fontSize:13, textAlign:"center", color:"#1f77a5", fontWeight:'bold'}}>AGREGAR TURNOS</Text></TouchableOpacity>
+                                <TouchableOpacity onPress={() => {this.props.navigation.navigate('AgregarTurno')}}><Text style={{fontSize:13, textAlign:"center", color:"#1f77a5", fontWeight:'bold'}}>AGREGAR TURNOS</Text></TouchableOpacity>
                             </CardItem>
                         </Card>        );}}
             renderItem={(item, firstItemInDay, day) => { 
@@ -107,7 +108,7 @@ export default class InicioMedico extends Component {
                                     <Text style={{fontSize:14, marginTop:10, marginLeft:16}}>{item.esp}</Text>
                                 </Col>
                                 <Col>
-                                <TouchableOpacity  style={{marginRight:10}}>
+                                <TouchableOpacity onPress={() => {this.props.navigation.navigate('ModificarTurno')}} style={{marginRight:10}}>
                                     <Text style={{color:"#1f77a5", fontWeight:"bold", fontSize:12 }}>MODIFICAR</Text>
                                 </TouchableOpacity>
                                 </Col>

@@ -47,9 +47,9 @@ export default class OlvidoContraseña extends Component {
     }
   };
   onChangeNum = e => {
-    if (/^[0-9]+$/.test(e[e.length-1])) {
+    if (/^[0-9]+$/.test(e[e.length-1])) 
       this.setState({nrosoc: e})
-  
+    }
     render(){
         return(
             <View style={{flex:1,flexDirection:'column',justifyContent:'center',alignItems:'center',backgroundColor:'white'}}>
