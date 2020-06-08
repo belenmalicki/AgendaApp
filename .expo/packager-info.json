@@ -1,10 +1,10 @@
 {
   "devToolsPort": 19002,
-  "expoServerPort": null,
-  "packagerPort": null,
-  "packagerPid": null,
-  "expoServerNgrokUrl": null,
-  "packagerNgrokUrl": null,
-  "ngrokPid": null,
+  "expoServerPort": 19000,
+  "packagerPort": 19001,
+  "packagerPid": 11228,
+  "expoServerNgrokUrl": "https://t9-8y9.belenmalicki.agendaapp.exp.direct",
+  "packagerNgrokUrl": "https://packager.t9-8y9.belenmalicki.agendaapp.exp.direct",
+  "ngrokPid": 12728,
   "webpackServerPort": null
 }

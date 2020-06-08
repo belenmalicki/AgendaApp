@@ -13,6 +13,8 @@ import ConfirmarTurno from './Paciente/ConfirmarTurno'
 import PerfilPaciente from './Paciente/PerfilPaciente'
 import InicioMedico from './Medico/InicioMedico'
 import PerfilMedico from './Medico/PerfilMedico'
+import AgregarTurno from './Medico/AgregarTurno'
+import ModificarTurno from './Medico/ModificarTurno'
 import OlvidoContraseña from './Usuario/OlvidoContraseña'
 import NuevaContraseña from './Usuario/NuevaContraseña'
 import { Container, Header, Content, Item, Input } from 'native-base';
@@ -158,6 +160,18 @@ const StMedico = createStackNavigator({
       return { headerTitle: 'INICIO' }
     }
   },
+  AgregarTurno:{
+    screen: AgregarTurno,
+    navigationOptions: () => {
+      return { headerTitle: 'TURNOS' }
+    }
+  },
+  ModificarTurno:{
+    screen:ModificarTurno,
+    navigationOptions: () => {
+      return { headerTitle: 'TURNOS' }
+    }
+  }
 }, {
   defaultNavigationOptions: ({ navigation }) => {
     return {

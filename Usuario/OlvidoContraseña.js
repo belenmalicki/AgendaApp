@@ -47,9 +47,9 @@ export default class OlvidoContraseña extends Component {
     }
   };
   onChangeNum = e => {
-    if (/^[0-9]+$/.test(e[e.length-1])) {
+    if (/^[0-9]+$/.test(e[e.length-1])) 
       this.setState({nrosoc: e})
-  
+    }
     render(){
         return(
             <View style={{flex:1,flexDirection:'column',justifyContent:'center',alignItems:'center',backgroundColor:'white'}}>
@@ -105,7 +105,7 @@ export default class OlvidoContraseña extends Component {
           />
         </View>
 
-        <View style={{ flex: 1 }}>
+        <View style={{ flex: 1 }}> 
           <TouchableOpacity onPress={() => { this.checkData() }}
             style={{ width: 230, justifyContent: 'center', alignSelf: 'center', backgroundColor: '#e93922' }}>
             <Text style={{ marginVertical: 10, fontSize: 11, color: 'white', textAlign: 'center', fontWeight: 'bold' }}>CONFIRMAR</Text>
