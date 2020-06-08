@@ -21,8 +21,7 @@ export default class Check extends Component {
                 onPress={() => this.setState({checked: !this.state.checked})}
                 checkedColor='black'
                 containerStyle={{backgroundColor:'white', borderColor:'white', paddingVertical:0}}
-                textStyle={{fontWeight:'normal', fontSize:12}} />
-                
+                textStyle={{fontWeight:'normal', fontSize:12}} />   
         </View>
       );
     }

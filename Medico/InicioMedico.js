@@ -109,7 +109,7 @@ export default class InicioMedico extends Component {
                                 </Col>
                                 <Col>
                                 <TouchableOpacity onPress={() => {this.props.navigation.navigate('ModificarTurno')}} style={{marginRight:10}}>
-                                    <Text style={{color:"#1f77a5", fontWeight:"bold", fontSize:12 }}>MODIFICAR</Text>
+                                    <Text style={{color:"#1f77a5", fontWeight:"bold",  fontSize:12 }}>MODIFICAR</Text>
                                 </TouchableOpacity>
                                 </Col>
                             </CardItem>

@@ -9,6 +9,7 @@ import AwesomeAlert from 'react-native-awesome-alerts';
 import ModalSelector from 'react-native-modal-selector'
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { Overlay } from 'react-native-elements';
+
 /*ESTADOS DE estadoTurnos
 1: Hay turno disponible en la fecha que eligió el paciente con el profesional elegido
 2: No hay turno disponible en esa fecha, te muestro las mas cercanas
