@@ -1,4 +1,4 @@
-const urlLocal = "http://192.168.0.8:8000"
+//const urlHeroku = "http://192.168.0.69:8000"
 const urlHeroku = "https://centro-medico-backend-h.herokuapp.com"
 
 
@@ -51,7 +51,7 @@ class ApiController {
 
     //parametro: paciente_id
     getTurnosPaciente(data, callback){
-        const endpoint = `${urlHeroku}/api/getTurnosPaciente`;
+        const endpoint = `${urlHeroku}/api/getTurnosActivosPaciente`;
         console.log('obteniendo turnos del paciente')
         fetch(endpoint, {
             method: 'POST',
