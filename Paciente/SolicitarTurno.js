@@ -31,7 +31,7 @@ export default class SolicitarTurno extends Component {
             //chosenDate:' ',
             select: new Date(),
             espe:' ',
-            estadoTurnos:5,
+            estadoTurnos: 1,
             showAlert: false,
             textInputValueEs:'',
             textInputValuePr:''
