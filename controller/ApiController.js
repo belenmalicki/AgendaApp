@@ -159,6 +159,20 @@ class ApiController {
         }).catch(err => console.log(err))
     }
 
+    getHistorialPaciente(data,callback){
+        const endpoint = `${urlHeroku}/api/getHistorialPaciente`;
+        console.log('obteniendo historial');
+        fetch(endpoint, {
+            method: 'POST',
+            mode: "cors",
+            headers:{ 'Content-Type': 'application/json'},
+            body: JSON.stringify(data) // data can be `string` or {object}!
+        }).then((response) => {
+            console.log('listo!');
+            callback(response)
+        }).catch(err => console.log(err))
+    }
+
     //FALTA IMPLEMENTAR: /getTurnos, /getJornadasMedico, /agregarTurnos, /eliminarTurnos
     //FALTA ARREGLAR: generarJornada no maneja el horario de almuerzo
 
