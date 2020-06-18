@@ -9,6 +9,7 @@ import AwesomeAlert from 'react-native-awesome-alerts';
 import ModalSelector from 'react-native-modal-selector'
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { Overlay } from 'react-native-elements';
+import ApiController from '../controller/ApiController'
 
 /*ESTADOS DE estadoTurnos
 1: Hay turno disponible en la fecha que eligió el paciente con el profesional elegido
@@ -34,11 +35,41 @@ export default class SolicitarTurno extends Component {
             estadoTurnos: 1,
             showAlert: false,
             textInputValueEs:'',
-            textInputValuePr:''
+            textInputValuePr:'',
+            especialidades:[],
+            profesionales:[]
             
         }
         this.setDate = this.setDate.bind(this);
         this.onChangeText = this.onChangeText.bind(this);
+    }
+
+    componentDidMount() {
+      ApiController.getEspecialidades(this.handleEspecialidades.bind(this))
+    }
+
+    handleEspecialidades(response) {
+      response.json().then((especialidades) => {
+        console.log(especialidades)
+        this.setState({ especialidades: especialidades});
+      })
+  
+    }
+
+    onChangeChoose(option){
+      this.setState({textInputValueEs:option.titulo})
+      let data={
+        titulo:option.titulo
+      }
+      ApiController.getMedicosEspecialidad(data,this.handleProfesionales.bind(this))
+    }
+
+    handleProfesionales(response) {
+      response.json().then((profesionales) => {
+        console.log(profesionales)
+        this.setState({ profesionales: profesionales});
+      })
+  
     }
 
     setDate(newDate) {
@@ -132,8 +163,8 @@ export default class SolicitarTurno extends Component {
                  {this.state.select.toLocaleDateString('es-ES', options).substr(7,4)} 
                 </Text>
               </View>
-                <CardSolicitarTurno espe={this.state.textInputValueEs} fecha={this.state.select} />
-                    </View>
+                <CardSolicitarTurno med={this.state.textInputValuePr} espe={this.state.textInputValueEs} fecha={this.state.select} />
+                    </View>//aun no se manda la fecha correcta
                 
               )
           }else if(this.state.estadoTurnos==2){
@@ -157,8 +188,8 @@ export default class SolicitarTurno extends Component {
               {this.state.select.toLocaleDateString('es-ES', options).substr(7,4)} 
               </Text>
             </View>
-            <CardSolicitarTurno espe={this.state.textInputValueEs} fecha={this.state.select} />
-                  </View> 
+            <CardSolicitarTurno med={this.state.textInputValuePr} espe={this.state.textInputValueEs} fecha={this.state.select} />
+                  </View> //aun no se manda la fecha correcta
             )
           }else if(this.state.estadoTurnos==3){
           return(
@@ -181,8 +212,8 @@ export default class SolicitarTurno extends Component {
             {this.state.select.toLocaleDateString('es-ES', options).substr(7,4)} 
             </Text>
           </View>
-          <CardSolicitarTurno espe={this.state.textInputValueEs} fecha={this.state.select} />
-                </View>  
+          <CardSolicitarTurno med={this.state.textInputValuePr} espe={this.state.textInputValueEs} fecha={this.state.select} />
+                </View>  //aun no se manda la fecha correcta
           )}else if(this.state.estadoTurnos==4){
             return(
                 <View>
@@ -232,8 +263,8 @@ export default class SolicitarTurno extends Component {
       var mensaje = this.state.espe +"\n" +this.state.select.toString().substr(8,2)+' ' +this.state.select.toString().substr(0,3)+' ' + this.state.select.toString().substr(4,3) +"\n"  +  "Horario"
       console.log(mensaje)
       const {showAlert} = this.state;
-      let index = 0;
-        const especialidad = [
+      /*let index = 0;
+         const especialidad = [
             { key: index++, section: true, label: 'Especialidad' },
             { key: index++, label: 'Cardiología' },
             { key: index++, label: 'Neumonología' },
@@ -246,7 +277,7 @@ export default class SolicitarTurno extends Component {
             { key: index++, label: 'Rodriguez Carla' },
             { key: index++, label: 'Casares Luis', accessibilityLabel: 'Tap here for cranberries' },
             { key: index++, label: 'Osvaldo Daniela', customKey: 'Not a fruit' }
-        ];
+        ]; */
        console.log(this.state.textInputValuePr, 'especialidad')
       return (
         //style no funciona con ScrollView, debe ser contentContainerStyle
@@ -273,15 +304,17 @@ export default class SolicitarTurno extends Component {
             <Text style={{fontSize:12,  marginTop:20, marginBottom:20, marginLeft:20}}>Especialidad:</Text>   
             <View style={{alignSelf:'center',width:width*0.9, marginTop:0}}>
                 <ModalSelector
-                    data={especialidad}
+                    data={this.state.especialidades}
                     initValue="Seleccione especialidad"
+                    keyExtractor={item=>item.id}
+                    labelExtractor={item=>item.titulo}
                     //supportedOrientations={['landscape']}
                   //  optionTextStyle={color:'red'}
                     animationType={'none'}
                     accessible={true}
                     scrollViewAccessibilityLabel={'Scrollable options'}
                     cancelButtonAccessibilityLabel={'Cancel Button'}
-                    onChange={(option)=>{ this.setState({textInputValueEs:option.label}) }}>
+                    onChange={(option)=>{ this.onChangeChoose(option) }}>
                  <View style={{flexDirection:'row',marginBottom:10,justifyContent:'space-between' }}> 
                       
                       <TextInput
@@ -298,15 +331,17 @@ export default class SolicitarTurno extends Component {
              <Text style={{fontSize:12,  marginTop:20, marginBottom:0, marginLeft:20}}>Profesional:</Text> 
             <View style={{alignSelf:'center',width:width*0.9, marginTop:20}}>
                 <ModalSelector
-                    data={profesional}
+                    data={this.state.profesionales}
                     initValue="Seleccione profesional"
+                    keyExtractor={item=>item.Medico_especialidad.medico_id}
+                    labelExtractor={item=>item.datos.nombre}
                     //supportedOrientations={['landscape']}
                    // optionTextStyle={color:'red'}
                     animationType={'none'}
                     accessible={true}
                     scrollViewAccessibilityLabel={'Scrollable options'}
                     cancelButtonAccessibilityLabel={'Cancel Button'}
-                    onChange={(option)=>{ this.setState({textInputValuePr:option.label})}}>
+                    onChange={(option)=>{ this.setState({textInputValuePr:option.datos.nombre})}}>
                  <View style={{flexDirection:'row',marginBottom:10,justifyContent:'space-between' }}> 
                       <TextInput
                             style={{borderWidth:1,borderColor:'white', fontSize:14,paddingLeft:8}}

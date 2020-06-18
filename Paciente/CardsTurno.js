@@ -17,9 +17,9 @@ export default class CardTurno extends Component {
             <CardItem>
                 
                     <Col style={{marginTop:25}} >
-                        <Text style={{fontSize:14, color:'#1f77a5', textAlign:"center", fontWeight:'bold'}}>07</Text>
-                        <Text style={{fontSize:12, color:'#1f77a5', textAlign:"center", fontWeight:'bold'}}>Abril</Text>
-                        <Text style={{fontSize:12, color:'#1f77a5', textAlign:"center"}}>Martes</Text>
+                        <Text style={{fontSize:14, color:'#1f77a5', textAlign:"center", fontWeight:'bold'}}>{this.props.dia}</Text>
+                        <Text style={{fontSize:12, color:'#1f77a5', textAlign:"center", fontWeight:'bold'}}>{this.props.mes}</Text>
+                        <Text style={{fontSize:12, color:'#1f77a5', textAlign:"center"}}>{this.props.dianombre}</Text>
                     </Col>
                     <Col size={3} style={{marginLeft:15}} >
                         <Text style={{fontSize:15}}>{this.props.med}</Text>
@@ -36,9 +36,9 @@ export default class CardTurno extends Component {
                         <Text style={{color:"#1f77a5", fontWeight:"bold", fontSize:12 }}> CONFIRMAR</Text>
                     </TouchableOpacity>*/}
                     <View style={{marginRight:15}}>
-                    <PopUp key='1' tipo='1' alto='18%' nombre='CONFIRMAR' bot="CONFIRMAR" col='#1f77a5' titulo='¿DESEA CONFIRMAR SU TURNO?'/>
+                    <PopUp key='1' tipo='1' alto='18%' nombre='CONFIRMAR' col='#1f77a5' titulo='¿DESEA CONFIRMAR SU TURNO?'/>
                     </View>
-                    <PopUp key='2' tipo='2' alto='28%' nombre='CANCELAR' bot="CANCELAR" col='#e93923' titulo='¿DESEA CONFIRMAR SU TURNO?' texto='Los turnos podrán ser cancelados hasta 12 Hs. antes del mismo, en caso de no ser así, se le cobrará la penalización correspondiente'/>
+                    <PopUp key='2' tipo='2' alto='28%' nombre='CANCELAR' col='#e93922' titulo='¿DESEA CANCELAR SU TURNO?' texto='Los turnos podrán ser cancelados hasta 12 Hs. antes del mismo, en caso de no ser así, se le cobrará la penalización correspondiente'/>
                    
                 
                 </View>

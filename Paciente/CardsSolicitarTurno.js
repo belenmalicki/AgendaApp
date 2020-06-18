@@ -13,7 +13,7 @@ class CardSolicitarTurno extends Component {
   };
  
     render() {
-      var med='Dra. RODRIGUEZ, CARLA'
+      var med=this.props.med
       var hora='14.00'
       var esp= this.props.espe
       var fecha = this.props.fecha
