@@ -36,9 +36,9 @@ export default class CardTurno extends Component {
                         <Text style={{color:"#1f77a5", fontWeight:"bold", fontSize:12 }}> CONFIRMAR</Text>
                     </TouchableOpacity>*/}
                     <View style={{marginRight:15}}>
-                    <PopUp key='1' tipo='1' alto='18%' nombre='CONFIRMAR' col='#1f77a5' titulo='¿DESEA CONFIRMAR SU TURNO?'/>
+                    <PopUp id={this.props.id} key='1' tipo='1' alto='18%' nombre='CONFIRMAR' col='#1f77a5' titulo='¿DESEA CONFIRMAR SU TURNO?'/>
                     </View>
-                    <PopUp key='2' tipo='2' alto='28%' nombre='CANCELAR' col='#e93922' titulo='¿DESEA CANCELAR SU TURNO?' texto='Los turnos podrán ser cancelados hasta 12 Hs. antes del mismo, en caso de no ser así, se le cobrará la penalización correspondiente'/>
+                    <PopUp id={this.props.id} key='2' tipo='2' alto='28%' nombre='CANCELAR' col='#e93922' titulo='¿DESEA CANCELAR SU TURNO?' texto='Los turnos podrán ser cancelados hasta 12 Hs. antes del mismo, en caso de no ser así, se le cobrará la penalización correspondiente'/>
                    
                 
                 </View>
