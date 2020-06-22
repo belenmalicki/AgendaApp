@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Platform, ScrollView, Text, View, Image,TextInput, Dimensions, TouchableOpacity  } from 'react-native';
-import {createSwitchNavigator,createAppContainer } from 'react-navigation'
+import {StackActions,NavigationActions } from 'react-navigation'
 import { Ionicons } from '@expo/vector-icons';
 import { Overlay } from 'react-native-elements';
 import ApiController from '../controller/ApiController'
@@ -47,7 +47,12 @@ export default class ConfirmarTurno extends Component {
       }
       cerrarPop=()=>{
         this.setState({ showAlert: false});
-        this.props.navigation.navigate('InicioPaciente',{usuario:this.state.usuario})
+        const resetAction = StackActions.reset({
+          index: 0,
+          actions: [NavigationActions.navigate({ routeName: 'InicioPaciente',params:{usuario:this.state.usuario} })],
+          });
+          this.props.navigation.dispatch(resetAction); 
+        //this.props.navigation.replace('InicioPaciente',{usuario:this.state.usuario})
       }
     
   render() {

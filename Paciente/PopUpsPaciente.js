@@ -80,6 +80,27 @@ if(props.tipo=='1'){
     </View>
   );
   }
-  else if(props.tipo=3){}
+  else if(props.tipo=='3'){
+    return (
+      <View>
+         <TouchableOpacity style={{backgroundColor:props.col, width:140, alignSelf:'center', marginTop:30}} onPress={toggleOverlay}>
+            <Text style={{color:"white", fontWeight:"bold", fontSize:11, marginVertical:10, marginHorizontal:8, textAlign:'center' }}>{props.nombre}</Text>
+          </TouchableOpacity>
+  
+        <Overlay overlayStyle={{height:props.alto}} isVisible={visible} onBackdropPress={toggleOverlay}>
+          <View>
+            <TouchableOpacity style={{alignSelf:'flex-end'}} onPress={toggleOverlay} >
+                <Text style={{fontSize:16, fontWeight:'bold'}}>X</Text>
+            </TouchableOpacity> 
+            <Text style={{textAlign:"center", marginTop:5}}>{props.titulo}</Text>
+            <Text style={{textAlign:"justify", fontSize:12, marginTop:20, marginHorizontal:5}}>{props.texto}</Text>
+            <TouchableOpacity style={{backgroundColor:props.col, width:140, alignSelf:'center', marginTop:30}} onPress={toggleOverlayConf}>
+                <Text style={{color:"white", fontWeight:"bold", fontSize:11, marginVertical:10, marginHorizontal:8, textAlign:'center' }}>{props.bot}</Text>
+            </TouchableOpacity>
+          </View>
+        </Overlay>
+      </View>
+    );
+  }
   else if(props.tipo=4){}
 };
