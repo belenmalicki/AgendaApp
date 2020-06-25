@@ -4,7 +4,6 @@ import { Platform, StyleSheet, Text, View, Image, Alert, Dimensions, TouchableOp
 import { Footer, FooterTab, Container } from 'native-base'
 import CardTurno from './CardsTurno'
 import AwesomeAlert from 'react-native-awesome-alerts';
-import Alerta from './Alert'
 import ApiController from '../controller/ApiController';
 import AsyncStorage from '@react-native-community/async-storage'
 //import DateTimePicker from '@react-native-community/datetimepicker';
@@ -111,12 +110,6 @@ export default class InicioPaciente extends Component {
     }
   }
 
-  Alert(usuario){
-    if (!usuario.paciente.es_deudor&&this.state.showAlert) {
-      return(<Alerta></Alerta>)
-    }
-  }
-
   render() {
     const { navigation } = this.props;
     const usuario = navigation.getParam('usuario', {})
@@ -139,7 +132,6 @@ export default class InicioPaciente extends Component {
         <Footer style={{ backgroundColor: 'white' }}>
           {this.solTurno()}
         </Footer>
-        {this.Alert(usuario)}
         <AwesomeAlert
           show={showAlert}
           showProgress={false}
