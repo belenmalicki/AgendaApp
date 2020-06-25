@@ -4,6 +4,7 @@ import { Platform, StyleSheet, Text, View, Image, Alert, Dimensions, TouchableOp
 import { Footer, FooterTab, Container } from 'native-base'
 import CardTurno from './CardsTurno'
 import AwesomeAlert from 'react-native-awesome-alerts';
+import Alerta from './Alert'
 import ApiController from '../controller/ApiController';
 import AsyncStorage from '@react-native-community/async-storage'
 //import DateTimePicker from '@react-native-community/datetimepicker';
@@ -17,23 +18,18 @@ export default class InicioPaciente extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      showAlert: false,
+      showAlert: true,
       es_deudor: false,
       cargado: false,
       turnos: [],
       dias:['Domingo', 'Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes', 'Sabado'],
-      meses:["enero", "febrero", "marzo", "abril", "mayo", "junio", "julio", "agosto", "septiembre", "octubre", "noviembre", "diciembre"]
+      meses:["enero", "febrero", "marzo", "abril", "mayo", "junio", "julio", "agosto", "septiembre", "octubre", "noviembre", "diciembre"],
     };
+    this.update=this.update.bind(this)
   };
 
   componentDidMount() {
-    const usuario = this.props.navigation.getParam('usuario', {})
-
-    const data = {
-      paciente_id: usuario.paciente.id
-    }
-
-    ApiController.getTurnosPaciente(data, this.handleTurnos.bind(this))
+    this.update()
   }
 
   handleTurnos(response) {
@@ -41,7 +37,14 @@ export default class InicioPaciente extends Component {
       console.log(turnos)
       this.setState({ turnos: turnos, cargado: true });
     })
+  }
 
+  update(){
+    const usuario = this.props.navigation.getParam('usuario', {})
+    const data = {
+      paciente_id: usuario.paciente.id
+    }
+    ApiController.getTurnosPaciente(data, this.handleTurnos.bind(this))
   }
 
   showAlert = () => {
@@ -63,7 +66,6 @@ export default class InicioPaciente extends Component {
           style={{ width: 230, alignSelf: 'center', backgroundColor: '#e93922' }}>
           <Text style={{ marginVertical: 10, fontSize: 11, color: 'white', textAlign: 'center', fontWeight: 'bold' }}>SOLICITAR TURNO</Text>
         </TouchableOpacity>)
-
     }
     else {
       return (
@@ -89,8 +91,7 @@ export default class InicioPaciente extends Component {
           let dia = new Date(turno.fecha_inicio).getDate();
           let dianombre = this.state.dias[new Date(turno.fecha_inicio).getDay()];
           let mes = this.state.meses[new Date(turno.fecha_inicio).getMonth()];
-          
-          return <CardTurno id={id} dia={dia} mes={mes} dianombre={dianombre} key={i} med={med} esp={esp} hora={hora} fecha={fecha} />//todavia no se pasa la fecha y hora correcta
+          return <CardTurno forzar={this.update} id={id} dia={dia} mes={mes} dianombre={dianombre} key={i} med={med} esp={esp} hora={hora} fecha={fecha} />//todavia no se pasa la fecha y hora correcta
         })
       } else {
         return <Text>No tiene ningún turno solicitado.</Text> //embellecer en otra oportunidad (tal vez poner una imagen tipo las de flaticon)
@@ -110,21 +111,23 @@ export default class InicioPaciente extends Component {
     }
   }
 
+  Alert(usuario){
+    if (!usuario.paciente.es_deudor&&this.state.showAlert) {
+      return(<Alerta></Alerta>)
+    }
+  }
+
   render() {
     const { navigation } = this.props;
     const usuario = navigation.getParam('usuario', {})
     if (usuario.paciente.es_deudor) {
       this.showAlert()
-    }console.log(usuario)
-
+    }
     const { showAlert } = this.state;
-
     this.storeUsuario(usuario);
-
     let genero = usuario.genero === 'femenino' ? 'A' : 'O'
     let nombre = usuario.nombre.toUpperCase()
     let bienvenida = `¡BIENVENID${genero}, ${nombre}!`
-
     const mensaje = " Le notificamos que mantiene una deuda pendiente con el establecimiento al día de la fecha y por lo tanto, no podrá solicitar un nuevo turno hasta que la regularice." + "\n" + "\n" + " Contactese al 4778-9809 para informarse sobre los métodos de pago."
     return (
       <Container>
@@ -136,6 +139,7 @@ export default class InicioPaciente extends Component {
         <Footer style={{ backgroundColor: 'white' }}>
           {this.solTurno()}
         </Footer>
+        {this.Alert(usuario)}
         <AwesomeAlert
           show={showAlert}
           showProgress={false}
@@ -143,7 +147,6 @@ export default class InicioPaciente extends Component {
           titleStyle={{ fontSize: 18, color: 'black' }}
           messageStyle={{ fontSize: 14, lineHeight: 18, color: 'black', marginVertical: 10, textAlign: 'justify' }}
           message={mensaje}
-
           closeOnTouchOutside={true}
           closeOnHardwareBackPress={false}
           confirmButtonStyle={{ paddingHorizontal: 40, borderRadius: 0, marginTop: 10 }}
@@ -152,10 +155,8 @@ export default class InicioPaciente extends Component {
           contentContainerStyle={{ height: 280, marginBottom: 100 }}
           confirmText="ACEPTAR"
           confirmButtonColor="#e93922"
-
           onConfirmPressed={() => {
             this.hideAlert();
-            console.log('pressed')
           }}
         />
       </Container>

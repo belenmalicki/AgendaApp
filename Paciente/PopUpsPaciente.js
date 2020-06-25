@@ -26,7 +26,7 @@ export default function PopUp(props){
     let data={
       turno_id:props.id// buscar el id del turno
     }
-    ApiController.confirmarTurno(data)//aun no maneja la respuesta
+    ApiController.confirmarTurno(data,handleConfirmar.bind(this))//aun no maneja la respuesta
   };
   const toggleOverlayCanc = () => {
     setVisible(!visible);
@@ -34,8 +34,25 @@ export default function PopUp(props){
     let data={
       turno_id:props.id// buscar el id del turno
     }
-    ApiController.cancelarTurno(data)//aun no maneja la respuesta
+    ApiController.cancelarTurno(data,handleCancelar.bind(this))//aun no maneja la respuesta
+    props.update()
   };
+  function handleCancelar(response){
+    if(response.status==200){
+      alert("se ha cancelado el turno correctamente")
+    }else{
+      alert("algo salio mal")
+    }
+    
+  }
+  function handleConfirmar(response){
+    if(response.status==200){
+      alert("se ha confirmado el turno correctamente")
+    }else{
+      alert("algo salio mal")
+    }
+    
+  }
 
 if(props.tipo=='1'){
   return (
