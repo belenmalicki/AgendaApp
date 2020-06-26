@@ -4,6 +4,8 @@ import { Ionicons } from '@expo/vector-icons';
 import { Platform, StyleSheet, Text, View, Image,TextInput, Dimensions, TouchableOpacity, Alert, Modal,TouchableHighlight } from 'react-native';
 import {Card, CardItem, Col, Row, Grid} from 'native-base'
 import { Button, Overlay } from 'react-native-elements';
+import ApiController from '../controller/ApiController'
+import ConfirmarTurno from './ConfirmarTurno';
 const { width } = Dimensions.get('window');
 /*Tipos:
 1: CIERRE: fuerea del pop up, con la cruz , TEXTO: no tiene, solo título
@@ -21,7 +23,37 @@ export default function PopUp(props){
   const toggleOverlayConf = () => {
     setVisible(!visible);
     //console.log('Confirmó')
+    let data={
+      turno_id:props.id// buscar el id del turno
+    }
+    ApiController.confirmarTurno(data,handleConfirmar.bind(this))//aun no maneja la respuesta
   };
+  const toggleOverlayCanc = () => {
+    setVisible(!visible);
+    //console.log('Confirmó')
+    let data={
+      turno_id:props.id// buscar el id del turno
+    }
+    ApiController.cancelarTurno(data,handleCancelar.bind(this))//aun no maneja la respuesta
+    props.update()
+  };
+  function handleCancelar(response){
+    if(response.status==200){
+      alert("se ha cancelado el turno correctamente")
+    }else{
+      alert("algo salio mal")
+    }
+    
+  }
+  function handleConfirmar(response){
+    if(response.status==200){
+      alert("se ha confirmado el turno correctamente")
+    }else{
+      alert("algo salio mal")
+    }
+    
+  }
+
 if(props.tipo=='1'){
   return (
     <View>
@@ -57,8 +89,8 @@ if(props.tipo=='1'){
           </TouchableOpacity> 
           <Text style={{textAlign:"center", marginTop:5}}>{props.titulo}</Text>
           <Text style={{textAlign:"justify", fontSize:12, marginTop:20, marginHorizontal:5}}>{props.texto}</Text>
-          <TouchableOpacity style={{backgroundColor:props.col, width:140, alignSelf:'center', marginTop:30}} onPress={toggleOverlayConf}>
-              <Text style={{color:"white", fontWeight:"bold", fontSize:11, marginVertical:10, marginHorizontal:8, textAlign:'center' }}>{props.bot} TURNO</Text>
+          <TouchableOpacity style={{backgroundColor:props.col, width:140, alignSelf:'center', marginTop:30}} onPress={toggleOverlayCanc}>
+              <Text style={{color:"white", fontWeight:"bold", fontSize:11, marginVertical:10, marginHorizontal:8, textAlign:'center' }}>{props.nombre} TURNO</Text>
           </TouchableOpacity>
         </View>
       </Overlay>
