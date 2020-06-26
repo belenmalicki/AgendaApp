@@ -89,9 +89,18 @@ class App extends Component {
 
   showLoading(){ //estoy abierto a cambios con esto pero me pareció copado
     if(this.state.cargando){
-      return (<View style={{ marginTop: '4%' }}>
+      return (<View style={{ marginTop: 60 }}>
       <ActivityIndicator size="large" color={'#e93922'}></ActivityIndicator>
     </View>)
+    }else{
+      return(
+        <View style={{ marginTop: 60 }}>
+          <TouchableOpacity onPress={() => { this.hash() }}
+            style={{ width: 230, alignSelf: 'center', backgroundColor: '#e93922' }}>
+            <Text style={{ marginVertical: 10, fontSize: 11, color: 'white', textAlign: 'center', fontWeight: 'bold' }}>INGRESAR</Text>
+          </TouchableOpacity>
+        </View>
+      )
     }
   }
 
@@ -119,12 +128,7 @@ class App extends Component {
           <Text style={{ color: '#e93922', fontSize: 11, textAlign: 'right', }}>¿OLVIDASTE TU CONTRASEÑA?</Text>
         </TouchableOpacity>
         {this.showLoading()}
-        <View style={{ marginTop: 60 }}>
-          <TouchableOpacity onPress={() => { this.hash() }}
-            style={{ width: 230, alignSelf: 'center', backgroundColor: '#e93922' }}>
-            <Text style={{ marginVertical: 10, fontSize: 11, color: 'white', textAlign: 'center', fontWeight: 'bold' }}>INGRESAR</Text>
-          </TouchableOpacity>
-        </View>
+        
 
       </ScrollView>
     );

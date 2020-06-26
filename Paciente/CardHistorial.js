@@ -15,8 +15,8 @@ export default class CardHistorial extends Component {
             <CardItem>
                 
                     <Col style={{justifyContent:"center", marginVertical:15}} >
-                        <Text style={{fontSize:14, color:'#1f77a5', textAlign:"center", fontWeight:'bold'}}>07</Text>
-                        <Text style={{fontSize:12, color:'#1f77a5', textAlign:"center", fontWeight:'bold'}}>Abril</Text>
+                        <Text style={{fontSize:14, color:'#1f77a5', textAlign:"center", fontWeight:'bold'}}>{this.props.dia}</Text>
+                        <Text style={{fontSize:12, color:'#1f77a5', textAlign:"center", fontWeight:'bold'}}>{this.props.mes}</Text>
                     </Col>
                     <Col size={3} style={{marginLeft:15}} >
                         <Text style={{fontSize:15}}>{this.props.med}</Text>
