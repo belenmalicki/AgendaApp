@@ -33,7 +33,7 @@ export default class InicioPaciente extends Component {
 
   handleTurnos(response) {
     response.json().then((turnos) => {
-      console.log(turnos)
+      //console.log(turnos)
       this.setState({ turnos: turnos, cargado: true });
     })
   }
@@ -78,7 +78,7 @@ export default class InicioPaciente extends Component {
   showTurnos() {
     if (this.state.cargado) {
       if (this.state.turnos.length > 0) {
-        console.log(this.state.turnos)
+        //console.log(this.state.turnos)
         return this.state.turnos.map((turno, i) => {
           let nom = turno.medico.datos.nombre.toUpperCase();
           let gen = turno.medico.datos.genero;
@@ -90,7 +90,7 @@ export default class InicioPaciente extends Component {
           let dia = new Date(turno.fecha_inicio).getDate();
           let dianombre = this.state.dias[new Date(turno.fecha_inicio).getDay()];
           let mes = this.state.meses[new Date(turno.fecha_inicio).getMonth()];
-          return <CardTurno forzar={this.update} id={id} dia={dia} mes={mes} dianombre={dianombre} key={i} med={med} esp={esp} hora={hora} fecha={fecha} />//todavia no se pasa la fecha y hora correcta
+          return <CardTurno forzar={this.update} turno={turno} id={id} dia={dia} mes={mes} dianombre={dianombre} key={i} med={med} esp={esp} hora={hora} fecha={fecha} />//todavia no se pasa la fecha y hora correcta
         })
       } else {
         return <Text>No tiene ningún turno solicitado.</Text> //embellecer en otra oportunidad (tal vez poner una imagen tipo las de flaticon)
@@ -106,7 +106,7 @@ export default class InicioPaciente extends Component {
     try {
       await AsyncStorage.setItem('usuario', JSON.stringify(usuario))
     }catch (e){
-      console.log(e)
+      //console.log(e)
     }
   }
 

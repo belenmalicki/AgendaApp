@@ -188,7 +188,7 @@ class ApiController {
     }
 
     //FALTA IMPLEMENTAR: /getTurnos, /getJornadasMedico, /agregarTurnos, /eliminarTurnos
-    //FALTA ARREGLAR: generarJornada no maneja el horario de almuerzo
+    //FALTA ARREGLAR: 
 
 
 

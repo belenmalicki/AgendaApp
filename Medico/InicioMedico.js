@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import { Ionicons } from '@expo/vector-icons';
 import { Platform, StyleSheet, Text, View, Image,TextInput, Dimensions, TouchableOpacity, ScrollView  } from 'react-native';
 import {Footer, FooterTab, Container,Card, CardItem, Col, Accordion,Content } from 'native-base'
+import {  Overlay } from 'react-native-elements';
 
 const { width } = Dimensions.get('window');
 class Historial extends Component {
@@ -140,8 +141,20 @@ export default class InicioMedico extends Component {
         super(props)
         this.state={
             fecha: false,
+            showAlert: false,
         }    
     }
+
+    abrirPop=()=>{
+        this.setState({ showAlert: true});
+      
+    }
+
+    cerrarPop=()=>{
+      this.setState({ showAlert: false});
+
+    }
+
   render() {
     var date = new Date().getDate().toString(); //Current Date
     var monthFut = new Date().getMonth() + 3; //Current Month
@@ -170,15 +183,29 @@ export default class InicioMedico extends Component {
    
     return (
       <Container>
-       
-            <Text style={{fontSize:17, textAlign:'center', marginVertical:20}}>¡BIENVENIDO NOMBREMEDICO!</Text>
+
+                <Text style={{fontSize:17, textAlign:'center', marginVertical:20}}>¡BIENVENIDO NOMBREMEDICO!</Text>
+
           {/* 
             <Card style={{width:width*0.95, alignSelf:"center", paddingVertical:10, paddingHorizontal:8, marginBottom:15}}>
                 <Text style={{fontSize:14, margin:8, textAlign:"justify",lineHeight:18 }}><Ionicons name='md-information-circle' size={18} color='#e93922'></Ionicons> Estimado: Le recordamos que solo podrá modificar los turnos una semana pasada a la fecha actual y aquellos que no hayan sido solicitados por algún paciente. </Text>
                 <Text style={{fontSize:14, margin:8, textAlign:"justify",lineHeight:18 }}> Solo podrá crear la agenda de los dos dos meses siguientes al corriente. </Text>
             </Card>
            */ }
+           <View style={{flexDirection:"row"}}>
             <Text style={{fontSize:14, marginLeft:'4%',color:'#e93922', marginBottom:15}}> <Ionicons name='md-calendar' size={16} color='#e93922'></Ionicons> AGENDA DE TURNOS</Text>
+                <TouchableOpacity onPress={() => this.abrirPop()} style={{marginLeft:5}}><Image source={require('../assets/Images/question.png')} style={{height:18, width:18}} /></TouchableOpacity>
+                <Overlay overlayStyle={{height:160}} isVisible={this.state.showAlert} onBackdropPress={() => this.cerrarPop()}>
+                    <View>
+                    
+                    <Text style={{textAlign:"justify", marginTop:10,fontSize:13}}> Solo podrá crear la agenda de los próximos dos meses siguientes al corriente.</Text>
+                    <Text style={{textAlign:"justify", marginTop:5,fontSize:13}}> Solo podrá modificar turnos de la semana siguiente a la actual.</Text>
+                    <TouchableOpacity style={{backgroundColor:'#E93923', width:140, alignSelf:'center', marginTop:20,}} onPress={() => this.cerrarPop()}>
+                        <Text style={{color:"white", fontWeight:"bold", fontSize:11, marginVertical:10, marginHorizontal:8, textAlign:'center' }}>ACEPTAR</Text>
+                    </TouchableOpacity>
+                    </View>
+              </Overlay>
+            </View>
             <Agenda
             items={item}
             //cant meses atras que puedo ver en el calendario

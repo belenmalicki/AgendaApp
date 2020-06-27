@@ -2,7 +2,6 @@ import React, { Component, useState } from 'react';
 import { Ionicons } from '@expo/vector-icons';
 import { Platform, StyleSheet, Text, View, Image,TextInput, Dimensions, TouchableOpacity, Alert, Modal,TouchableHighlight } from 'react-native';
 import {Card, CardItem, Col, Row, Grid} from 'native-base'
-import { Button, Overlay } from 'react-native-elements';
 import PopUp from './PopUpsPaciente'
 const { width } = Dimensions.get('window');
 
@@ -10,12 +9,29 @@ export default class CardTurno extends Component {
   constructor(props) {
     super(props);
   };
+  mostrarBoton(){
+    let turno = new Date(this.props.turno.fecha_inicio)
+    let turno1= new Date(this.props.turno.fecha_inicio)
+    turno1.setHours(turno1.getHours()-12)
+    let hsTurno=new Date(this.props.turno.fecha_inicio).toLocaleTimeString()
+    let fechaTurno= new Date(this.props.turno.fecha_inicio).toLocaleDateString()
+    let today= new Date() 
+    console.log('hoy', turno.toLocaleTimeString(), turno1.toLocaleTimeString())
+    //today.toLocaleDateString() == fechaTurno && 
+    if(today.toLocaleTimeString()  > hsTurno){
+console.log('holi')
+
+    }
+  }
+
   render() {
+    console.log('soy un turno en la card',new Date(this.props.turno.fecha_inicio).toLocaleTimeString())
+
+    // console.log('hoy', date.toLocaleTimeString())
     return (
       <View style={{ alignItems:'center', marginBottom:10}}>
         <Card style={{width:width*0.9}}>
             <CardItem>
-                
                     <Col style={{marginTop:25}} >
                         <Text style={{fontSize:14, color:'#1f77a5', textAlign:"center", fontWeight:'bold'}}>{this.props.dia}</Text>
                         <Text style={{fontSize:12, color:'#1f77a5', textAlign:"center", fontWeight:'bold'}}>{this.props.mes}</Text>
@@ -36,6 +52,7 @@ export default class CardTurno extends Component {
                         <Text style={{color:"#1f77a5", fontWeight:"bold", fontSize:12 }}> CONFIRMAR</Text>
                     </TouchableOpacity>*/}
                     <View style={{marginRight:15}}>
+                   { this.mostrarBoton()}
                     <PopUp update={this.props.forzar} id={this.props.id} key='1' tipo='1' alto='18%' nombre='CONFIRMAR' col='#1f77a5' titulo='¿DESEA CONFIRMAR SU TURNO?'/>
                     </View>
                     <PopUp update={this.props.forzar} id={this.props.id} key='2' tipo='2' alto='28%' nombre='CANCELAR' col='#e93922' titulo='¿DESEA CANCELAR SU TURNO?' texto='Los turnos podrán ser cancelados hasta 12 Hs. antes del mismo, en caso de no ser así, se le cobrará la penalización correspondiente'/>
