@@ -20,6 +20,7 @@ import NuevaContraseña from './Usuario/NuevaContraseña'
 import { Container, Header, Content, Item, Input } from 'native-base';
 import * as Crypto from 'expo-crypto'
 import ApiController from './controller/ApiController'
+import AsyncStorage from '@react-native-community/async-storage'
 const { width } = Dimensions.get('window');
 
 
@@ -104,8 +105,24 @@ class App extends Component {
     }
   }
 
+  verificarUser = async() => {
+    const jsonValue = await AsyncStorage.getItem('usuario')
+    if(jsonValue != null){
+      const usuario = JSON.parse(jsonValue)
+      if (usuario.medico && !usuario.paciente) { //por ahora para debug, despues va al revés
+        this.props.navigation.navigate('InicioMedico', { usuario: usuario })
+      }
+      else {
+        this.props.navigation.navigate('InicioPaciente', { usuario: usuario })
+      }
+    }
+  }
+
 
   render() {
+
+    this.verificarUser()
+    
     return (
       <ScrollView contentContainerStyle={{ flex: 1, backgroundColor: 'white' }}>
         <View style={{ justifyContent: 'center', alignItems: 'center' }}>
@@ -137,7 +154,10 @@ class App extends Component {
 const CerrarSesion = 'Cerrar sesion';
 
 
-
+const Logout = async(props) => {
+  await AsyncStorage.removeItem('usuario');
+  props.navigation.navigate('App');
+}
 
 
 const CustomDrawerContentComponent = (props) => (
@@ -147,7 +167,7 @@ const CustomDrawerContentComponent = (props) => (
       <Image style={{ alignSelf: 'center', justifyContent: 'center', height: width * 0.1, width: width * 0.45, marginTop: 10, marginBottom: 20 }} source={require('./assets/Images/Logo.png')} />
       <DrawerItems {...props} />
     </View>
-    <TouchableOpacity style={{ flexDirection: 'row', alignItems: 'center', marginTop: width * 0.9, marginBottom: 20 }} onPress={() => { props.navigation.navigate('App') }}>
+    <TouchableOpacity style={{ flexDirection: 'row', alignItems: 'center', marginTop: width * 0.9, marginBottom: 20 }} onPress={() => Logout(props) }>
       <View style={{ marginLeft: 18, flexDirection: 'row' }}>
         <Ionicons name="ios-log-out" size={24} color={'black'} />
         <Text style={{ marginLeft: 25, marginTop: 5, fontWeight: 'bold' }}>  Cerrar sesión</Text>
