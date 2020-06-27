@@ -28,7 +28,111 @@ class Historial extends Component {
       );
     }
   }
-  
+  let jornadas = [{
+    "id": 1,
+    "fecha_inicio": "2020-06-01T10:00:00.000Z",
+    "fecha_fin": "2020-06-01T13:00:00.000Z",
+    "sede": "Belgrano",
+    "estado": "disponible",
+    "createdAt": "2020-06-16T21:48:47.082Z",
+    "updatedAt": "2020-06-16T21:48:47.082Z",
+    "medico_id": 1,
+    "especialidad_id": 1,
+    "turnos": [
+        {
+            "fecha_inicio": "2020-06-01T10:00:00.000Z",
+            "fecha_fin": "2020-06-01T10:30:00.000Z",
+            "sede": "Belgrano",
+            "estado": "en espera"
+        },
+        {
+            "fecha_inicio": "2020-06-01T10:30:00.000Z",
+            "fecha_fin": "2020-06-01T11:00:00.000Z",
+            "sede": "Belgrano",
+            "estado": "en espera"
+        },
+        {
+            "fecha_inicio": "2020-06-01T11:00:00.000Z",
+            "fecha_fin": "2020-06-01T11:30:00.000Z",
+            "sede": "Belgrano",
+            "estado": "en espera"
+        },
+        {
+            "fecha_inicio": "2020-06-01T11:30:00.000Z",
+            "fecha_fin": "2020-06-01T12:00:00.000Z",
+            "sede": "Belgrano",
+            "estado": "en espera"
+        },
+        {
+            "fecha_inicio": "2020-06-01T12:00:00.000Z",
+            "fecha_fin": "2020-06-01T12:30:00.000Z",
+            "sede": "Belgrano",
+            "estado": "en espera"
+        },
+        {
+            "fecha_inicio": "2020-06-01T12:30:00.000Z",
+            "fecha_fin": "2020-06-01T13:00:00.000Z",
+            "sede": "Belgrano",
+            "estado": "en espera"
+        }
+    ],
+    "especialidad": {
+        "titulo": "Cardiología"
+    }
+},
+{
+    "id": 2,
+    "fecha_inicio": "2020-06-08T10:00:00.000Z",
+    "fecha_fin": "2020-06-08T13:00:00.000Z",
+    "sede": "Belgrano",
+    "estado": "disponible",
+    "createdAt": "2020-06-16T21:48:47.082Z",
+    "updatedAt": "2020-06-16T21:48:47.082Z",
+    "medico_id": 1,
+    "especialidad_id": 1,
+    "turnos": [
+        {
+            "fecha_inicio": "2020-06-08T10:00:00.000Z",
+            "fecha_fin": "2020-06-08T10:30:00.000Z",
+            "sede": "Belgrano",
+            "estado": "en espera"
+        },
+        {
+            "fecha_inicio": "2020-06-08T10:30:00.000Z",
+            "fecha_fin": "2020-06-08T11:00:00.000Z",
+            "sede": "Belgrano",
+            "estado": "en espera"
+        },
+        {
+            "fecha_inicio": "2020-06-08T11:00:00.000Z",
+            "fecha_fin": "2020-06-08T11:30:00.000Z",
+            "sede": "Belgrano",
+            "estado": "en espera"
+        },
+        {
+            "fecha_inicio": "2020-06-08T11:30:00.000Z",
+            "fecha_fin": "2020-06-08T12:00:00.000Z",
+            "sede": "Belgrano",
+            "estado": "en espera"
+        },
+        {
+            "fecha_inicio": "2020-06-08T12:00:00.000Z",
+            "fecha_fin": "2020-06-08T12:30:00.000Z",
+            "sede": "Belgrano",
+            "estado": "en espera"
+        },
+        {
+            "fecha_inicio": "2020-06-08T12:30:00.000Z",
+            "fecha_fin": "2020-06-08T13:00:00.000Z",
+            "sede": "Belgrano",
+            "estado": "en espera"
+        }
+    ],
+    "especialidad": {
+        "titulo": "Cardiología"
+    }
+}
+]
 
 
 export default class InicioMedico extends Component {
@@ -43,23 +147,26 @@ export default class InicioMedico extends Component {
     var monthFut = new Date().getMonth() + 3; //Current Month
     var year = new Date().getFullYear().toString(); //Current Year
     var today = new Date();
+    
     if(date.length==1){
         var endDate= year +'-0'+monthFut.toString()+'-0'+date 
     }else{
         var endDate= year +'-0'+monthFut.toString()+'-'+date 
     }
 
-    var item = {'2020-04-04':[{esp:'Oculista', time:'9.00  - 12.00'}],
-                '2020-05-22': [{esp: 'Cardiologia', time:'9.00  - 12.00'}],
-                '2020-06-23': [{esp: 'Ginecologia', time:'14.00 - 18.00'}],
-            }
+    var item = Object.assign({}, ...jornadas.map(j => {
+        let fechastring = j.fecha_inicio.slice(0,10)
+        let hora = j.fecha_inicio.slice(11,16) + ' - ' + j.fecha_fin.slice(11,16)
+        
+        return ({[fechastring]:[{esp: j.especialidad.titulo, time: hora}]})}
+      ))
+            
     function addDays(date, days) {
         const copy = new Date(Number(date))
         copy.setDate(date.getDate() + days)
         return copy
         } 
     const dateAdd = addDays(today, 7);
-    
    
     return (
       <Container>
@@ -104,7 +211,7 @@ export default class InicioMedico extends Component {
                         <Card>
                             <CardItem>
                                 <Col size={2} style={{}}>
-                                    <Text style={{fontSize:14, fontWeight:'bold'}} ><Ionicons name='md-calendar' size={16} color='#1f77a5'></Ionicons> {item.time}</Text>
+                                    <Text style={{fontSize:14, fontWeight:'bold'}} ><Ionicons name='md-calendar' size={18} color='#1f77a5'></Ionicons> {item.time}</Text>
                                     <Text style={{fontSize:14, marginTop:10, marginLeft:16}}>{item.esp}</Text>
                                 </Col>
                                 <Col>
@@ -121,7 +228,7 @@ export default class InicioMedico extends Component {
                         <Card>
                             <CardItem>
                                 <Col size={2}>
-                                    <Text style={{fontSize:14, fontWeight:'bold'}} ><Ionicons name='md-calendar' size={16} color='#1f77a5'></Ionicons> {item.time}</Text>
+                                    <Text style={{fontSize:14, fontWeight:'bold'}} ><Ionicons name='md-calendar' size={18} color='#1f77a5'></Ionicons> {item.time}</Text>
                                     <Text style={{fontSize:14, marginTop:10, marginLeft:16}}>{item.esp}</Text>
                                 </Col>
                             </CardItem>
