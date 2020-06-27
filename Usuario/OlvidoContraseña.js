@@ -28,7 +28,7 @@ export default class OlvidoContraseña extends Component {
   handleData(response) {
     if (response.status == 200) {
       response.json().then(usuario => {
-        console.log(usuario)
+        //console.log(usuario)
         this.props.navigation.navigate('NuevaContraseña', {usuario: usuario})
       })
     } else {
