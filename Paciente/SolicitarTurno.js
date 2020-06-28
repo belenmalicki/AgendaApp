@@ -161,8 +161,6 @@ export default class SolicitarTurno extends Component {
        
         )
     }
-           
-    
     else{
 
         if(this.state.estadoTurnos==1){
