@@ -82,17 +82,17 @@ export default class InicioPaciente extends Component {
       if (this.state.turnos.length > 0) {
         //console.log(this.state.turnos)
         return this.state.turnos.map((turno, i) => {
-          let nom = turno.medico.datos.nombre.toUpperCase();
+        /*  let nom = turno.medico.datos.nombre.toUpperCase();
           let gen = turno.medico.datos.genero;
           let id = turno.id;
-          let med = gen === 'femenino' ? `DRA. ${nom}` : `DR. ${nom}`
+          let med = gen === 'femenino' ? `DRA. ${turno.medico.datos.nombre.toUpperCase()}` : `DR. ${turno.medico.datos.nombre.toUpperCase()}`
           let esp = turno.especialidad.titulo;
           let hora = new Date(turno.fecha_inicio).getHours()+'.'+new Date(turno.fecha_inicio).getMinutes(); 
           let fecha = turno.fecha_inicio;
           let dia = new Date(turno.fecha_inicio).getDate();
           let dianombre = this.state.dias[new Date(turno.fecha_inicio).getDay()];
-          let mes = this.state.meses[new Date(turno.fecha_inicio).getMonth()];
-          return <CardTurno forzar={this.update} turno={turno} id={id} dia={dia} mes={mes} dianombre={dianombre} key={i} med={med} esp={esp} hora={hora} fecha={fecha} />//todavia no se pasa la fecha y hora correcta
+          let mes = this.state.meses[new Date(turno.fecha_inicio).getMonth()];*/
+          return <CardTurno forzar={this.update} turno={turno} key={i}  />//todavia no se pasa la fecha y hora correcta
         })
       } else {
         return <Text>No tiene ningún turno solicitado.</Text> //embellecer en otra oportunidad (tal vez poner una imagen tipo las de flaticon)
