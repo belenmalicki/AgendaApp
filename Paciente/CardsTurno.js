@@ -27,6 +27,8 @@ cerrarPop=()=>{
     turno.setHours(turno.getHours()-12)
     let today= new Date() 
     console.log('hoy', this.props.turno)
+    if(this.props.turno.estado !== 'confirmado'){
+
     if(today >= turno){
       if(this.props.turno.estado !== 'canceladoCM'){
         console.log('estado',this.props.turno.estado)
@@ -50,6 +52,14 @@ cerrarPop=()=>{
         </Overlay>
       </View>
       }
+    }
+    <PopUp update={this.props.forzar} id={this.props.id} key='2' tipo='2' alto='28%' nombre='CANCELAR' col='#e93922' titulo='¿DESEA CANCELAR SU TURNO?' texto='Los turnos podrán ser cancelados hasta 12 Hs. antes del mismo, en caso de no ser así, se le cobrará la penalización correspondiente'/>
+
+      }else{
+        return <View style={{alignItems:'center'}}>
+                  <Text style={{color:"#1f77a5", fontWeight:"bold", fontSize:12, textAlign:'center' }}>TURNO</Text>
+                  <Text style={{color:"#1f77a5", fontWeight:"bold", fontSize:12, textAlign:'center' }}>CONFIRMADO</Text>
+                </View>
       }
   }
 
@@ -82,7 +92,7 @@ cerrarPop=()=>{
                     <View style={{marginRight:15}}>
                       {this.mostrarBoton()}
                     </View>
-                    <PopUp update={this.props.forzar} id={this.props.id} key='2' tipo='2' alto='28%' nombre='CANCELAR' col='#e93922' titulo='¿DESEA CANCELAR SU TURNO?' texto='Los turnos podrán ser cancelados hasta 12 Hs. antes del mismo, en caso de no ser así, se le cobrará la penalización correspondiente'/>
+                    
                 </View>
             </CardItem>
         </Card>
