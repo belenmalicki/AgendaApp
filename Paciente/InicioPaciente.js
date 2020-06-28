@@ -17,8 +17,8 @@ export default class InicioPaciente extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      showAlert: true,
-      es_deudor: false,
+      showAlert: false,
+      es_deudor: '',
       cargado: false,
       turnos: [],
       dias:['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'],
@@ -41,8 +41,10 @@ export default class InicioPaciente extends Component {
   update(){
     const usuario = this.props.navigation.getParam('usuario', {})
     const data = {
-      paciente_id: usuario.paciente.id
+      paciente_id: usuario.paciente.id,
     }
+    this.setState({es_deudor:usuario.paciente.es_deudor})
+    //console.log('usuario.paciente.es_deudor', usuario.paciente.es_deudor)
     ApiController.getTurnosPaciente(data, this.handleTurnos.bind(this))
   }
 
@@ -62,14 +64,14 @@ export default class InicioPaciente extends Component {
     if (this.state.es_deudor === false) {
       return (
         <TouchableOpacity onPress={() => { this.props.navigation.navigate('SolicitarTurno')}}
-          style={{ width: 230, alignSelf: 'center', backgroundColor: '#e93922' }}>
+          style={{ width: 230, alignSelf: 'center', backgroundColor: '#e93923' }}>
           <Text style={{ marginVertical: 10, fontSize: 11, color: 'white', textAlign: 'center', fontWeight: 'bold' }}>SOLICITAR TURNO</Text>
         </TouchableOpacity>)
     }
     else {
       return (
         <TouchableOpacity onPress={() => this.showAlert()}
-          style={{ width: 230, alignSelf: 'center', backgroundColor: '#e93922' }}>
+          style={{ width: 230, alignSelf: 'center', backgroundColor: '#e93923' }}>
           <Text style={{ marginVertical: 10, fontSize: 11, color: 'white', textAlign: 'center', fontWeight: 'bold' }}>SOLICITAR TURNO</Text>
         </TouchableOpacity>)
     }
@@ -97,7 +99,7 @@ export default class InicioPaciente extends Component {
       }
     } else {
       return (<View style={{ marginTop: '2%' }}>
-        <ActivityIndicator size="large" color={'#e93922'}></ActivityIndicator>
+        <ActivityIndicator size="large" color={'#e93923'}></ActivityIndicator>
       </View>)
     }
   }
