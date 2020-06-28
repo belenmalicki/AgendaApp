@@ -22,12 +22,12 @@ cerrarPop=()=>{
   this.setState({ showAlert: false});
 
 }
-  mostrarBoton(){
+  mostrarBotonConf(){
     let turno= new Date(this.props.turno.fecha_inicio)
     turno.setHours(turno.getHours()-12)
     let today= new Date() 
     console.log('hoy', this.props.turno)
-    if(this.props.turno.estado !== 'confirmado'){
+
 
     if(today >= turno){
       if(this.props.turno.estado !== 'canceladoCM'){
@@ -53,32 +53,38 @@ cerrarPop=()=>{
       </View>
       }
     }
-    <PopUp update={this.props.forzar} id={this.props.id} key='2' tipo='2' alto='28%' nombre='CANCELAR' col='#e93922' titulo='¿DESEA CANCELAR SU TURNO?' texto='Los turnos podrán ser cancelados hasta 12 Hs. antes del mismo, en caso de no ser así, se le cobrará la penalización correspondiente'/>
+  
 
-      }else{
-        return <View style={{alignItems:'center'}}>
-                  <Text style={{color:"#1f77a5", fontWeight:"bold", fontSize:12, textAlign:'center' }}>TURNO</Text>
-                  <Text style={{color:"#1f77a5", fontWeight:"bold", fontSize:12, textAlign:'center' }}>CONFIRMADO</Text>
-                </View>
-      }
+     
   }
+  mostrarBotonCanc(){
+    if(this.props.turno.estado !== 'confirmado'){
 
+      return <PopUp update={this.props.forzar} id={this.props.id} key='2' tipo='2' alto='28%' nombre='CANCELAR' col='#e93922' titulo='¿DESEA CANCELAR SU TURNO?' texto='Los turnos podrán ser cancelados hasta 12 Hs. antes del mismo, en caso de no ser así, se le cobrará la penalización correspondiente'/>
+    }else{
+      return <View style={{alignItems:'center'}}>
+                <Text style={{color:"#1f77a5", fontWeight:"bold", fontSize:12, textAlign:'center' }}>TURNO</Text>
+                <Text style={{color:"#1f77a5", fontWeight:"bold", fontSize:12, textAlign:'center' }}>CONFIRMADO</Text>
+              </View>
+    }
+  }
   render() {
    // console.log('soy un turno en la card',new Date(this.props.turno.fecha_inicio).toLocaleTimeString("es-AR", {hour:'2-digit', minute:'2-digit'}))
 
     // console.log('hoy', this.props.turno)
+ 
     return (
       <View style={{ alignItems:'center', marginBottom:10}}>
         <Card style={{width:width*0.9}}>
             <CardItem>
                     <Col style={{marginTop:25}} >
-                        <Text style={{fontSize:14, color:'#1f77a5', textAlign:"center", fontWeight:'bold'}}>{this.props.dia}</Text>
-                        <Text style={{fontSize:12, color:'#1f77a5', textAlign:"center", fontWeight:'bold'}}>{this.props.mes}</Text>
-                        <Text style={{fontSize:12, color:'#1f77a5', textAlign:"center"}}>{this.props.dianombre}</Text>
+                        <Text style={{fontSize:14, color:'#1f77a5', textAlign:"center", fontWeight:'bold'}}>{new Date(this.props.turno.fecha_inicio).getDate()}</Text>
+                        <Text style={{fontSize:12, color:'#1f77a5', textAlign:"center", fontWeight:'bold'}}>{new Date(this.props.turno.fecha_inicio).toLocaleDateString("es-AR", {month:'long'})}</Text>
+                        <Text style={{fontSize:12, color:'#1f77a5', textAlign:"center"}}>{new Date(this.props.turno.fecha_inicio).toLocaleDateString("es-AR", {weekday:'long'})}</Text>
                     </Col>
                     <Col size={3} style={{marginLeft:15}} >
-                        <Text style={{fontSize:15}}>{this.props.med}</Text>
-                        <Text style={{fontSize:13, marginTop:3}}>{this.props.esp}</Text>
+                        <Text style={{fontSize:15}}>{this.props.turno.medico.datos.genero === 'femenino' ? `DRA. ${this.props.turno.medico.datos.nombre.toUpperCase()}` : `DR. ${this.props.turno.medico.datos.nombre.toUpperCase()}`}</Text>
+                        <Text style={{fontSize:13, marginTop:3}}>{this.props.turno.especialidad.titulo}</Text>
                         <Text style={{fontSize:11, marginTop:12}}> <Ionicons name='md-time' size={12} color='black'></Ionicons> {new Date(this.props.turno.fecha_inicio).toLocaleTimeString("es-AR", {hour:'2-digit', minute:'2-digit'})} Hs</Text>
                         <Text style={{fontSize:11,marginTop:3 }}> <Image style={{height:11, width:11}} source={require('../assets/Images/pin.png')}/> Sede Belgrano</Text>
                     </Col>
@@ -90,9 +96,9 @@ cerrarPop=()=>{
                         <Text style={{color:"#1f77a5", fontWeight:"bold", fontSize:12 }}> CONFIRMAR</Text>
                     </TouchableOpacity>*/}
                     <View style={{marginRight:15}}>
-                      {this.mostrarBoton()}
+                      {this.mostrarBotonConf()}
                     </View>
-                    
+                    {this.mostrarBotonCanc()}
                 </View>
             </CardItem>
         </Card>
