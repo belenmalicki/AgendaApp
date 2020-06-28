@@ -4,7 +4,9 @@ import { Ionicons } from '@expo/vector-icons';
 import { Platform, StyleSheet, Text, View, Image,TextInput, Dimensions, TouchableOpacity, ScrollView  } from 'react-native';
 import {Footer, FooterTab, Container,Card, CardItem, Col, Accordion,Content } from 'native-base'
 import { Divider,CheckBox, Overlay  } from 'react-native-elements';
-import Check from './Check'
+import Check from './Check';
+import AsyncStorage from '@react-native-community/async-storage';
+
 
 const { width } = Dimensions.get('window');
 export default class ModificarTurno extends Component {
