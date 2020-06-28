@@ -14,8 +14,25 @@ export default class ModificarTurno extends Component {
             showAlert: false,
             showAlert2: false,
             showAlert3: false,
+            usuario: {}
         }
       }
+
+      componentDidMount(){
+        this.getUsuario()
+      }
+
+      getUsuario = async () => {
+        try {
+          const jsonValue = await AsyncStorage.getItem('usuario')
+          const usuario = jsonValue != null ? JSON.parse(jsonValue) : null;
+          this.setState({ usuario: usuario, especialidades: usuario.medico.especialidades, cargado: true })
+          //console.log(usuario)
+        } catch (e) {
+          console.log(e)
+        }
+      }
+
       showAlert = () => {
         this.setState({
           showAlert: true
@@ -52,7 +69,7 @@ export default class ModificarTurno extends Component {
         const elim= ' Para seleccionar un turno, presione sobre el casillero.'+'\n'+
         ' Los turnos que hayan sido solicitados por un paciente no podrán ser eliminados y por lo tanto no aparecerán en las opciones.'+'\n'+
         ' Solo podrá eliminar todos los turnos de un día cuando ningún paciente haya solicitado turnos en ese día.'
-        const agre= ' Para seleccionar un turno, presione sobre el casillero. Puede agregar tantos tunos como desee.'
+        const agre= ' Para seleccionar un turno, presione sobre el casillero. Puede agregar tantos turnos como desee.'
         const {showAlert,showAlert2,showAlert3} = this.state;
         return (
             <Container>
