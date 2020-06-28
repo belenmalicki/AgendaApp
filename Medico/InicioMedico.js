@@ -60,11 +60,14 @@ export default class InicioMedico extends Component {
         } 
     const dateAdd = addDays(today, 7);
     
-   
+    const usuario = this.props.navigation.getParam('usuario', {})
+    let genero = usuario.genero === 'femenino' ? 'A' : 'O'
+    let nombre = usuario.nombre.toUpperCase()
+    let bienvenida = `¡BIENVENID${genero}, ${nombre}!`
     return (
       <Container>
        
-            <Text style={{fontSize:17, textAlign:'center', marginVertical:20}}>¡BIENVENIDO NOMBREMEDICO!</Text>
+            <Text style={{fontSize:17, textAlign:'center', marginVertical:20}}>{bienvenida}</Text>
           {/* 
             <Card style={{width:width*0.95, alignSelf:"center", paddingVertical:10, paddingHorizontal:8, marginBottom:15}}>
                 <Text style={{fontSize:14, margin:8, textAlign:"justify",lineHeight:18 }}><Ionicons name='md-information-circle' size={18} color='#e93922'></Ionicons> Estimado: Le recordamos que solo podrá modificar los turnos una semana pasada a la fecha actual y aquellos que no hayan sido solicitados por algún paciente. </Text>
