@@ -23,19 +23,17 @@ class CardSolicitarTurno extends Component {
           <Card style={{width:width*0.9, alignSelf:"center"}}>
             <CardItem style={{marginVertical:5}}>
               <Col size={3} >
-                  <Text style={{fontSize:12, fontWeight:'bold', color:'#1f77a5'}}><Ionicons name='md-time' size={12} color='#1f77a5'></Ionicons> {this.props.hora} Hs</Text>
+                  <Text style={{fontSize:12, fontWeight:'bold', color:'#1f77a5'}}><Ionicons name='md-time' size={12} color='#1f77a5'></Ionicons> {this.props.hora} Hs.</Text>
                   <Text style={{fontSize:14, marginTop:5}}>{med.nombre}</Text>
               </Col>
               <Col>
-                <TouchableOpacity  style={{marginRight:15}} onPress={() => {this.props.navigation.navigate('ConfirmarTurno', {id:id,med:med, esp:esp, fecha:fecha, hora:hora})}}>
-                   <Text style={{color:"#e93922", fontWeight:"bold", fontSize:12 }}>SOLICITAR</Text>
+                <TouchableOpacity onPress={() => {this.props.navigation.navigate('ConfirmarTurno', {id:id,med:med, esp:esp, fecha:fecha, hora:hora})}}>
+                   <Text style={{color:"#e93922" ,fontWeight:"bold", fontSize:12 }}>SOLICITAR</Text>
                 </TouchableOpacity>
               </Col>   
             </CardItem>
         </Card>
-      </View>
-  
-        
+      </View>     
       );
     }
   }

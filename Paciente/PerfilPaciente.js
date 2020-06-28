@@ -56,7 +56,7 @@ export default class PerfilPaciente extends Component {
           <ImageBackground style={{ height: 195, width: 300, marginTop: 20, alignSelf: "center" }} source={require('../assets/Images/credencialesPaciente/Credencial_9.png')} >
             <View style={{ flex: 1, alignItems: "center" }}>
               <Text style={{ fontSize: 18, marginTop: 10, fontWeight: 'bold', marginTop: 120, letterSpacing: 3 }}> 61  759666  1  02  </Text>
-              <Text style={{ fontSize: 11, marginTop: 10, fontWeight: 'bold', letterSpacing: 3 }}> {this.state.usuario.nombre}  </Text>
+              <Text style={{ fontSize: 11, marginTop: 10, fontWeight: 'bold', letterSpacing: 3 }}> {this.state.usuario.nombre.toUpperCase()}  </Text>
               <View style={{ flexDirection: 'row', marginBottom: 10 }}>
                 <Text style={{ fontSize: 9, marginTop: 12 }}>dni </Text>
                 <Text style={{ marginLeft: 2, fontSize: 11, marginTop: 10, fontWeight: 'bold' }}> {this.state.usuario.dni} </Text>

@@ -17,12 +17,12 @@ export default class InicioPaciente extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      showAlert: true,
-      es_deudor: false,
+      showAlert: false,
+      es_deudor: '',
       cargado: false,
       turnos: [],
-      dias:['Domingo', 'Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes', 'Sabado'],
-      meses:["enero", "febrero", "marzo", "abril", "mayo", "junio", "julio", "agosto", "septiembre", "octubre", "noviembre", "diciembre"],
+      dias:['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'],
+      meses:["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"],
     };
     this.update=this.update.bind(this)
   };
@@ -33,7 +33,7 @@ export default class InicioPaciente extends Component {
 
   handleTurnos(response) {
     response.json().then((turnos) => {
-      console.log(turnos)
+      //console.log(turnos)
       this.setState({ turnos: turnos, cargado: true });
     })
   }
@@ -41,8 +41,10 @@ export default class InicioPaciente extends Component {
   update(){
     const usuario = this.props.navigation.getParam('usuario', {})
     const data = {
-      paciente_id: usuario.paciente.id
+      paciente_id: usuario.paciente.id,
     }
+    this.setState({es_deudor:usuario.paciente.es_deudor})
+    //console.log('usuario.paciente.es_deudor', usuario.paciente.es_deudor)
     ApiController.getTurnosPaciente(data, this.handleTurnos.bind(this))
   }
 
@@ -62,14 +64,14 @@ export default class InicioPaciente extends Component {
     if (this.state.es_deudor === false) {
       return (
         <TouchableOpacity onPress={() => { this.props.navigation.navigate('SolicitarTurno')}}
-          style={{ width: 230, alignSelf: 'center', backgroundColor: '#e93922' }}>
+          style={{ width: 230, alignSelf: 'center', backgroundColor: '#e93923' }}>
           <Text style={{ marginVertical: 10, fontSize: 11, color: 'white', textAlign: 'center', fontWeight: 'bold' }}>SOLICITAR TURNO</Text>
         </TouchableOpacity>)
     }
     else {
       return (
         <TouchableOpacity onPress={() => this.showAlert()}
-          style={{ width: 230, alignSelf: 'center', backgroundColor: '#e93922' }}>
+          style={{ width: 230, alignSelf: 'center', backgroundColor: '#e93923' }}>
           <Text style={{ marginVertical: 10, fontSize: 11, color: 'white', textAlign: 'center', fontWeight: 'bold' }}>SOLICITAR TURNO</Text>
         </TouchableOpacity>)
     }
@@ -78,7 +80,7 @@ export default class InicioPaciente extends Component {
   showTurnos() {
     if (this.state.cargado) {
       if (this.state.turnos.length > 0) {
-        console.log(this.state.turnos)
+        //console.log(this.state.turnos)
         return this.state.turnos.map((turno, i) => {
           let nom = turno.medico.datos.nombre.toUpperCase();
           let gen = turno.medico.datos.genero;
@@ -90,14 +92,14 @@ export default class InicioPaciente extends Component {
           let dia = new Date(turno.fecha_inicio).getDate();
           let dianombre = this.state.dias[new Date(turno.fecha_inicio).getDay()];
           let mes = this.state.meses[new Date(turno.fecha_inicio).getMonth()];
-          return <CardTurno forzar={this.update} id={id} dia={dia} mes={mes} dianombre={dianombre} key={i} med={med} esp={esp} hora={hora} fecha={fecha} />//todavia no se pasa la fecha y hora correcta
+          return <CardTurno forzar={this.update} turno={turno} id={id} dia={dia} mes={mes} dianombre={dianombre} key={i} med={med} esp={esp} hora={hora} fecha={fecha} />//todavia no se pasa la fecha y hora correcta
         })
       } else {
         return <Text>No tiene ningún turno solicitado.</Text> //embellecer en otra oportunidad (tal vez poner una imagen tipo las de flaticon)
       }
     } else {
       return (<View style={{ marginTop: '2%' }}>
-        <ActivityIndicator size="large" color={'#e93922'}></ActivityIndicator>
+        <ActivityIndicator size="large" color={'#e93923'}></ActivityIndicator>
       </View>)
     }
   }
@@ -106,7 +108,7 @@ export default class InicioPaciente extends Component {
     try {
       await AsyncStorage.setItem('usuario', JSON.stringify(usuario))
     }catch (e){
-      console.log(e)
+      //console.log(e)
     }
   }
 
