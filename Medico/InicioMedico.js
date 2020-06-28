@@ -1,142 +1,13 @@
 import { Calendar, CalendarList, Agenda } from 'react-native-calendars';
 import React, { Component } from 'react';
 import { Ionicons } from '@expo/vector-icons';
-import { Platform, StyleSheet, Text, View, Image, TextInput, Dimensions, TouchableOpacity, ScrollView } from 'react-native';
+import { Platform, StyleSheet, Text, View, Image, TextInput, Dimensions, TouchableOpacity, ScrollView, ActivityIndicator } from 'react-native';
 import { Footer, FooterTab, Container, Card, CardItem, Col, Accordion, Content } from 'native-base';
 import { Overlay } from 'react-native-elements';
 import AsyncStorage from '@react-native-community/async-storage';
 import ApiController from '../controller/ApiController';
 
 const { width } = Dimensions.get('window');
-class Historial extends Component {
-    render() {
-        return (
-            <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-                <View style={{ marginHorizontal: '5%', borderWidth: 0.5, borderColor: 'black', }}>
-                    <Text style={{ fontSize: 18, textAlign: 'center', marginTop: '5%' }}>HISTORIAL </Text>
-                    <Text style={{ marginTop: '5%', textAlign: 'justify', fontSize: 14, marginBottom: 20, lineHeight: 16, marginHorizontal: '5%' }}>
-                        Texto HISTORIAL
-        </Text>
-                    <Text style={{ marginBottom: '5%', textAlign: 'justify', fontSize: 14, lineHeight: 16, marginHorizontal: '5%' }}>
-                        Contactese al 4778-9809 para informarse sobre los métodos de pago.
-        </Text>
-                </View>
-                <View style={{ marginTop: 60 }}>
-                    <TouchableOpacity onPress={() => { this.props.navigation.navigate('InicioPaciente') }}
-                        style={{ width: 230, alignSelf: 'center', backgroundColor: '#e93922' }}>
-                        <Text style={{ marginVertical: 10, fontSize: 11, color: 'white', textAlign: 'center', fontWeight: 'bold' }}>VER MIS TURNOS</Text>
-                    </TouchableOpacity>
-                </View>
-            </View>
-        );
-    }
-}
-let jornadas = [{
-    "id": 1,
-    "fecha_inicio": "2020-06-01T10:00:00.000Z",
-    "fecha_fin": "2020-06-01T13:00:00.000Z",
-    "sede": "Belgrano",
-    "estado": "disponible",
-    "createdAt": "2020-06-16T21:48:47.082Z",
-    "updatedAt": "2020-06-16T21:48:47.082Z",
-    "medico_id": 1,
-    "especialidad_id": 1,
-    "turnos": [
-        {
-            "fecha_inicio": "2020-06-01T10:00:00.000Z",
-            "fecha_fin": "2020-06-01T10:30:00.000Z",
-            "sede": "Belgrano",
-            "estado": "en espera"
-        },
-        {
-            "fecha_inicio": "2020-06-01T10:30:00.000Z",
-            "fecha_fin": "2020-06-01T11:00:00.000Z",
-            "sede": "Belgrano",
-            "estado": "en espera"
-        },
-        {
-            "fecha_inicio": "2020-06-01T11:00:00.000Z",
-            "fecha_fin": "2020-06-01T11:30:00.000Z",
-            "sede": "Belgrano",
-            "estado": "en espera"
-        },
-        {
-            "fecha_inicio": "2020-06-01T11:30:00.000Z",
-            "fecha_fin": "2020-06-01T12:00:00.000Z",
-            "sede": "Belgrano",
-            "estado": "en espera"
-        },
-        {
-            "fecha_inicio": "2020-06-01T12:00:00.000Z",
-            "fecha_fin": "2020-06-01T12:30:00.000Z",
-            "sede": "Belgrano",
-            "estado": "en espera"
-        },
-        {
-            "fecha_inicio": "2020-06-01T12:30:00.000Z",
-            "fecha_fin": "2020-06-01T13:00:00.000Z",
-            "sede": "Belgrano",
-            "estado": "en espera"
-        }
-    ],
-    "especialidad": {
-        "titulo": "Cardiología"
-    }
-},
-{
-    "id": 2,
-    "fecha_inicio": "2020-06-08T10:00:00.000Z",
-    "fecha_fin": "2020-06-08T13:00:00.000Z",
-    "sede": "Belgrano",
-    "estado": "disponible",
-    "createdAt": "2020-06-16T21:48:47.082Z",
-    "updatedAt": "2020-06-16T21:48:47.082Z",
-    "medico_id": 1,
-    "especialidad_id": 1,
-    "turnos": [
-        {
-            "fecha_inicio": "2020-06-08T10:00:00.000Z",
-            "fecha_fin": "2020-06-08T10:30:00.000Z",
-            "sede": "Belgrano",
-            "estado": "en espera"
-        },
-        {
-            "fecha_inicio": "2020-06-08T10:30:00.000Z",
-            "fecha_fin": "2020-06-08T11:00:00.000Z",
-            "sede": "Belgrano",
-            "estado": "en espera"
-        },
-        {
-            "fecha_inicio": "2020-06-08T11:00:00.000Z",
-            "fecha_fin": "2020-06-08T11:30:00.000Z",
-            "sede": "Belgrano",
-            "estado": "en espera"
-        },
-        {
-            "fecha_inicio": "2020-06-08T11:30:00.000Z",
-            "fecha_fin": "2020-06-08T12:00:00.000Z",
-            "sede": "Belgrano",
-            "estado": "en espera"
-        },
-        {
-            "fecha_inicio": "2020-06-08T12:00:00.000Z",
-            "fecha_fin": "2020-06-08T12:30:00.000Z",
-            "sede": "Belgrano",
-            "estado": "en espera"
-        },
-        {
-            "fecha_inicio": "2020-06-08T12:30:00.000Z",
-            "fecha_fin": "2020-06-08T13:00:00.000Z",
-            "sede": "Belgrano",
-            "estado": "en espera"
-        }
-    ],
-    "especialidad": {
-        "titulo": "Cardiología"
-    }
-}
-]
-
 
 export default class InicioMedico extends Component {
     constructor(props) {
@@ -146,7 +17,8 @@ export default class InicioMedico extends Component {
             showAlert: false,
             usuario: {},
             jornadas: [],
-            cargado: false
+            cargado: false,
+            date: undefined
         }
     }
 
@@ -192,6 +64,11 @@ export default class InicioMedico extends Component {
     }
 
     render() {
+        if(!this.state.cargado){
+            return (<View style={{ marginTop: '8%' }}>
+            <ActivityIndicator size="large" color={'#e93923'}></ActivityIndicator>
+          </View>)
+        }else{
         var date = new Date().getDate().toString(); //Current Date
         var monthFut = new Date().getMonth() + 3; //Current Month
         var year = new Date().getFullYear().toString(); //Current Year
@@ -202,6 +79,8 @@ export default class InicioMedico extends Component {
         } else {
             var endDate = year + '-0' + monthFut.toString() + '-' + date
         }
+
+        const { jornadas } = this.state;
 
         var item = Object.assign({}, ...jornadas.map(j => {
             let fechastring = j.fecha_inicio.slice(0, 10)
@@ -258,10 +137,10 @@ export default class InicioMedico extends Component {
                     onDayPress={(day) => {
                         var selec = new Date(day.year, (day.month - 1), day.day, 0, 0, 0, 0);
                         if (selec.getTime() < dateAdd.getTime()) {
-                            this.setState({ fecha: false });
+                            this.setState({ fecha: false, date: selec });
                         }
                         else {
-                            this.setState({ fecha: true });
+                            this.setState({ fecha: true, date: selec });
                         }
                     }}
                     renderEmptyData={() => {
@@ -272,7 +151,7 @@ export default class InicioMedico extends Component {
                                     <Text style={{ fontSize: 14, textAlign: "center", }}>No hay turnos asginados.</Text>
                                 </CardItem>
                                 <CardItem style={{ alignSelf: "center", marginBottom: 10 }}>
-                                    <TouchableOpacity onPress={() => { this.props.navigation.navigate('AgregarTurno') }}><Text style={{ fontSize: 13, textAlign: "center", color: "#1f77a5", fontWeight: 'bold' }}>AGREGAR TURNOS</Text></TouchableOpacity>
+                                    <TouchableOpacity onPress={() => { this.props.navigation.navigate('AgregarTurno', { fecha: this.state.date }) }}><Text style={{ fontSize: 13, textAlign: "center", color: "#1f77a5", fontWeight: 'bold' }}>AGREGAR TURNOS</Text></TouchableOpacity>
                                 </CardItem>
                             </Card>);
                     }}
@@ -328,5 +207,6 @@ export default class InicioMedico extends Component {
             </Container>
         );
     }
+}
 }
 

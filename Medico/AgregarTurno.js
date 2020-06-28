@@ -10,6 +10,9 @@ import TimePicker from "react-native-24h-timepicker";
 import ApiController from '../controller/ApiController';
 import AsyncStorage from '@react-native-community/async-storage'
 
+const dias = ['Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes', 'Sábado', 'Domingo'];
+const meses = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
+
 const { width } = Dimensions.get('window');
 export default class AgregarTurno extends Component {
   constructor(props) {
@@ -42,7 +45,6 @@ export default class AgregarTurno extends Component {
       const jsonValue = await AsyncStorage.getItem('usuario')
       const usuario = jsonValue != null ? JSON.parse(jsonValue) : null;
       this.setState({ usuario: usuario, especialidades: usuario.medico.especialidades, cargado: true })
-      //console.log(usuario)
     } catch (e) {
       console.log(e)
     }
@@ -139,27 +141,31 @@ export default class AgregarTurno extends Component {
     if (!this.state.cargado) {
       return null
     } else {
-      let index = 0;
-      const especialidad = [
-        { key: index++, section: true, label: 'Especialidad' },
-        { key: index++, label: 'Cardiología' },
-        { key: index++, label: 'Neumonología' },
-        { key: index++, label: 'Oculista', accessibilityLabel: 'Tap here for cranberries' },
-        { key: index++, label: 'Psicología', customKey: 'Not a fruit' }
-      ];
+      const fecha = this.props.navigation.getParam('fecha', '')
+
+      const stringDia = dias[fecha.getDay() - 1] + ' ' + fecha.getDate().toString()
+      const stringMes = meses[fecha.getMonth()]
+      
+
+      const {especialidades} = this.state
+
+      const items = especialidades.map((esp, i) => {return {key: i+1, label: esp.titulo}})
+
+      items.unshift({key: 0, section: true, label: 'Especialidad'})
+
       const { showAlert, showAlert2, showAlert3 } = this.state;
       //const {showAlert2} = this.state;
       const {usuario} = this.state
-      console.log(usuario.medico)
+      //console.log(usuario.medico)
       return (
         <ScrollView style={{}}>
 
           <Text style={{ fontSize: 18, textAlign: 'center', marginVertical: 20 }}>AGREGAR TURNO </Text>
-          <Text style={{ fontSize: 14, marginLeft: '4%', color: '#e93922', marginBottom: 15 }}> <Ionicons name='md-calendar' size={16} color='#e93922'></Ionicons> 9 Jueves<Text style={{ fontSize: 14, color: 'black' }}> Abril</Text></Text>
+          <Text style={{ fontSize: 14, marginLeft: '4%', color: '#e93922', marginBottom: 15 }}> <Ionicons name='md-calendar' size={16} color='#e93922'></Ionicons> {stringDia} <Text style={{ fontSize: 14, color: 'black' }}> {stringMes} </Text></Text>
           <Text style={{ fontSize: 12, marginBottom: 20, marginLeft: 20 }}>Elija la especialidad</Text>
           <View style={{ alignSelf: 'center', width: width * 0.9, marginTop: 0 }}>
             <ModalSelector
-              data={especialidad}
+              data={items}
               initValue="Seleccione especialidad"
               //supportedOrientations={['landscape']}
               //  optionTextStyle={color:'red'}
