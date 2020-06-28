@@ -7,6 +7,22 @@ const { width } = Dimensions.get('window');
 
 
 export default class Perfil extends Component {
+  constructor(props) {
+    super(props);
+    this.state = { usuario: {}, cargado: false }
+  }
+
+  mostrarBoton(){
+    if(true){
+      <View style={{marginTop:60}}>
+        <TouchableOpacity onPress={() => {this.props.navigation.navigate('InicioPaciente')}}
+         style={{ width:230 ,alignSelf:'center', backgroundColor:'#e93922'}}>
+            <Text style={{marginVertical:10,fontSize:11, color:'white', textAlign:'center', fontWeight:'bold'}}>VER INICIO PACIENTE</Text>
+       </TouchableOpacity>
+    </View>
+    }
+
+  }
   render() {
     return (
       <ScrollView style={{flex:1}}>
@@ -57,6 +73,20 @@ export default class Perfil extends Component {
       </Text>
       <Divider style={{ backgroundColor: 'black',marginHorizontal:'5%' }} />
       <Text style={{marginTop:'5%',textAlign:'justify', fontSize:14, marginBottom:15, lineHeight:16, marginHorizontal:'5%'}}>
+        FECHA DE NACIMIENTO
+      </Text>
+      <Text style={{fontSize:13, lineHeight:16, marginHorizontal:'6%', color:'grey'}}>
+        20/02/1999
+      </Text>
+      <Divider style={{ backgroundColor: 'black',marginHorizontal:'5%' }} />
+      <Text style={{marginTop:'5%',textAlign:'justify', fontSize:14, marginBottom:15, lineHeight:16, marginHorizontal:'5%'}}>
+        EMAIL
+      </Text>
+      <Text style={{fontSize:13, lineHeight:16, marginHorizontal:'6%', color:'grey'}}>
+        elniñopanza99@gmail.com
+      </Text>
+      <Divider style={{ backgroundColor: 'black',marginHorizontal:'5%' }} />
+      <Text style={{marginTop:'5%',textAlign:'justify', fontSize:14, marginBottom:15, lineHeight:16, marginHorizontal:'5%'}}>
         DIRECCION
       </Text>
       <Text style={{fontSize:13, lineHeight:16, marginHorizontal:'6%', color:'grey'}}>
@@ -71,12 +101,7 @@ export default class Perfil extends Component {
       </Text>
       <Divider style={{ backgroundColor: 'black',marginHorizontal:'5%' }} />
     
-    <View style={{marginTop:60}}>
-          <TouchableOpacity onPress={() => {this.props.navigation.navigate('InicioPaciente')}}
-          style={{ width:230 ,alignSelf:'center', backgroundColor:'#e93922'}}>
-          <Text style={{marginVertical:10,fontSize:11, color:'white', textAlign:'center', fontWeight:'bold'}}>VER INICIO PACIENTE</Text>
-          </TouchableOpacity>
-      </View>
+
       </ScrollView>
     );
   }
