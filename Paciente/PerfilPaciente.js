@@ -31,7 +31,7 @@ export default class PerfilPaciente extends Component {
 
   mostrarBoton(){
     if(this.state.usuario.medico!=null){
-      <View style={{ marginTop: 60 }}>
+      <View style={{ marginTop: 50 }}>
             <TouchableOpacity onPress={() => { this.props.navigation.navigate('InicioMedico',{usuario:usuario}) }}
               style={{ width: 230, alignSelf: 'center', backgroundColor: '#e93922' }}>
               <Text style={{ marginVertical: 10, fontSize: 11, color: 'white', textAlign: 'center', fontWeight: 'bold' }}>VER AGENDA MÉDICO</Text>
@@ -121,7 +121,7 @@ export default class PerfilPaciente extends Component {
           <Text style={{ fontSize: 13, lineHeight: 16, marginHorizontal: '6%', color: 'grey' }}>
             {this.state.usuario.telefono}
           </Text>
-          <Divider style={{ backgroundColor: 'black', marginHorizontal: '5%' }} />
+          <Divider style={{ backgroundColor: 'black', marginHorizontal: '5%', marginBottom:10 }} />
 
           {this.mostrarBoton()}
           
