@@ -17,7 +17,7 @@ export default class InicioPaciente extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      showAlert: true,
+      showAlert: false,
       es_deudor: false,
       cargado: false,
       turnos: [],
@@ -61,7 +61,7 @@ export default class InicioPaciente extends Component {
   solTurno() {
     if (this.state.es_deudor === false) {
       return (
-        <TouchableOpacity onPress={() => { this.props.navigation.navigate('SolicitarTurno')}}
+        <TouchableOpacity onPress={() => { this.props.navigation.navigate('SolicitarTurno',{turnosPaciente:this.state.turnos})}}
           style={{ width: 230, alignSelf: 'center', backgroundColor: '#e93922' }}>
           <Text style={{ marginVertical: 10, fontSize: 11, color: 'white', textAlign: 'center', fontWeight: 'bold' }}>SOLICITAR TURNO</Text>
         </TouchableOpacity>)
@@ -88,7 +88,7 @@ export default class InicioPaciente extends Component {
           let hora = new Date(turno.fecha_inicio).getHours()+'.'+new Date(turno.fecha_inicio).getMinutes(); 
           let fecha = turno.fecha_inicio;
           let dia = new Date(turno.fecha_inicio).getDate();
-          let dianombre = this.state.dias[new Date(turno.fecha_inicio).getDay()];
+          let dianombre = this.state.dias[(new Date(turno.fecha_inicio).getDay())];
           let mes = this.state.meses[new Date(turno.fecha_inicio).getMonth()];
           return <CardTurno forzar={this.update} id={id} dia={dia} mes={mes} dianombre={dianombre} key={i} med={med} esp={esp} hora={hora} fecha={fecha} />//todavia no se pasa la fecha y hora correcta
         })
