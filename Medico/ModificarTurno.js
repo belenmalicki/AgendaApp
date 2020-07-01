@@ -6,6 +6,7 @@ import { Footer, FooterTab, Container, Card, CardItem, Col, Accordion, Content }
 import { Divider, CheckBox, Overlay } from 'react-native-elements';
 import Check from './Check';
 import AsyncStorage from '@react-native-community/async-storage';
+import utils from '../utils/utils';
 
 
 const { width } = Dimensions.get('window');
@@ -72,7 +73,7 @@ export default class ModificarTurno extends Component {
     this.setState({
       showAlert3: false
     });
-    this.props.navigation.navigate('InicioMedico')
+    this.props.navigation.navigate('InicioMedico', { usuario: this.state.usuario, render: new Date() })
   };
 
   render() {
@@ -85,6 +86,11 @@ export default class ModificarTurno extends Component {
       const agre = ' Para seleccionar un turno, presione sobre el casillero. Puede agregar tantos turnos como desee.'
       const { showAlert, showAlert2, showAlert3 } = this.state;
       const turnos = this.props.navigation.getParam('turnos', []);
+      
+      const fecha = this.props.navigation.getParam('fecha', '');
+
+      const stringDia = utils.getStringWeekday(fecha) + ' ' + fecha.getDate().toString()
+      const stringMes = utils.getStringMes(fecha)
 
       const elimTurnos = turnos.filter(turno => turno.paciente_id === null)
       const elimItems = elimTurnos.map(turno => { return { hora: new Date(turno.fecha_inicio), id: turno.id } })
@@ -93,7 +99,7 @@ export default class ModificarTurno extends Component {
         <Container>
           <ScrollView >
             <Text style={{ fontSize: 18, textAlign: 'center', marginVertical: 20 }}>MODIFICAR TURNO </Text>
-            <Text style={{ fontSize: 14, marginLeft: '4%', color: '#e93922', marginBottom: 15 }}> <Ionicons name='md-calendar' size={16} color='#e93922'></Ionicons> 9 Jueves<Text style={{ fontSize: 14, color: 'black' }}> Abril</Text></Text>
+            <Text style={{ fontSize: 14, marginLeft: '4%', color: '#e93922', marginBottom: 15 }}> <Ionicons name='md-calendar' size={16} color='#e93922'></Ionicons> {stringDia}<Text style={{ fontSize: 14, color: 'black' }}> {stringMes}</Text></Text>
             <Text style={{ fontSize: 14, fontWeight: 'bold', marginBottom: 10, marginLeft: 20 }}>Agregar turnos</Text>
             <View style={{ flexDirection: "row", marginBottom: 10, marginLeft: 20 }}>
               <Text style={{ fontSize: 12 }}>Seleccione los turnos que desea agregar  </Text>
@@ -129,7 +135,7 @@ export default class ModificarTurno extends Component {
               </Overlay>
             </View>
             {elimItems.map(item => {return (
-              <Check key={item.id} hora={item.hora.toLocaleTimeString()}/>
+              <Check key={item.id} hora={utils.formatHora(item.hora) + ' Hs'}/>
             )})}
 
           </ScrollView>

@@ -42,6 +42,10 @@ class App extends Component {
     }
   }
 
+  componentDidMount(){
+    this.verificarUser()
+  }
+
   hash = async () => {
 
     this.setState({cargando: true})
@@ -65,17 +69,26 @@ class App extends Component {
       alert('Los datos ingresados no coinciden con ningún usuario válido. Por favor, reingrese los datos.')
     } else {
       response.json().then(usuario => {
-        this.setState({cargando: false})
-        //console.log(usuario)        
-        if (usuario.medico && !usuario.paciente) { //por ahora para debug, despues va al revés
-          this.props.navigation.navigate('InicioMedico', { usuario: usuario })
-        }
-        else {
-          this.props.navigation.navigate('InicioPaciente', { usuario: usuario })
-        }
+        this.storeUsuario(usuario).then(() => {
+          this.setState({cargando: false})
+          if (usuario.medico && !usuario.paciente) { //por ahora para debug, despues va al revés
+            this.props.navigation.navigate('InicioMedico', { usuario: usuario })
+          }
+          else {
+            this.props.navigation.navigate('InicioPaciente', { usuario: usuario })
+          }
+        })
       })
     }
   }
+  
+  storeUsuario = async (usuario) => {
+    try {
+        await AsyncStorage.setItem('usuario', JSON.stringify(usuario))
+    } catch (e) {
+        console.log(e)
+    }
+}
 
   onChangeUs = e => {
     if (/^[a-zA-Z]+$/.test(e[e.length - 1]) || e[e.length - 1] == '@' || e[e.length - 1] == '.') {
@@ -120,8 +133,6 @@ class App extends Component {
 
 
   render() {
-
-    this.verificarUser()
     
     return (
       <ScrollView contentContainerStyle={{ flex: 1, backgroundColor: 'white' }}>

@@ -9,9 +9,8 @@ import ModalSelector from 'react-native-modal-selector'
 import TimePicker from "react-native-24h-timepicker";
 import ApiController from '../controller/ApiController';
 import AsyncStorage from '@react-native-community/async-storage'
+import utils from '../utils/utils';
 
-const dias = ['Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes', 'Sábado', 'Domingo'];
-const meses = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
 
 const formatFecha = (fecha, hora) => {
    return hora !== null ? new Date(fecha.toLocaleDateString() + ' ' + hora) : null;
@@ -177,7 +176,7 @@ export default class AgregarTurno extends Component {
       this.setState({
         showAlert2: false,
       });
-      this.props.navigation.navigate('InicioMedico')
+      this.props.navigation.navigate('InicioMedico', {usuario: this.state.usuario, render: new Date()})
     }
     else
       this.setState({ showAlert3: false, });
@@ -189,8 +188,8 @@ export default class AgregarTurno extends Component {
     } else {
       const fecha = this.props.navigation.getParam('fecha', '')
 
-      const stringDia = dias[fecha.getDay() - 1] + ' ' + fecha.getDate().toString()
-      const stringMes = meses[fecha.getMonth()]
+      const stringDia = utils.getStringWeekday(fecha) + ' ' + fecha.getDate().toString()
+      const stringMes = utils.getStringMes(fecha)
       const stringCheck = `Repetir turno para las próximas semanas de ${stringMes}`
       
 

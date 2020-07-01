@@ -6,6 +6,7 @@ import { Footer, FooterTab, Container, Card, CardItem, Col, Accordion, Content }
 import { Overlay } from 'react-native-elements';
 import AsyncStorage from '@react-native-community/async-storage';
 import ApiController from '../controller/ApiController';
+import utils from '../utils/utils';
 
 const { width } = Dimensions.get('window');
 
@@ -15,7 +16,7 @@ export default class InicioMedico extends Component {
         this.state = {
             fecha: false,
             showAlert: false,
-            usuario: {},
+            usuario: null,
             jornadas: [],
             cargado: false,
             date: undefined
@@ -24,7 +25,26 @@ export default class InicioMedico extends Component {
 
 
     componentDidMount(){
-        const usuario = this.props.navigation.getParam('usuario', {});
+        this.update();
+    }
+
+    componentDidUpdate(prevProps, prevState){
+        if(this.props.navigation.getParam('render') !== prevProps.navigation.getParam('render')){
+            this.update();
+        }
+    }
+
+    update(){
+        if(this.state.cargado){
+            this.setState({cargado: false})
+        }
+
+        let usuario;
+        if(!this.state.usuario){
+            usuario = this.props.navigation.getParam('usuario', {});
+        }else{
+            usuario = this.state.usuario;
+        }
 
         let data = {
             medico_id: usuario.medico.id
@@ -55,13 +75,7 @@ export default class InicioMedico extends Component {
     }
 
 
-    storeUsuario = async (usuario) => {
-        try {
-            await AsyncStorage.setItem('usuario', JSON.stringify(usuario))
-        } catch (e) {
-            console.log(e)
-        }
-    }
+    
 
     render() {
         if(!this.state.cargado){
@@ -84,9 +98,7 @@ export default class InicioMedico extends Component {
 
         var item = Object.assign({}, ...jornadas.map(j => {
             let fechastring = j.fecha_inicio.slice(0, 10);
-            let fechaIni = new Date(j.fecha_inicio);
-            let fechaFin = new Date(j.fecha_fin);
-            let hora = fechaIni.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) + ' - ' + fechaFin.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+            let hora = utils.formatHora(j.fecha_inicio) + ' - ' + utils.formatHora(j.fecha_fin)
 
             return ({ [fechastring]: [{ esp: j.especialidad.titulo, time: hora, turnos: j.turnos }] })
         }
@@ -100,7 +112,6 @@ export default class InicioMedico extends Component {
         const dateAdd = addDays(today, 7);
 
         const usuario = this.props.navigation.getParam('usuario', {});
-        this.storeUsuario(usuario);
         let genero = usuario.genero === 'femenino' ? 'A' : 'O';
         let dr = usuario.genero === 'femenino' ? 'DRA.' : 'DR.';
         let apellido = usuario.apellido.toUpperCase();
@@ -168,7 +179,7 @@ export default class InicioMedico extends Component {
                                                 <Text style={{ fontSize: 14, marginTop: 10, marginLeft: 16 }}>{item.esp}</Text>
                                             </Col>
                                             <Col>
-                                                <TouchableOpacity onPress={() => { this.props.navigation.navigate('ModificarTurno', {turnos: item.turnos}) }} style={{ marginRight: 10 }}>
+                                                <TouchableOpacity onPress={() => { this.props.navigation.navigate('ModificarTurno', {turnos: item.turnos, fecha: this.state.date}) }} style={{ marginRight: 10 }}>
                                                     <Text style={{ color: "#1f77a5", fontWeight: "bold", fontSize: 12 }}>MODIFICAR</Text>
                                                 </TouchableOpacity>
                                             </Col>

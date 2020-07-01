@@ -113,14 +113,6 @@ export default class InicioPaciente extends Component {
     }
   }
 
-  storeUsuario = async(usuario) =>{
-    try {
-      await AsyncStorage.setItem('usuario', JSON.stringify(usuario))
-    }catch (e){
-      //console.log(e)
-    }
-  }
-
   render() {
     const { navigation } = this.props;
     const usuario = navigation.getParam('usuario', {})
@@ -128,7 +120,6 @@ export default class InicioPaciente extends Component {
       this.showAlert()
     }
     const { showAlert } = this.state;
-    this.storeUsuario(usuario);
     let genero = usuario.genero === 'femenino' ? 'A' : 'O'
     let nombre = usuario.nombre.toUpperCase()
     let apellido = usuario.apellido.toUpperCase()
