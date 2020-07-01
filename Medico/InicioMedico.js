@@ -144,6 +144,7 @@ export default class InicioMedico extends Component {
                         }
                     }}
                     renderEmptyData={() => {
+                        if (this.state.fecha == true) {
                         return (
                             <Card style={{ width: width * 0.85, alignSelf: "center", marginTop: 10 }} >
                                 <CardItem style={{ marginTop: 10, alignSelf: "center", flexDirection: "column" }}>
@@ -153,7 +154,16 @@ export default class InicioMedico extends Component {
                                 <CardItem style={{ alignSelf: "center", marginBottom: 10 }}>
                                     <TouchableOpacity onPress={() => { this.props.navigation.navigate('AgregarTurno', { fecha: this.state.date }) }}><Text style={{ fontSize: 13, textAlign: "center", color: "#1f77a5", fontWeight: 'bold' }}>AGREGAR TURNOS</Text></TouchableOpacity>
                                 </CardItem>
+                            </Card>);}
+                        else{
+                            return(<Card style={{ width: width * 0.85, alignSelf: "center", marginTop: 10 }} >
+                                <CardItem style={{ marginTop: 10, alignSelf: "center", flexDirection: "column" }}>
+                                    <Image style={{ alignSelf: "center", height: 60, width: 60, marginBottom: 5 }} source={require('../assets/Images/calendar2.png')} />
+                                    <Text style={{ fontSize: 14, textAlign: "center",marginBottom:10 }}>No asignaste turnos en ésta fecha.</Text>
+                                </CardItem>
                             </Card>);
+                        }
+
                     }}
                     renderItem={(item, firstItemInDay, day) => {
                         if (this.state.fecha == true) {
