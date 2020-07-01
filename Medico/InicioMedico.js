@@ -88,7 +88,7 @@ export default class InicioMedico extends Component {
             let fechaFin = new Date(j.fecha_fin);
             let hora = fechaIni.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) + ' - ' + fechaFin.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
 
-            return ({ [fechastring]: [{ esp: j.especialidad.titulo, time: hora }] })
+            return ({ [fechastring]: [{ esp: j.especialidad.titulo, time: hora, turnos: j.turnos }] })
         }
         ))
 
@@ -168,7 +168,7 @@ export default class InicioMedico extends Component {
                                                 <Text style={{ fontSize: 14, marginTop: 10, marginLeft: 16 }}>{item.esp}</Text>
                                             </Col>
                                             <Col>
-                                                <TouchableOpacity onPress={() => { this.props.navigation.navigate('ModificarTurno') }} style={{ marginRight: 10 }}>
+                                                <TouchableOpacity onPress={() => { this.props.navigation.navigate('ModificarTurno', {turnos: item.turnos}) }} style={{ marginRight: 10 }}>
                                                     <Text style={{ color: "#1f77a5", fontWeight: "bold", fontSize: 12 }}>MODIFICAR</Text>
                                                 </TouchableOpacity>
                                             </Col>

@@ -4,6 +4,7 @@ import { Footer, FooterTab, Container, Col, Row } from 'native-base'
 import { Divider } from 'react-native-elements'
 import { Ionicons } from '@expo/vector-icons';
 import AsyncStorage from '@react-native-community/async-storage'
+import utils from '../utils/utils';
 
 const { width } = Dimensions.get('window');
 
@@ -72,7 +73,7 @@ export default class PerfilPaciente extends Component {
               <Text style={{ fontSize: 11, marginTop: 10, fontWeight: 'bold', letterSpacing: 3 }}> {this.state.usuario.apellido.toUpperCase()} {this.state.usuario.nombre.toUpperCase()}  </Text>
               <View style={{ flexDirection: 'row', marginBottom: 10 }}>
                 <Text style={{ fontSize: 9, marginTop: 12 }}>dni </Text>
-                <Text style={{ marginLeft: 2, fontSize: 11, marginTop: 10, fontWeight: 'bold' }}> {this.state.usuario.dni} </Text>
+                <Text style={{ marginLeft: 2, fontSize: 11, marginTop: 10, fontWeight: 'bold' }}> {utils.separarEnMiles(this.state.usuario.dni)} </Text>
                 <Text style={{ marginLeft: 30, fontSize: 9, marginTop: 12 }}>vto  </Text>
                 <Text style={{ marginLeft: 2, fontSize: 11, marginTop: 10, fontWeight: 'bold' }}> 10/2023 </Text>
               </View>
@@ -91,7 +92,7 @@ export default class PerfilPaciente extends Component {
             NÚMERO DE SOCIO
           </Text>
           <Text style={{ fontSize: 13, lineHeight: 16, marginHorizontal: '6%', color: 'grey' }}>
-            {this.state.usuario.nro_socio}
+            {utils.separarEnMiles(this.state.usuario.nro_socio)}
           </Text>
           <Divider style={{ backgroundColor: 'black', marginHorizontal: '5%' }} />
           <Text style={{ marginTop: '5%', textAlign: 'justify', fontSize: 14, marginBottom: 15, lineHeight: 16, marginHorizontal: '5%' }}>
