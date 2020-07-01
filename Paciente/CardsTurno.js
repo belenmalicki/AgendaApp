@@ -83,7 +83,7 @@ cerrarPop=()=>{
                         <Text style={{fontSize:12, color:'#1f77a5', textAlign:"center"}}>{new Date(this.props.turno.fecha_inicio).toLocaleDateString("es-AR", {weekday:'long'})}</Text>
                     </Col>
                     <Col size={3} style={{marginLeft:15}} >
-                        <Text style={{fontSize:15}}>{this.props.turno.medico.datos.genero === 'femenino' ? `DRA. ${this.props.turno.medico.datos.nombre.toUpperCase()}` : `DR. ${this.props.turno.medico.datos.nombre.toUpperCase()}`}</Text>
+                        <Text style={{fontSize:15}}>{this.props.turno.medico.datos.genero === 'femenino' ? `DRA. ${this.props.turno.medico.datos.apellido.toUpperCase()}, ${this.props.turno.medico.datos.nombre}` : `DR. ${this.props.turno.medico.datos.apellido.toUpperCase()}, ${this.props.turno.medico.datos.nombre}`}</Text>
                         <Text style={{fontSize:13, marginTop:3}}>{this.props.turno.especialidad.titulo}</Text>
                         <Text style={{fontSize:11, marginTop:12}}> <Ionicons name='md-time' size={12} color='black'></Ionicons> {new Date(this.props.turno.fecha_inicio).toLocaleTimeString("es-AR", {hour:'2-digit', minute:'2-digit'})} Hs</Text>
                         <Text style={{fontSize:11,marginTop:3 }}> <Image style={{height:11, width:11}} source={require('../assets/Images/pin.png')}/> Sede Belgrano</Text>

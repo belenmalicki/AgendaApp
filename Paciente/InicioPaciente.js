@@ -131,7 +131,8 @@ export default class InicioPaciente extends Component {
     this.storeUsuario(usuario);
     let genero = usuario.genero === 'femenino' ? 'A' : 'O'
     let nombre = usuario.nombre.toUpperCase()
-    let bienvenida = `¡BIENVENID${genero}, ${nombre}!`
+    let apellido = usuario.apellido.toUpperCase()
+    let bienvenida = `¡BIENVENID${genero}, ${nombre} ${apellido}!`
     const mensaje = " Le notificamos que mantiene una deuda pendiente con el establecimiento al día de la fecha y por lo tanto, no podrá solicitar un nuevo turno hasta que la regularice." + "\n" + "\n" + " Contactese al 4778-9809 para informarse sobre los métodos de pago."
     return (
       <Container>

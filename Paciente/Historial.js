@@ -89,7 +89,7 @@ export default class Historial extends Component {
     } else {
       const array = this.state.historial.slice(0, this.state.actual)
       return (<View>
-        {array.map((item, i) => <CardHistorial key={i} dia={new Date(item.fecha_inicio).getDate()} mes={this.state.meses[new Date(item.fecha_inicio).getMonth()]} med={item.medico.datos.nombre.toUpperCase()} esp={item.especialidad.titulo} fecha={item.fecha_inicio} />)}
+        {array.map((item, i) => <CardHistorial key={i} dia={new Date(item.fecha_inicio).getDate()} mes={this.state.meses[new Date(item.fecha_inicio).getMonth()]} med={item.medico.datos.apellido.toUpperCase()} esp={item.especialidad.titulo} fecha={item.fecha_inicio} />)}
         {this.showButton()}
       </View>
       );
