@@ -46,7 +46,7 @@ export default class Perfil extends Component {
     } else {
       const {usuario} = this.state;
       const dr = usuario.genero === 'femenino' ? 'DRA.' : 'DR.';
-      console.log(usuario)
+      //console.log(usuario)
       return (
         <ScrollView style={{ flex: 1 }}>
 
@@ -55,7 +55,7 @@ export default class Perfil extends Component {
           <ImageBackground style={{ height: 195, width: 300, marginTop: 20, alignSelf: "center" }} source={require('../assets/Images/credencialMedico/Credencial_Medico.png')} >
             <View >
               <Text style={{ marginLeft: 25, fontSize: 12, marginTop: 10, fontWeight: 'bold', marginTop: 100, letterSpacing: 3, textAlign: 'left' }}> {dr} </Text>
-              <Text style={{ marginLeft: 25, fontSize: 14, marginTop: 10, fontWeight: 'bold', letterSpacing: 3 }}> {usuario.nombre.toUpperCase()} </Text>
+              <Text style={{ marginLeft: 25, fontSize: 14, marginTop: 10, fontWeight: 'bold', letterSpacing: 3 }}> {usuario.apellido.toUpperCase()} {usuario.nombre.toUpperCase()} </Text>
               <View style={{ flexDirection: 'row', marginBottom: 10, justifyContent: "space-around", }}>
                 <View style={{ alignItems: "center" }}>
                   <Text style={{ fontSize: 12, marginTop: 12 }}>Nro. Socio/a</Text>
@@ -72,7 +72,7 @@ export default class Perfil extends Component {
             NOMBRE Y APELLIDO
       </Text>
           <Text style={{ fontSize: 13, lineHeight: 16, marginHorizontal: '6%', color: 'grey' }}>
-            {usuario.nombre}
+            {usuario.nombre} {usuario.apellido}
       </Text>
           <Divider style={{ backgroundColor: 'black', marginHorizontal: '5%' }} />
           <Text style={{ marginTop: '5%', textAlign: 'justify', fontSize: 14, marginBottom: 15, lineHeight: 16, marginHorizontal: '5%' }}>

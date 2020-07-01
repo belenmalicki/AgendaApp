@@ -83,8 +83,10 @@ export default class InicioMedico extends Component {
         const { jornadas } = this.state;
 
         var item = Object.assign({}, ...jornadas.map(j => {
-            let fechastring = j.fecha_inicio.slice(0, 10)
-            let hora = j.fecha_inicio.slice(11, 16) + ' - ' + j.fecha_fin.slice(11, 16)
+            let fechastring = j.fecha_inicio.slice(0, 10);
+            let fechaIni = new Date(j.fecha_inicio);
+            let fechaFin = new Date(j.fecha_fin);
+            let hora = fechaIni.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) + ' - ' + fechaFin.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
 
             return ({ [fechastring]: [{ esp: j.especialidad.titulo, time: hora }] })
         }
@@ -97,12 +99,12 @@ export default class InicioMedico extends Component {
         }
         const dateAdd = addDays(today, 7);
 
-        const usuario = this.props.navigation.getParam('usuario', {})
-        this.storeUsuario(usuario)
-        let genero = usuario.genero === 'femenino' ? 'A' : 'O'
-        let dr = usuario.genero === 'femenino' ? 'DRA.' : 'DR.'
-        let nombre = usuario.nombre.toUpperCase()
-        let bienvenida = `¡BIENVENID${genero} ${dr} ${nombre}!`
+        const usuario = this.props.navigation.getParam('usuario', {});
+        this.storeUsuario(usuario);
+        let genero = usuario.genero === 'femenino' ? 'A' : 'O';
+        let dr = usuario.genero === 'femenino' ? 'DRA.' : 'DR.';
+        let apellido = usuario.apellido.toUpperCase();
+        let bienvenida = `¡BIENVENID${genero} ${dr} ${apellido}!`
         return (
             <Container>
 
