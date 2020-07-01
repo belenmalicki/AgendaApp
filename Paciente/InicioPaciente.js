@@ -18,7 +18,7 @@ export default class InicioPaciente extends Component {
     super(props);
     this.state = {
       showAlert: false,
-      es_deudor: '',
+      es_deudor: false,
       cargado: false,
       turnos: [],
       dias:['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'],
@@ -63,8 +63,8 @@ export default class InicioPaciente extends Component {
   solTurno() {
     if (this.state.es_deudor === false) {
       return (
-        <TouchableOpacity onPress={() => { this.props.navigation.navigate('SolicitarTurno')}}
-          style={{ width: 230, alignSelf: 'center', backgroundColor: '#e93923' }}>
+        <TouchableOpacity onPress={() => { this.props.navigation.navigate('SolicitarTurno',{turnosPaciente:this.state.turnos})}}
+          style={{ width: 230, alignSelf: 'center', backgroundColor: '#e93922' }}>
           <Text style={{ marginVertical: 10, fontSize: 11, color: 'white', textAlign: 'center', fontWeight: 'bold' }}>SOLICITAR TURNO</Text>
         </TouchableOpacity>)
     }
@@ -131,7 +131,8 @@ export default class InicioPaciente extends Component {
     this.storeUsuario(usuario);
     let genero = usuario.genero === 'femenino' ? 'A' : 'O'
     let nombre = usuario.nombre.toUpperCase()
-    let bienvenida = `¡BIENVENID${genero}, ${nombre}!`
+    let apellido = usuario.apellido.toUpperCase()
+    let bienvenida = `¡BIENVENID${genero}, ${nombre} ${apellido}!`
     const mensaje = " Le notificamos que mantiene una deuda pendiente con el establecimiento al día de la fecha y por lo tanto, no podrá solicitar un nuevo turno hasta que la regularice." + "\n" + "\n" + " Contactese al 4778-9809 para informarse sobre los métodos de pago."
     return (
       <Container>

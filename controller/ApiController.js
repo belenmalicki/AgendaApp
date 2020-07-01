@@ -235,6 +235,21 @@ class ApiController {
         }).catch(err => console.log(err))
     }
 
+    //parámetros: turno_id, paciente_id
+    registrarDeuda(data, callback){
+        const endpoint = `${urlHeroku}/api/registrarDeuda`;
+        console.log('registrando deuda');
+        fetch(endpoint, {
+            method: 'POST',
+            mode: "cors",
+            headers:{ 'Content-Type': 'application/json'},
+            body: JSON.stringify(data)
+        }).then((response) => {
+            console.log('listo!');
+            callback(response)
+        }).catch(err => console.log(err))
+    }
+
 
 };
 

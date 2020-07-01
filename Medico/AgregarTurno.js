@@ -13,6 +13,11 @@ import AsyncStorage from '@react-native-community/async-storage'
 const dias = ['Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes', 'Sábado', 'Domingo'];
 const meses = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
 
+const formatFecha = (fecha, hora) => {
+   return hora !== null ? new Date(fecha.toLocaleDateString() + ' ' + hora) : null;
+}
+
+
 const { width } = Dimensions.get('window');
 export default class AgregarTurno extends Component {
   constructor(props) {
@@ -112,11 +117,52 @@ export default class AgregarTurno extends Component {
     });
 
   };
-  AbrirPop = () => {
-    if (this.state.textInputValueEs !== '' && this.state.entrada !== 'Seleccione horario del primer turno' && this.state.salida !== "Seleccione horario del ultimo turno") {
+
+  generarJornada(){
+    const esp = this.state.especialidades.find(e => e.titulo === this.state.textInputValueEs);
+    const fecha = this.props.navigation.getParam('fecha', '');
+
+    const {entrada, salida, checked, usuario} = this.state;
+
+    const almuerzo = this.state.almuerzo === 'Seleccione la hora de almuerzo' ? null : this.state.almuerzo;
+    
+    const fecha_inicio = formatFecha(fecha, entrada)
+    const fecha_fin = formatFecha(fecha, salida)
+    const horario_almuerzo = formatFecha(fecha, almuerzo)
+    
+    console.log(fecha_inicio);
+    console.log(fecha_fin);
+    console.log(horario_almuerzo);
+
+    let data = {
+      fecha_inicio: fecha_inicio,
+      fecha_fin: fecha_fin,
+      horario_almuerzo: horario_almuerzo,
+      medico_id: usuario.medico.id,
+      especialidad_id: esp.id,
+      sede: 'Belgrano'
+    };
+
+    ApiController.generarJornadaMedico(data, this.handleResponse.bind(this), checked)  
+
+  }
+
+  handleResponse(response){
+    if(response.status === 400){
+      alert('Ha ocurrido un error, por favor intente nuevamente')
+    }else{
       this.setState({
         showAlert2: true
       });
+    }
+  }
+
+
+
+  AbrirPop = () => {
+    if (this.state.textInputValueEs !== '' && this.state.entrada !== 'Seleccione horario del primer turno' && this.state.salida !== "Seleccione horario del ultimo turno") {
+      this.generarJornada()
+      
     }
     else {
       this.setState({
@@ -145,6 +191,7 @@ export default class AgregarTurno extends Component {
 
       const stringDia = dias[fecha.getDay() - 1] + ' ' + fecha.getDate().toString()
       const stringMes = meses[fecha.getMonth()]
+      const stringCheck = `Repetir turno para las próximas semanas de ${stringMes}`
       
 
       const {especialidades} = this.state
@@ -266,7 +313,7 @@ export default class AgregarTurno extends Component {
           <Divider style={{ backgroundColor: "rgba(0, 0, 0, .38)", alignSelf: 'center', width: width * 0.9 }} />
 
           <CheckBox
-            title='Repetir turno para las próximas semanas de abril'
+            title={stringCheck}
             checked={this.state.checked}
             //checked={false}
             onPress={() => this.setState({ checked: !this.state.checked })}
