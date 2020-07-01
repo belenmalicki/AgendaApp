@@ -159,6 +159,7 @@ class ApiController {
         }).catch(err => console.log(err))
     }
 
+    //parámetro: paciente_id
     getHistorialPaciente(data,callback){
         const endpoint = `${urlHeroku}/api/getHistorialPaciente`;
         console.log('obteniendo historial');
@@ -173,6 +174,7 @@ class ApiController {
         }).catch(err => console.log(err))
     }
 
+    //parámetros: especialidad_id, medico_id, fecha (los ultimos 2 no son requeridos)
     getTurnos(data,callback){
         const endpoint = `${urlHeroku}/api/getTurnos`;
         console.log('obteniendo turnos disponibles');
@@ -187,10 +189,51 @@ class ApiController {
         }).catch(err => console.log(err))
     }
 
-    //FALTA IMPLEMENTAR: /getTurnos, /getJornadasMedico, /agregarTurnos, /eliminarTurnos
-    //FALTA ARREGLAR: generarJornada no maneja el horario de almuerzo
+    //parámetros: medico_id
+    getJornadasMedico(data,callback){
+        const endpoint = `${urlHeroku}/api/getJornadasMedico`;
+        console.log('obteniendo agenda del médico');
+        fetch(endpoint, {
+            method: 'POST',
+            mode: "cors",
+            headers:{ 'Content-Type': 'application/json'},
+            body: JSON.stringify(data)
+        }).then((response) => {
+            console.log('listo!');
+            callback(response)
+        }).catch(err => console.log(err))
+    }
 
 
+    //parametros: jornada_id, horarios[]
+    agregarTurnos(data,callback){
+        const endpoint = `${urlHeroku}/api/agregarTurnos`;
+        console.log('agregando turnos');
+        fetch(endpoint, {
+            method: 'POST',
+            mode: "cors",
+            headers:{ 'Content-Type': 'application/json'},
+            body: JSON.stringify(data)
+        }).then((response) => {
+            console.log('listo!');
+            callback(response)
+        }).catch(err => console.log(err))
+    }
+
+    //parámetros: jornada_id, turnos[] (array de id)
+    eliminarTurnos(data,callback){
+        const endpoint = `${urlHeroku}/api/eliminarTurnosById`;
+        console.log('eliminando turnos');
+        fetch(endpoint, {
+            method: 'POST',
+            mode: "cors",
+            headers:{ 'Content-Type': 'application/json'},
+            body: JSON.stringify(data)
+        }).then((response) => {
+            console.log('listo!');
+            callback(response)
+        }).catch(err => console.log(err))
+    }
 
 
 };

@@ -1,7 +1,7 @@
 import React, { Component, useState } from 'react';
 import { Ionicons } from '@expo/vector-icons';
 import { Platform, StyleSheet, Text, View, Image, Alert, Dimensions, TouchableOpacity, ScrollView, ActivityIndicator } from 'react-native';
-import { Footer, FooterTab, Container } from 'native-base'
+import { Footer, FooterTab, Container,Card, CardItem } from 'native-base'
 import CardTurno from './CardsTurno'
 import AwesomeAlert from 'react-native-awesome-alerts';
 import ApiController from '../controller/ApiController';
@@ -17,12 +17,12 @@ export default class InicioPaciente extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      showAlert: true,
+      showAlert: false,
       es_deudor: false,
       cargado: false,
       turnos: [],
-      dias:['Domingo', 'Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes', 'Sabado'],
-      meses:["enero", "febrero", "marzo", "abril", "mayo", "junio", "julio", "agosto", "septiembre", "octubre", "noviembre", "diciembre"],
+      dias:['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'],
+      meses:["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"],
     };
     this.update=this.update.bind(this)
   };
@@ -33,7 +33,7 @@ export default class InicioPaciente extends Component {
 
   handleTurnos(response) {
     response.json().then((turnos) => {
-      console.log(turnos)
+      //console.log(turnos)
       this.setState({ turnos: turnos, cargado: true });
     })
   }
@@ -41,8 +41,10 @@ export default class InicioPaciente extends Component {
   update(){
     const usuario = this.props.navigation.getParam('usuario', {})
     const data = {
-      paciente_id: usuario.paciente.id
+      paciente_id: usuario.paciente.id,
     }
+    this.setState({es_deudor:usuario.paciente.es_deudor})
+    //console.log('usuario.paciente.es_deudor', usuario.paciente.es_deudor)
     ApiController.getTurnosPaciente(data, this.handleTurnos.bind(this))
   }
 
@@ -61,7 +63,7 @@ export default class InicioPaciente extends Component {
   solTurno() {
     if (this.state.es_deudor === false) {
       return (
-        <TouchableOpacity onPress={() => { this.props.navigation.navigate('SolicitarTurno')}}
+        <TouchableOpacity onPress={() => { this.props.navigation.navigate('SolicitarTurno',{turnosPaciente:this.state.turnos})}}
           style={{ width: 230, alignSelf: 'center', backgroundColor: '#e93922' }}>
           <Text style={{ marginVertical: 10, fontSize: 11, color: 'white', textAlign: 'center', fontWeight: 'bold' }}>SOLICITAR TURNO</Text>
         </TouchableOpacity>)
@@ -69,7 +71,7 @@ export default class InicioPaciente extends Component {
     else {
       return (
         <TouchableOpacity onPress={() => this.showAlert()}
-          style={{ width: 230, alignSelf: 'center', backgroundColor: '#e93922' }}>
+          style={{ width: 230, alignSelf: 'center', backgroundColor: '#e93923' }}>
           <Text style={{ marginVertical: 10, fontSize: 11, color: 'white', textAlign: 'center', fontWeight: 'bold' }}>SOLICITAR TURNO</Text>
         </TouchableOpacity>)
     }
@@ -78,26 +80,35 @@ export default class InicioPaciente extends Component {
   showTurnos() {
     if (this.state.cargado) {
       if (this.state.turnos.length > 0) {
-        console.log(this.state.turnos)
+        //console.log(this.state.turnos)
         return this.state.turnos.map((turno, i) => {
-          let nom = turno.medico.datos.nombre.toUpperCase();
+        /*  let nom = turno.medico.datos.nombre.toUpperCase();
           let gen = turno.medico.datos.genero;
           let id = turno.id;
-          let med = gen === 'femenino' ? `DRA. ${nom}` : `DR. ${nom}`
+          let med = gen === 'femenino' ? `DRA. ${turno.medico.datos.nombre.toUpperCase()}` : `DR. ${turno.medico.datos.nombre.toUpperCase()}`
           let esp = turno.especialidad.titulo;
           let hora = new Date(turno.fecha_inicio).getHours()+'.'+new Date(turno.fecha_inicio).getMinutes(); 
           let fecha = turno.fecha_inicio;
           let dia = new Date(turno.fecha_inicio).getDate();
           let dianombre = this.state.dias[new Date(turno.fecha_inicio).getDay()];
-          let mes = this.state.meses[new Date(turno.fecha_inicio).getMonth()];
-          return <CardTurno forzar={this.update} id={id} dia={dia} mes={mes} dianombre={dianombre} key={i} med={med} esp={esp} hora={hora} fecha={fecha} />//todavia no se pasa la fecha y hora correcta
+          let mes = this.state.meses[new Date(turno.fecha_inicio).getMonth()];*/
+          return <CardTurno forzar={this.update} turno={turno} key={i}  />//todavia no se pasa la fecha y hora correcta
         })
       } else {
-        return <Text>No tiene ningún turno solicitado.</Text> //embellecer en otra oportunidad (tal vez poner una imagen tipo las de flaticon)
+        return <View style={{alignItems: 'center'}}>
+        <Card>
+          <CardItem style={{flexDirection:'column', marginTop:'2%'}}>
+            <View style={{backgroundColor:'#e1e6e9', padding:15, borderRadius:80}}>
+                <Image style={{alignSelf:"center", height:80, width:80 }} source={require('../assets/Images/calendarhistorial3.png')}></Image>
+            </View>
+          <Text style={{textAlign: 'center', marginTop: '4%', fontSize: 14, marginVertical:10}}>No tenés ningún turno solicitado.</Text>
+          </CardItem>
+        </Card>
+        </View> //embellecer en otra oportunidad (tal vez poner una imagen tipo las de flaticon)
       }
     } else {
       return (<View style={{ marginTop: '2%' }}>
-        <ActivityIndicator size="large" color={'#e93922'}></ActivityIndicator>
+        <ActivityIndicator size="large" color={'#e93923'}></ActivityIndicator>
       </View>)
     }
   }
@@ -106,7 +117,7 @@ export default class InicioPaciente extends Component {
     try {
       await AsyncStorage.setItem('usuario', JSON.stringify(usuario))
     }catch (e){
-      console.log(e)
+      //console.log(e)
     }
   }
 
@@ -120,7 +131,8 @@ export default class InicioPaciente extends Component {
     this.storeUsuario(usuario);
     let genero = usuario.genero === 'femenino' ? 'A' : 'O'
     let nombre = usuario.nombre.toUpperCase()
-    let bienvenida = `¡BIENVENID${genero}, ${nombre}!`
+    let apellido = usuario.apellido.toUpperCase()
+    let bienvenida = `¡BIENVENID${genero}, ${nombre} ${apellido}!`
     const mensaje = " Le notificamos que mantiene una deuda pendiente con el establecimiento al día de la fecha y por lo tanto, no podrá solicitar un nuevo turno hasta que la regularice." + "\n" + "\n" + " Contactese al 4778-9809 para informarse sobre los métodos de pago."
     return (
       <Container>

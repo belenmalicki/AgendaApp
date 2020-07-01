@@ -10,6 +10,7 @@ import ModalSelector from 'react-native-modal-selector'
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { Overlay } from 'react-native-elements';
 import ApiController from '../controller/ApiController'
+import AsyncStorage from '@react-native-community/async-storage'
 
 /*ESTADOS DE estadoTurnos
 1: Hay turno disponible en la fecha que eligió el paciente con el profesional elegido
@@ -38,12 +39,14 @@ export default class SolicitarTurno extends Component {
             especialidades:[],
             profesionales:[],
             turnos:[],
-            dias:['Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes', 'Sabado', 'Domingo'],
+            usuario:{},
+            dias:[ 'Domingo','Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes', 'Sabado'],
             meses:["enero", "febrero", "marzo", "abril", "mayo", "junio", "julio", "agosto", "septiembre", "octubre", "noviembre", "diciembre"]
         }
     }
 
     componentDidMount() {
+      this.getUsuario()
       ApiController.getEspecialidades(this.handleEspecialidades.bind(this))
     }
 
@@ -53,9 +56,19 @@ export default class SolicitarTurno extends Component {
       })
     }
 
+    getUsuario = async () => {
+      try {
+        const jsonValue = await AsyncStorage.getItem('usuario')
+        const usuario = jsonValue != null ? JSON.parse(jsonValue) : null;
+        this.setState({usuario:usuario})
+      } catch (e) {
+        console.log(e)
+      }
+    }
+
     onChangeChoose(option){
       this.setState({textInputValueEs:option})
-      this.setState({profesional:'',espe:option.titulo})
+      this.setState({profesional:'',espe:option.titulo,estadoTurnos:0})
       let data={
         titulo:option.titulo
       }
@@ -100,7 +113,30 @@ export default class SolicitarTurno extends Component {
 
   handleTurnos(response){
     response.json().then((turnos) => {
-      this.setState({ turnos: turnos,estadoTurnos:1});
+      if(turnos.length>0 || this.state.estadoTurnos==5){//si se encontro algun turno o si no hay turnos en 2 meses
+        var turnosPaciente=this.props.navigation.getParam('turnosPaciente', [])//verificar que el usuario no tenga turno para ese dia
+         if(turnosPaciente.find(t=> (new Date( t.fecha_inicio).getDate()+new Date(t.fecha_inicio).getMonth()) == new Date(this.state.select).getDate()+new Date(this.state.select).getMonth())!=undefined){
+          this.setState({estadoTurnos:4});
+        }else{ 
+          if(this.state.estadoTurnos==0){
+            this.setState({estadoTurnos:1});
+          }
+          this.setState({ turnos: turnos})
+        }
+      }else{//si no hay turnos por otras razones
+          if(this.state.select!==''){//buscar sin fecha especifica
+            this.setState({estadoTurnos:2,select:''});
+          }else{
+            if(this.state.profesional!==''){//buscar los otros profesional
+              this.setState({estadoTurnos:3,profesional:''});
+            }else{
+              if(this.state.select==''&&this.state.profesional==''){//si no hay mas profesionales no hay turno
+                this.setState({estadoTurnos:5});
+              }
+            }
+          }
+          this.abrirPop()
+      }
     })
   }
 
@@ -109,7 +145,7 @@ export default class SolicitarTurno extends Component {
   }
 
   buscar(){
-    if(!this.state.estadoTurnos==1){
+    if(this.state.estadoTurnos!=1){
       return(<View>
        <CardDisponibilidadTurno nro={this.state.estadoTurnos} />
       </View>)
@@ -125,8 +161,11 @@ export default class SolicitarTurno extends Component {
       },{})
       var mapeado= []
       var keys=Object.keys(reduced)
+      var turnosPaciente=this.props.navigation.getParam('turnosPaciente', [])
       for (let index = 0; index < keys.length; index++) {
-        mapeado.push(reduced[keys[index]])
+        if(turnosPaciente.find(t=> (new Date( t.fecha_inicio).getDate().toString()+'-'+new Date(t.fecha_inicio).getMonth().toString()+'-'+new Date(t.fecha_inicio).getFullYear().toString()) == keys[index])==undefined){
+          mapeado.push(reduced[keys[index]])
+        }
       }
       return(<View>
       <View style={{backgroundColor:'#1f77a5',marginHorizontal:10, paddingLeft:8}}>
@@ -137,7 +176,7 @@ export default class SolicitarTurno extends Component {
           {mapeado.map((j)=><View>
             <View style={{flexDirection:"row", marginLeft:20, marginTop:15}}>
             <Text style={{fontSize:14,color:'#e93922', fontWeight:'bold'}}>
-              {new Date(j[0].fecha_inicio).getDate()} {this.state.dias[(new Date(j[0].fecha_inicio).getDate()-1)%7]}
+              {new Date(j[0].fecha_inicio).getDate()} {this.state.dias[(new Date(j[0].fecha_inicio).getDay())]}
             </Text>
             <Text style={{fontSize:14, marginLeft:2}}>
               {this.state.meses[new Date(j[0].fecha_inicio).getMonth()]} 
@@ -161,8 +200,6 @@ export default class SolicitarTurno extends Component {
        
         )
     }
-           
-    
     else{
 
         if(this.state.estadoTurnos==1){
@@ -317,7 +354,7 @@ export default class SolicitarTurno extends Component {
                     accessible={true}
                     scrollViewAccessibilityLabel={'Scrollable options'}
                     cancelButtonAccessibilityLabel={'Cancel Button'}
-                    onChange={(option)=>{ this.setState({profesional:option.datos.nombre,textInputValuePr:option})}}>
+                    onChange={(option)=>{ this.setState({profesional:option.datos.nombre,textInputValuePr:option,estadoTurnos:0})}}>
                  <View style={{flexDirection:'row',marginBottom:10,justifyContent:'space-between' }}> 
                       <TextInput
                             style={{borderWidth:1,borderColor:'white', fontSize:14,paddingLeft:8}}
@@ -339,7 +376,7 @@ export default class SolicitarTurno extends Component {
                       maximumDate={new Date(year, monthFut, date)}
                       placeHolderText="Seleccione una fecha"
                       placeHolderTextStyle={{ color: "rgba(0, 0, 0, .22)", fontSize:14,paddingLeft:18 }}
-                      onDateChange={(fecha)=>(this.setState({select:fecha}))}
+                      onDateChange={(fecha)=>(this.setState({select:fecha,estadoTurnos:0}))}
                     />
               </View>
               <Icon name={'caret-down'} type='FontAwesome'  style={{color:"rgba(0, 0, 0, .38)", fontSize:18,marginLeft:5  ,marginTop:25}}></Icon>
@@ -349,7 +386,7 @@ export default class SolicitarTurno extends Component {
                 style={{marginVertical:20, width:115 ,alignSelf:'flex-end', backgroundColor:'#e93922', marginRight:20}}>
                 <Text style={{marginVertical:10,fontSize:11, color:'white', textAlign:'center', fontWeight:'bold'}}>BUSCAR</Text>
             </TouchableOpacity>
-            {this.state.estadoTurnos==1 && this.buscar()}
+            {this.state.estadoTurnos!=0 && this.buscar()}
             <Overlay overlayStyle={{height:140}} isVisible={this.state.showAlert} >
                 <Text style={{fontSize:14, lineHeight:18,color:'black',textAlign:'center', marginTop:20, marginHorizontal:8}}>POR FAVOR, SELECCIONE POR LO MENOS LA ESPECIALIDAD</Text>
                 <TouchableOpacity style={{backgroundColor:"#e93922", width:100, marginTop:20, alignSelf:"center"}} onPress={() => this.cerrarPop()}>

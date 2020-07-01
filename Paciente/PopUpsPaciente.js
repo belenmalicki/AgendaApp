@@ -39,17 +39,17 @@ export default function PopUp(props){
   };
   function handleCancelar(response){
     if(response.status==200){
-      alert("se ha cancelado el turno correctamente")
+      //alert("se ha cancelado el turno correctamente")
     }else{
-      alert("algo salio mal")
+      //alert("algo salio mal")
     }
     
   }
   function handleConfirmar(response){
     if(response.status==200){
-      alert("se ha confirmado el turno correctamente")
+     // alert("se ha confirmado el turno correctamente")
     }else{
-      alert("algo salio mal")
+     // alert("algo salio mal")
     }
     
   }
@@ -119,5 +119,23 @@ if(props.tipo=='1'){
       </View>
     );
   }
-  else if(props.tipo=4){}
+  else if(props.tipo=='4'){
+    return (
+      <View>
+         <TouchableOpacity style={{backgroundColor:'white',  alignSelf:'center'}} onPress={toggleOverlay}>
+            <Text style={{color:"#1f77a5", fontWeight:"bold", fontSize:12, textAlign:'center' }}>CONFIRMAR</Text>
+          </TouchableOpacity>
+  
+        <Overlay overlayStyle={{height:props.alto}} isVisible={visible} >
+          <View>
+            <Text style={{textAlign:"center", marginTop:10}}>{props.titulo}</Text>
+            <Text style={{textAlign:"justify", fontSize:12, marginTop:20, marginHorizontal:5}}>{props.texto}</Text>
+            <TouchableOpacity style={{backgroundColor:props.col, width:140, alignSelf:'center', marginTop:30}} onPress={toggleOverlayConf}>
+                <Text style={{color:"white", fontWeight:"bold", fontSize:11, marginVertical:10, marginHorizontal:8, textAlign:'center' }}>{props.bot}</Text>
+            </TouchableOpacity>
+          </View>
+        </Overlay>
+      </View>
+    );
+  }
 };

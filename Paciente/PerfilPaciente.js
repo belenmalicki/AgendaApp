@@ -29,6 +29,19 @@ export default class PerfilPaciente extends Component {
     }
   }
 
+  mostrarBoton(){
+    if(this.state.usuario.medico!=null){
+      <View style={{ marginTop: 20,marginBottom:20 }}>
+      <Text style={{marginHorizontal:15, fontSize:13, marginBottom:10, textAlign:"justify" }}>Si desea volver a su agénda con los turnos programados diríjase a su cuenta de médico</Text>
+            <TouchableOpacity onPress={() => { this.props.navigation.navigate('InicioMedico',{usuario:usuario}) }}
+              style={{ width: 230, alignSelf: 'center', backgroundColor: '#e93922' }}>
+              <Text style={{ marginVertical: 10, fontSize: 11, color: 'white', textAlign: 'center', fontWeight: 'bold' }}>VER AGENDA MÉDICO</Text>
+            </TouchableOpacity>
+          </View>
+    }
+
+  }
+
   render() {
 
     if (!this.state.cargado) {
@@ -55,8 +68,8 @@ export default class PerfilPaciente extends Component {
       </View>*/}
           <ImageBackground style={{ height: 195, width: 300, marginTop: 20, alignSelf: "center" }} source={require('../assets/Images/credencialesPaciente/Credencial_9.png')} >
             <View style={{ flex: 1, alignItems: "center" }}>
-              <Text style={{ fontSize: 18, marginTop: 10, fontWeight: 'bold', marginTop: 120, letterSpacing: 3 }}> 61  759666  1  02  </Text>
-              <Text style={{ fontSize: 11, marginTop: 10, fontWeight: 'bold', letterSpacing: 3 }}> {this.state.usuario.nombre}  </Text>
+              <Text style={{ fontSize: 18, marginTop: 10, fontWeight: 'bold', marginTop: 120, letterSpacing: 3 }}> {this.state.usuario.paciente.os_nro}  </Text>
+              <Text style={{ fontSize: 11, marginTop: 10, fontWeight: 'bold', letterSpacing: 3 }}> {this.state.usuario.apellido.toUpperCase()} {this.state.usuario.nombre.toUpperCase()}  </Text>
               <View style={{ flexDirection: 'row', marginBottom: 10 }}>
                 <Text style={{ fontSize: 9, marginTop: 12 }}>dni </Text>
                 <Text style={{ marginLeft: 2, fontSize: 11, marginTop: 10, fontWeight: 'bold' }}> {this.state.usuario.dni} </Text>
@@ -69,33 +82,50 @@ export default class PerfilPaciente extends Component {
 
           <Text style={{ marginTop: '7%', textAlign: 'justify', fontSize: 14, marginBottom: 15, lineHeight: 16, marginHorizontal: '5%' }}>
             NOMBRE Y APELLIDO
-      </Text>
+          </Text>
           <Text style={{ fontSize: 13, lineHeight: 16, marginHorizontal: '6%', color: 'grey' }}>
-            {this.state.usuario.nombre}
-      </Text>
+            {this.state.usuario.nombre} {this.state.usuario.apellido}
+          </Text>
           <Divider style={{ backgroundColor: 'black', marginHorizontal: '5%' }} />
-
+          <Text style={{ marginTop: '5%', textAlign: 'justify', fontSize: 14, marginBottom: 15, lineHeight: 16, marginHorizontal: '5%' }}>
+            NÚMERO DE SOCIO
+          </Text>
+          <Text style={{ fontSize: 13, lineHeight: 16, marginHorizontal: '6%', color: 'grey' }}>
+            {this.state.usuario.nro_socio}
+          </Text>
+          <Divider style={{ backgroundColor: 'black', marginHorizontal: '5%' }} />
+          <Text style={{ marginTop: '5%', textAlign: 'justify', fontSize: 14, marginBottom: 15, lineHeight: 16, marginHorizontal: '5%' }}>
+            FECHA DE NACIMIENTO
+          </Text>
+          <Text style={{ fontSize: 13, lineHeight: 16, marginHorizontal: '6%', color: 'grey' }}>
+            {new Date(this.state.usuario.fecha_nac).toLocaleDateString("es-AR")}
+          </Text>
+          <Divider style={{ backgroundColor: 'black', marginHorizontal: '5%' }} />
+          
+          <Text style={{ marginTop: '5%', textAlign: 'justify', fontSize: 14, marginBottom: 15, lineHeight: 16, marginHorizontal: '5%' }}>
+            EMAIL
+          </Text>
+          <Text style={{ fontSize: 13, lineHeight: 16, marginHorizontal: '6%', color: 'grey' }}>
+            {this.state.usuario.email}
+          </Text>
+          <Divider style={{ backgroundColor: 'black', marginHorizontal: '5%' }} />
           <Text style={{ marginTop: '5%', textAlign: 'justify', fontSize: 14, marginBottom: 15, lineHeight: 16, marginHorizontal: '5%' }}>
             DIRECCION
-      </Text>
+          </Text>
           <Text style={{ fontSize: 13, lineHeight: 16, marginHorizontal: '6%', color: 'grey' }}>
             {this.state.usuario.direccion}
-      </Text>
+          </Text>
           <Divider style={{ backgroundColor: 'black', marginHorizontal: '5%' }} />
           <Text style={{ marginTop: '5%', textAlign: 'justify', fontSize: 14, marginBottom: 15, lineHeight: 16, marginHorizontal: '5%' }}>
             TELÉFONO
-      </Text>
+          </Text>
           <Text style={{ fontSize: 13, lineHeight: 16, marginHorizontal: '6%', color: 'grey' }}>
             {this.state.usuario.telefono}
-      </Text>
-          <Divider style={{ backgroundColor: 'black', marginHorizontal: '5%' }} />
+          </Text>
+          <Divider style={{ backgroundColor: 'black', marginHorizontal: '5%', marginBottom:10 }} />
 
-          <View style={{ marginTop: 60 }}>
-            <TouchableOpacity onPress={() => { this.props.navigation.navigate('InicioMedico') }}
-              style={{ width: 230, alignSelf: 'center', backgroundColor: '#e93922' }}>
-              <Text style={{ marginVertical: 10, fontSize: 11, color: 'white', textAlign: 'center', fontWeight: 'bold' }}>VER AGENDA MÉDICO</Text>
-            </TouchableOpacity>
-          </View>
+          {this.mostrarBoton()}
+          
         </ScrollView>
       );
     }
