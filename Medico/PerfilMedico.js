@@ -29,9 +29,11 @@ export default class Perfil extends Component {
   }
 
   mostrarBoton() {
+    //
     if (this.state.usuario.paciente != null) {
-      <View style={{ marginTop: 60 }}>
-        <TouchableOpacity onPress={() => { this.props.navigation.navigate('InicioPaciente', { usuario: usuario }) }}
+      return <View style={{ marginTop: 20,marginBottom:20 }}>
+      <Text style={{marginHorizontal:15, fontSize:13, marginBottom:10, textAlign:"justify" }}>Si desea ver sus turnos solicitados, diríjase a su cuenta de paciente</Text>
+        <TouchableOpacity  onPress={() => { this.props.navigation.navigate('InicioPaciente', { usuario: usuario }) }}
           style={{ width: 230, alignSelf: 'center', backgroundColor: '#e93922' }}>
           <Text style={{ marginVertical: 10, fontSize: 11, color: 'white', textAlign: 'center', fontWeight: 'bold' }}>IR A CUENTA PACIENTE</Text>
         </TouchableOpacity>
@@ -109,7 +111,7 @@ export default class Perfil extends Component {
           <Text style={{ fontSize: 13, lineHeight: 16, marginHorizontal: '6%', color: 'grey' }}>
             {usuario.telefono}
       </Text>
-          <Divider style={{ backgroundColor: 'black', marginHorizontal: '5%' }} />
+          <Divider style={{ backgroundColor: 'black', marginHorizontal: '5%', marginBottom:10 }} />
 
         {this.mostrarBoton()}
         </ScrollView>

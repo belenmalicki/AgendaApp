@@ -1,7 +1,7 @@
 import React, { Component, useState } from 'react';
 import { Ionicons } from '@expo/vector-icons';
 import { Platform, StyleSheet, Text, View, Image, Alert, Dimensions, TouchableOpacity, ScrollView, ActivityIndicator } from 'react-native';
-import { Footer, FooterTab, Container } from 'native-base'
+import { Footer, FooterTab, Container,Card, CardItem } from 'native-base'
 import CardTurno from './CardsTurno'
 import AwesomeAlert from 'react-native-awesome-alerts';
 import ApiController from '../controller/ApiController';
@@ -95,7 +95,16 @@ export default class InicioPaciente extends Component {
           return <CardTurno forzar={this.update} turno={turno} key={i}  />//todavia no se pasa la fecha y hora correcta
         })
       } else {
-        return <Text>No tiene ningún turno solicitado.</Text> //embellecer en otra oportunidad (tal vez poner una imagen tipo las de flaticon)
+        return <View style={{alignItems: 'center'}}>
+        <Card>
+          <CardItem style={{flexDirection:'column', marginTop:'2%'}}>
+            <View style={{backgroundColor:'#e1e6e9', padding:15, borderRadius:80}}>
+                <Image style={{alignSelf:"center", height:80, width:80 }} source={require('../assets/Images/calendarhistorial3.png')}></Image>
+            </View>
+          <Text style={{textAlign: 'center', marginTop: '4%', fontSize: 14, marginVertical:10}}>No tenés ningún turno solicitado.</Text>
+          </CardItem>
+        </Card>
+        </View> //embellecer en otra oportunidad (tal vez poner una imagen tipo las de flaticon)
       }
     } else {
       return (<View style={{ marginTop: '2%' }}>
