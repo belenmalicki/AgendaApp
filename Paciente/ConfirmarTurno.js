@@ -58,7 +58,7 @@ export default class ConfirmarTurno extends Component {
   render() {
     const { navigation } = this.props;
     const med  = navigation.getParam('med' ,{});
-    const esp  = navigation.getParam( 'esp' , '');
+    var esp  = navigation.getParam( 'esp' , '');
     const fechaComp  = navigation.getParam( 'fecha' , '');
     const hora  = navigation.getParam( 'hora' ,'');
     //const options = { weekday: 'short', year: 'numeric', month: 'short', day: 'numeric' };//long month y weekday 
@@ -72,7 +72,7 @@ export default class ConfirmarTurno extends Component {
     return (
       <ScrollView style={{flex:1}}>
          <Text style={{fontSize:14, marginLeft:10,marginTop:20,}}>Datos del turno: </Text>
-         <Text style={{fontSize:14, marginLeft:14,marginTop:20, marginBottom:10, color:'#1F77A5', fontWeight:'bold' }}>{med.nombre}</Text>
+         <Text style={{fontSize:14, marginLeft:14,marginTop:20, marginBottom:10, color:'#1F77A5', fontWeight:'bold' }}>{med.apellido} {med.nombre}</Text>
          <Text style={{fontSize:14, marginLeft:14, marginBottom:20, color:'#1F77A5' }}>{esp}</Text>
          <Text style={{fontSize:12, marginLeft:18, marginBottom:10 }}> <Ionicons name='md-calendar' size={16} color='black'></Ionicons> <Text style={{fontWeight:'bold'}}>{dia} {mes}</Text> {dianombre}   </Text>
          <Text style={{fontSize:12, marginLeft:18, marginBottom:10 }}> <Ionicons name='md-time' size={16} color='black'></Ionicons> {hora} Hs. </Text>
@@ -85,10 +85,12 @@ export default class ConfirmarTurno extends Component {
             <Text style={{marginVertical:10,fontSize:11, color:'white', textAlign:'center', fontWeight:'bold'}}>CONFIRMAR</Text>
         </TouchableOpacity>
         <Overlay overlayStyle={{height:120}} isVisible={this.state.showAlert} >
-            <Text style={{fontSize:13, lineHeight:18,color:'black',textAlign:'center', marginTop:20, marginHorizontal:8}}>SE HA CONFIRMADO SU TURNO CON ÉXITO</Text>
-            <TouchableOpacity style={{backgroundColor:"#1F77A5", width:180, marginTop:20, alignSelf:"center"}} onPress={() => this.cerrarPop()}>
-                <Text style={{fontSize:11,fontWeight:'bold', color:'white', marginVertical:8, textAlign:"center"}} >VOLVER AL INICIO</Text>
-            </TouchableOpacity>
+            <View>
+                <Text style={{fontSize:13, lineHeight:18,color:'black',textAlign:'center', marginTop:20, marginHorizontal:8}}>SE HA CONFIRMADO SU TURNO CON ÉXITO</Text>
+                <TouchableOpacity style={{backgroundColor:"#1F77A5", width:180, marginTop:20, alignSelf:"center"}} onPress={() => this.cerrarPop()}>
+                    <Text style={{fontSize:11,fontWeight:'bold', color:'white', marginVertical:8, textAlign:"center"}} >VOLVER AL INICIO</Text>
+                </TouchableOpacity>
+            </View>
          </Overlay> 
       </ScrollView>
     );
