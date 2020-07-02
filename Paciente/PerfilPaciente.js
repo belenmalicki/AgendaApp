@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Platform, StyleSheet, Text, View, Image, TextInput, Dimensions, TouchableOpacity, ScrollView, ImageBackground } from 'react-native';
+import { Text, View, Image, ActivityIndicator, Dimensions, TouchableOpacity, ScrollView, ImageBackground } from 'react-native';
 import { Footer, FooterTab, Container, Col, Row } from 'native-base'
 import { Divider } from 'react-native-elements'
 import { Ionicons } from '@expo/vector-icons';
@@ -12,7 +12,7 @@ const { width } = Dimensions.get('window');
 export default class PerfilPaciente extends Component {
   constructor(props) {
     super(props);
-    this.state = { usuario: {}, cargado: false }
+    this.state = { usuario: {}, cargado: false, }
   }
 
   componentDidMount() {
@@ -32,7 +32,7 @@ export default class PerfilPaciente extends Component {
 
   mostrarBoton(){
     if(this.state.usuario.medico!=null){
-      <View style={{ marginTop: 20,marginBottom:20 }}>
+      <View style={{ marginTop: 10,marginBottom:20 }}>
       <Text style={{marginHorizontal:15, fontSize:13, marginBottom:10, textAlign:"justify" }}>Si desea volver a su agénda con los turnos programados diríjase a su cuenta de médico</Text>
             <TouchableOpacity onPress={() => { this.props.navigation.navigate('InicioMedico',{usuario:usuario}) }}
               style={{ width: 230, alignSelf: 'center', backgroundColor: '#e93922' }}>
@@ -43,12 +43,51 @@ export default class PerfilPaciente extends Component {
 
   }
 
+
   render() {
 
     if (!this.state.cargado) {
-      return null
-      //mostrar que está cargando, con un activity indicator
+      return <View >
+                  <Text style={{ fontSize: 16, textAlign: 'center', marginTop: '5%' }}>Mi Perfil </Text>
+                  <ActivityIndicator style={{ marginTop: '2%'}} size="large" color={'#e93923'}></ActivityIndicator>
+              </View>
     } else {
+
+      if(this.state.usuario.paciente.obra_social=='medicare'){
+        if(this.state.usuario.paciente.plan=='premium'){
+          var img=require('../assets/Images/credencialesPaciente/Credencial_9.png')
+        }
+        if(this.state.usuario.paciente.plan=='plus'){
+          var img=require('../assets/Images/credencialesPaciente/Credencial_8.png')
+        }
+        if(this.state.usuario.paciente.plan=='essential'){
+          var img=require('../assets/Images/credencialesPaciente/Credencial_7.png')
+        }
+  
+      }
+      if(this.state.usuario.paciente.obra_social=='osima'){
+        if(this.state.usuario.paciente.plan=='gold'){
+          var img=require('../assets/Images/credencialesPaciente/Credencial_1.png')
+        }
+        if(this.state.usuario.paciente.plan=='silver'){
+          var img=require('../assets/Images/credencialesPaciente/Credencial_2.png')
+        }
+        if(this.state.usuario.paciente.plan=='blue'){
+          var img=require('../assets/Images/credencialesPaciente/Credencial_3.png')
+        }
+      } 
+      if(this.state.usuario.paciente.obra_social=='arsalud'){
+        if(this.state.usuario.paciente.plan=='250'){
+          var img=require('../assets/Images/credencialesPaciente/Credencial_6.png')
+        }
+        if(this.state.usuario.paciente.plan=='240'){
+          var img=require('../assets/Images/credencialesPaciente/Credencial_5.png')
+        }
+        if(this.state.usuario.paciente.plan=='230'){
+          var img=require('../assets/Images/credencialesPaciente/Credencial_6.png')
+        }
+      }
+     
       return (
         <ScrollView style={{ flex: 1 }}>
 
@@ -67,7 +106,7 @@ export default class PerfilPaciente extends Component {
                 <Text  style={{ marginLeft:2, fontSize:11, marginTop:10, fontWeight:'bold' }}> 31/10/2020 </Text>
             </View>
       </View>*/}
-          <ImageBackground style={{ height: 195, width: 300, marginTop: 20, alignSelf: "center" }} source={require('../assets/Images/credencialesPaciente/Credencial_9.png')} >
+          <ImageBackground style={{ height: 195, width: 300, marginTop: 20, alignSelf: "center" }} source={img} >
             <View style={{ flex: 1, alignItems: "center" }}>
               <Text style={{ fontSize: 18, marginTop: 10, fontWeight: 'bold', marginTop: 120, letterSpacing: 3 }}> {this.state.usuario.paciente.os_nro}  </Text>
               <Text style={{ fontSize: 11, marginTop: 10, fontWeight: 'bold', letterSpacing: 3 }}> {this.state.usuario.apellido.toUpperCase()} {this.state.usuario.nombre.toUpperCase()}  </Text>
@@ -123,7 +162,7 @@ export default class PerfilPaciente extends Component {
           <Text style={{ fontSize: 13, lineHeight: 16, marginHorizontal: '6%', color: 'grey' }}>
             {this.state.usuario.telefono}
           </Text>
-          <Divider style={{ backgroundColor: 'black', marginHorizontal: '5%', marginBottom:10 }} />
+          <Divider style={{ backgroundColor: 'black', marginHorizontal: '5%', marginBottom:20 }} />
 
           {this.mostrarBoton()}
           

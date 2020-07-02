@@ -1,4 +1,4 @@
-import { Calendar, CalendarList, Agenda } from 'react-native-calendars';
+import { Calendar, CalendarList, Agenda,LocaleConfig } from 'react-native-calendars';
 import React, { Component } from 'react';
 import { Ionicons } from '@expo/vector-icons';
 import { Platform, StyleSheet, Text, View, Image, TextInput, Dimensions, TouchableOpacity, ScrollView, ActivityIndicator } from 'react-native';
@@ -9,7 +9,14 @@ import ApiController from '../controller/ApiController';
 import utils from '../utils/utils';
 
 const { width } = Dimensions.get('window');
-
+LocaleConfig.locales['es'] = {
+    monthNames: ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'],
+    monthNamesShort: ['Ene.','Feb.','Mar.','Abr.','May..','Jun','Jul.','Ago.','Sep.','Oct.','Nov.','Dic.'],
+    dayNames: ['Domingo','Lunes','Martes','Miércoles','Jueves','Viernes','Sábado'],
+    dayNamesShort: ['Dom.','Lun.','Mar.','Mie.','Jue.','Vie.','Sabb.'],
+    today: 'Hoy'
+  };
+  LocaleConfig.defaultLocale = 'es';
 export default class InicioMedico extends Component {
     constructor(props) {
         super(props)
@@ -115,6 +122,7 @@ export default class InicioMedico extends Component {
         let genero = usuario.genero === 'femenino' ? 'A' : 'O';
         let dr = usuario.genero === 'femenino' ? 'DRA.' : 'DR.';
         let apellido = usuario.apellido.toUpperCase();
+        //let apellido= ' ' 
         let bienvenida = `¡BIENVENID${genero} ${dr} ${apellido}!`
         return (
             <Container>
@@ -157,6 +165,7 @@ export default class InicioMedico extends Component {
                         }
                     }}
                     renderEmptyData={() => {
+                        if (this.state.fecha == true) {
                         return (
                             <Card style={{ width: width * 0.85, alignSelf: "center", marginTop: 10 }} >
                                 <CardItem style={{ marginTop: 10, alignSelf: "center", flexDirection: "column" }}>
@@ -166,7 +175,16 @@ export default class InicioMedico extends Component {
                                 <CardItem style={{ alignSelf: "center", marginBottom: 10 }}>
                                     <TouchableOpacity onPress={() => { this.props.navigation.navigate('AgregarTurno', { fecha: this.state.date }) }}><Text style={{ fontSize: 13, textAlign: "center", color: "#1f77a5", fontWeight: 'bold' }}>AGREGAR TURNOS</Text></TouchableOpacity>
                                 </CardItem>
+                            </Card>);}
+                        else{
+                            return(<Card style={{ width: width * 0.85, alignSelf: "center", marginTop: 10 }} >
+                                <CardItem style={{ marginTop: 10, alignSelf: "center", flexDirection: "column" }}>
+                                    <Image style={{ alignSelf: "center", height: 60, width: 60, marginBottom: 5 }} source={require('../assets/Images/calendar2.png')} />
+                                    <Text style={{ fontSize: 14, textAlign: "center",marginBottom:10 }}>No asignaste turnos en ésta fecha.</Text>
+                                </CardItem>
                             </Card>);
+                        }
+
                     }}
                     renderItem={(item, firstItemInDay, day) => {
                         if (this.state.fecha == true) {

@@ -139,13 +139,13 @@ class App extends Component {
         <View style={{ justifyContent: 'center', alignItems: 'center' }}>
           <Image style={{ justifyContent: 'center', alignItems: 'center', height: width * 0.15, width: width * 0.8, marginTop: '45%', marginBottom: '20%' }} source={require('./assets/Images/Logo.png')} />
           <TextInput
-            style={{ fontSize: 11, paddingLeft: 10, justifyContent: 'center', alignItems: 'center', marginBottom: '10%', height: 20, width: width * 0.9, borderWidth: 1, borderLeftColor: 'white', borderRightColor: 'white', borderTopColor: 'white' }}
+            style={{ fontSize: 12, paddingLeft: 10, justifyContent: 'center', alignItems: 'center', marginBottom: '10%', height: 20, width: width * 0.9, borderWidth: 1, borderLeftColor: 'white', borderRightColor: 'white', borderTopColor: 'white' }}
             placeholder={'NOMBRE DE USUARIO'}
             value={this.state.usuario}
             onChangeText={(e) => { this.onChangeUs(e) }}
           />
           <TextInput
-            style={{ fontSize: 11, paddingLeft: 10, justifyContent: 'center', alignItems: 'center', height: 20, width: width * 0.9, borderWidth: 1, borderLeftColor: 'white', borderRightColor: 'white', borderTopColor: 'white', }}
+            style={{ fontSize: 12, paddingLeft: 10, justifyContent: 'center', alignItems: 'center', height: 20, width: width * 0.9, borderWidth: 1, borderLeftColor: 'white', borderRightColor: 'white', borderTopColor: 'white', }}
             placeholder={'CONTRASEÑA'}
             value={this.state.password}
             onChangeText={(e) => { this.onChangePas(e) }}
