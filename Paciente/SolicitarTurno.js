@@ -11,6 +11,7 @@ import DateTimePicker from '@react-native-community/datetimepicker';
 import { Overlay } from 'react-native-elements';
 import ApiController from '../controller/ApiController'
 import AsyncStorage from '@react-native-community/async-storage'
+import { Calendar, CalendarList, Agenda,LocaleConfig } from 'react-native-calendars';
 
 /*ESTADOS DE estadoTurnos
 1: Hay turno disponible en la fecha que eligió el paciente con el profesional elegido
@@ -19,7 +20,67 @@ import AsyncStorage from '@react-native-community/async-storage'
 4: No podes elegir ese turno porque ya tenes un turno de esa especialidad en esa fecha
 5:No hay turnos disponibles en todos los dos meses: Lista de espera
 */
-
+let turnos=[{
+  "id": 1,
+  "fecha_inicio": "2020-07-02T13:00:00.000Z",
+  "fecha_fin": "2020-07-02T13:30:00.000Z",
+  "sede": "Belgrano",
+  "estado": "disponible",
+  "createdAt": "2020-07-01T03:44:26.442Z",
+  "updatedAt": "2020-07-01T03:44:26.442Z",
+  "especialidad_id": 1,
+  "jornada_id": 1,
+  "medico_id": 1,
+  "paciente_id": null,
+  "medico": {
+      "id": 1,
+      "nro_matricula": "621248963",
+      "foto_carnet": "https://i.imgur.com/rOeqi15.jpg",
+      "createdAt": "2020-07-01T03:31:04.065Z",
+      "updatedAt": "2020-07-01T03:31:04.065Z",
+      "usuario_id": 2,
+      "datos": {
+          "id": 2,
+          "apellido": "Rodríguez",
+          "nombre": "Carla",
+          "genero": "femenino"
+      }
+  },
+  "especialidad": {
+      "titulo": "Cardiología"
+  }
+},
+{
+  "id": 2,
+  "fecha_inicio": "2020-07-02T13:30:00.000Z",
+  "fecha_fin": "2020-07-02T14:00:00.000Z",
+  "sede": "Belgrano",
+  "estado": "disponible",
+  "createdAt": "2020-07-01T03:44:26.442Z",
+  "updatedAt": "2020-07-01T03:44:26.442Z",
+  "especialidad_id": 1,
+  "jornada_id": 1,
+  "medico_id": 1,
+  "paciente_id": null,
+  "medico": {
+      "id": 1,
+      "nro_matricula": "621248963",
+      "foto_carnet": "https://i.imgur.com/rOeqi15.jpg",
+      "createdAt": "2020-07-01T03:31:04.065Z",
+      "updatedAt": "2020-07-01T03:31:04.065Z",
+      "usuario_id": 2,
+      "datos": {
+          "id": 2,
+          "apellido": "Rodríguez",
+          "nombre": "Carla",
+          "genero": "femenino"
+      }
+  },
+  "especialidad": {
+      "titulo": "Cardiología"
+  }
+}
+]
 
 
 const { width } = Dimensions.get('window');
@@ -31,9 +92,11 @@ export default class SolicitarTurno extends Component {
         this.state={
             select:'',
             espe:'',
+            dia:'Seleccione fecha',
             profesional:'',
             estadoTurnos: 0,
             showAlert: false,
+            showAlert2: false,
             textInputValueEs:{},
             textInputValuePr:{},
             especialidades:[],
@@ -110,6 +173,7 @@ export default class SolicitarTurno extends Component {
         ApiController.getTurnos(data,this.handleTurnos.bind(this))
       }   
   }
+  abrirPop2=()=>{this.setState({showAlert2:true})}
 
   handleTurnos(response){
     response.json().then((turnos) => {
@@ -142,6 +206,9 @@ export default class SolicitarTurno extends Component {
 
   cerrarPop=()=>{
     this.setState({ showAlert: false});
+  }
+  cerrarPop2=()=>{
+    this.setState({ showAlert2: false});
   }
 
   buscar(){
@@ -309,6 +376,17 @@ export default class SolicitarTurno extends Component {
       var date = new Date().getDate(); //Current Date
       var monthFut = new Date().getMonth() + 2; //Current Month + 2
       var year = new Date().getFullYear(); //Current Year
+    var i=0
+      var item = Object.assign({}, ...turnos.map(j => {
+        let fechastring = j.fecha_inicio.slice(0, 10);
+        return ({ [fechastring]: { marked:true } })
+    }
+    ))
+    if(this.state.dia!='Seleccione fecha'){
+        item[this.state.dia]={...item[this.state.dia], selected: true}
+    }
+    let cambio = this.state.dia === 'Seleccione fecha' ? 'rgba(0,0,0,0.22)' : 'black'
+    console.log('selec', this.state.select)
       return (
         //style no funciona con ScrollView, debe ser contentContainerStyle
         //flex:1 hacia que la pantalla no se moviera con el scrollview
@@ -347,14 +425,14 @@ export default class SolicitarTurno extends Component {
                     data={this.state.profesionales}
                     initValue="Seleccione profesional"
                     keyExtractor={item=>item.Medico_especialidad.medico_id}
-                    labelExtractor={item=>item.datos.nombre}
+                    labelExtractor={item=>item.datos.apellido+' '+item.datos.nombre}
                     //supportedOrientations={['landscape']}
                    // optionTextStyle={color:'red'}
                     animationType={'none'}
                     accessible={true}
                     scrollViewAccessibilityLabel={'Scrollable options'}
                     cancelButtonAccessibilityLabel={'Cancel Button'}
-                    onChange={(option)=>{ this.setState({profesional:option.datos.nombre,textInputValuePr:option,estadoTurnos:0})}}>
+                    onChange={(option)=>{ this.setState({profesional:option.datos.apellido+' '+option.datos.nombre,textInputValuePr:option,estadoTurnos:0})}}>
                  <View style={{flexDirection:'row',marginBottom:10,justifyContent:'space-between' }}> 
                       <TextInput
                             style={{borderWidth:1,borderColor:'white', fontSize:14,paddingLeft:8}}
@@ -368,30 +446,54 @@ export default class SolicitarTurno extends Component {
             </View>
             <Text style={{fontSize:12,  marginTop:20, marginBottom:0, marginLeft:20}}>Fecha:</Text> 
             <View style={{marginLeft:'3%', flexDirection:"row", justifyContent:'space-between',width:width*0.9}}>
-              <View style={{width:width*0.88}}>
-                    <DatePicker 
-                      androidMode={"calendar"}
-                      locale={"es"}
-                      minimumDate={new Date()}
-                      maximumDate={new Date(year, monthFut, date)}
-                      placeHolderText="Seleccione una fecha"
-                      placeHolderTextStyle={{ color: "rgba(0, 0, 0, .22)", fontSize:14,paddingLeft:18 }}
-                      onDateChange={(fecha)=>(this.setState({select:fecha,estadoTurnos:0}))}
-                    />
-              </View>
-              <Icon name={'caret-down'} type='FontAwesome'  style={{color:"rgba(0, 0, 0, .38)", fontSize:18,marginLeft:5  ,marginTop:25}}></Icon>
+              <TouchableOpacity style={{marginTop:20}}onPress={() => this.abrirPop2()}>
+                <Text style={{paddingLeft:20,fontSize:14, color:cambio,marginBottom:10 }}>{this.state.dia}</Text>
+            </TouchableOpacity>
+              <Icon name={'caret-down'} type='FontAwesome'  style={{color:"rgba(0, 0, 0, .38)", fontSize:18,marginLeft:5  ,marginTop:20}}></Icon>
             </View> 
             <Divider style={{ backgroundColor: "rgba(0, 0, 0, .38)",alignSelf:'center',width:width*0.9 }} />
+            <Overlay key={i++} overlayStyle={{height:width, width:width}} isVisible={this.state.showAlert2}>
+            <View>
+            <Calendar
+                    current={new Date()}
+                    minDate={new Date()}
+                    maxDate={new Date(year, monthFut, date)}
+                    onDayPress={(day) => {this.setState({dia:day.dateString}),this.setState({select:new Date(day.year,day.month, day.day)}),console.log('selected day', day.dateString)}}
+                    onDayLongPress={(day) => {console.log('selected long day', day)}}
+                    onMonthChange={(month) => {console.log('month changed', month)}}
+                    hideExtraDays={true}
+                    disableMonthChange={true}
+                    showWeekNumbers={false}
+                    onPressArrowLeft={subtractMonth => subtractMonth()}
+                    onPressArrowRight={addMonth => addMonth()}
+                    disableAllTouchEventsForDisabledDays={true}
+                    renderHeader={(date) => {/*Return JSX*/}}
+                    style={{height:0.8*width}}
+                    markedDates={item}
+                    theme={{agendaDayTextColor: '#1f77a5',
+                            agendaDayNumColor: '#1f77a5',
+                            todayTextColor: '#e93923',
+                            dotColor: '#1f77a5',
+                            arrowColor: '#e93923',
+                            selectedDayBackgroundColor: '#1f77a5',}}
+                    />
+                <TouchableOpacity style={{backgroundColor:"#e93922", width:100, marginTop:20, alignSelf:"center"}} onPress={() => this.cerrarPop2()}>
+                    <Text style={{fontSize:11,fontWeight:'bold', color:'white', marginVertical:8, textAlign:"center"}} >ACEPTAR</Text>
+                </TouchableOpacity>
+              </View>               
+            </Overlay>
             <TouchableOpacity onPress={() => this.abrirPop()}
                 style={{marginVertical:20, width:115 ,alignSelf:'flex-end', backgroundColor:'#e93922', marginRight:20}}>
                 <Text style={{marginVertical:10,fontSize:11, color:'white', textAlign:'center', fontWeight:'bold'}}>BUSCAR</Text>
             </TouchableOpacity>
             {this.state.estadoTurnos!=0 && this.buscar()}
             <Overlay overlayStyle={{height:140}} isVisible={this.state.showAlert} >
-                <Text style={{fontSize:14, lineHeight:18,color:'black',textAlign:'center', marginTop:20, marginHorizontal:8}}>POR FAVOR, SELECCIONE POR LO MENOS LA ESPECIALIDAD</Text>
-                <TouchableOpacity style={{backgroundColor:"#e93922", width:100, marginTop:20, alignSelf:"center"}} onPress={() => this.cerrarPop()}>
-                    <Text style={{fontSize:11,fontWeight:'bold', color:'white', marginVertical:8, textAlign:"center"}} >ACEPTAR</Text>
-                </TouchableOpacity>
+              <View>
+                  <Text style={{fontSize:14, lineHeight:18,color:'black',textAlign:'center', marginTop:20, marginHorizontal:8}}>POR FAVOR, SELECCIONE POR LO MENOS LA ESPECIALIDAD</Text>
+                  <TouchableOpacity style={{backgroundColor:"#e93922", width:100, marginTop:20, alignSelf:"center"}} onPress={() => this.cerrarPop()}>
+                      <Text style={{fontSize:11,fontWeight:'bold', color:'white', marginVertical:8, textAlign:"center"}} >ACEPTAR</Text>
+                  </TouchableOpacity>
+                </View>
             </Overlay>
         </ScrollView>
     );

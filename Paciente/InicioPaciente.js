@@ -6,6 +6,7 @@ import CardTurno from './CardsTurno'
 import AwesomeAlert from 'react-native-awesome-alerts';
 import ApiController from '../controller/ApiController';
 import AsyncStorage from '@react-native-community/async-storage'
+import CalendarioTurnos from '../Paciente/CalendarioTurno'
 //import DateTimePicker from '@react-native-community/datetimepicker';
 
 
@@ -113,14 +114,6 @@ export default class InicioPaciente extends Component {
     }
   }
 
-  storeUsuario = async(usuario) =>{
-    try {
-      await AsyncStorage.setItem('usuario', JSON.stringify(usuario))
-    }catch (e){
-      //console.log(e)
-    }
-  }
-
   render() {
     const { navigation } = this.props;
     const usuario = navigation.getParam('usuario', {})
@@ -128,7 +121,6 @@ export default class InicioPaciente extends Component {
       this.showAlert()
     }
     const { showAlert } = this.state;
-    this.storeUsuario(usuario);
     let genero = usuario.genero === 'femenino' ? 'A' : 'O'
     let nombre = usuario.nombre.toUpperCase()
     let apellido = usuario.apellido.toUpperCase()
@@ -140,6 +132,7 @@ export default class InicioPaciente extends Component {
           <Text style={{ fontSize: 17, textAlign: 'center', marginVertical: 20 }}>{bienvenida}</Text>
           <Text style={{ fontSize: 14, marginLeft: '4%', color: '#e93922', marginBottom: 15 }}> <Ionicons name='md-calendar' size={16} color='#e93922'></Ionicons> PRÓXIMOS TURNOS</Text>
           {this.showTurnos()}
+
         </ScrollView>
         <Footer style={{ backgroundColor: 'white' }}>
           {this.solTurno()}

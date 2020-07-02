@@ -4,6 +4,7 @@ import { Platform, StyleSheet, Text, View, Image,TextInput, Dimensions, Touchabl
 import {Card, CardItem, Col, Row, Grid} from 'native-base'
 import PopUp from './PopUpsPaciente'
 import {  Overlay } from 'react-native-elements';
+import utils from '../utils/utils';
 const { width } = Dimensions.get('window');
 
 export default class CardTurno extends Component {
@@ -79,13 +80,13 @@ cerrarPop=()=>{
             <CardItem>
                     <Col style={{marginTop:25}} >
                         <Text style={{fontSize:14, color:'#1f77a5', textAlign:"center", fontWeight:'bold'}}>{new Date(this.props.turno.fecha_inicio).getDate()}</Text>
-                        <Text style={{fontSize:12, color:'#1f77a5', textAlign:"center", fontWeight:'bold'}}>{new Date(this.props.turno.fecha_inicio).toLocaleDateString("es-AR", {month:'long'})}</Text>
-                        <Text style={{fontSize:12, color:'#1f77a5', textAlign:"center"}}>{new Date(this.props.turno.fecha_inicio).toLocaleDateString("es-AR", {weekday:'long'})}</Text>
+                        <Text style={{fontSize:12, color:'#1f77a5', textAlign:"center", fontWeight:'bold'}}>{utils.getStringMes(this.props.turno.fecha_inicio)}</Text>
+                        <Text style={{fontSize:12, color:'#1f77a5', textAlign:"center"}}>{utils.getStringWeekday(this.props.turno.fecha_inicio)}</Text>
                     </Col>
                     <Col size={3} style={{marginLeft:15}} >
                         <Text style={{fontSize:15}}>{this.props.turno.medico.datos.genero === 'femenino' ? `DRA. ${this.props.turno.medico.datos.apellido.toUpperCase()}, ${this.props.turno.medico.datos.nombre}` : `DR. ${this.props.turno.medico.datos.apellido.toUpperCase()}, ${this.props.turno.medico.datos.nombre}`}</Text>
                         <Text style={{fontSize:13, marginTop:3}}>{this.props.turno.especialidad.titulo}</Text>
-                        <Text style={{fontSize:11, marginTop:12}}> <Ionicons name='md-time' size={12} color='black'></Ionicons> {new Date(this.props.turno.fecha_inicio).toLocaleTimeString("es-AR", {hour:'2-digit', minute:'2-digit'})} Hs</Text>
+                        <Text style={{fontSize:11, marginTop:12}}> <Ionicons name='md-time' size={12} color='black'></Ionicons> {utils.formatHora(this.props.turno.fecha_inicio)} Hs</Text>
                         <Text style={{fontSize:11,marginTop:3 }}> <Image style={{height:11, width:11}} source={require('../assets/Images/pin.png')}/> Sede Belgrano</Text>
                     </Col>
             </CardItem>
