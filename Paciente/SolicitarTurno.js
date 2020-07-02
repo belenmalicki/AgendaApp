@@ -383,8 +383,8 @@ export default class SolicitarTurno extends Component {
     }
     ))
     if(this.state.dia!='Seleccione fecha'){
-        item[this.state.dia].selected=true
-            }
+        item[this.state.dia]={...item[this.state.dia], selected: true}
+    }
     let cambio = this.state.dia === 'Seleccione fecha' ? 'rgba(0,0,0,0.22)' : 'black'
     console.log('selec', this.state.select)
       return (
@@ -463,7 +463,7 @@ export default class SolicitarTurno extends Component {
                     onMonthChange={(month) => {console.log('month changed', month)}}
                     hideExtraDays={true}
                     disableMonthChange={true}
-                    showWeekNumbers={true}
+                    showWeekNumbers={false}
                     onPressArrowLeft={subtractMonth => subtractMonth()}
                     onPressArrowRight={addMonth => addMonth()}
                     disableAllTouchEventsForDisabledDays={true}
