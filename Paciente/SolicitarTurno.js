@@ -200,8 +200,6 @@ export default class SolicitarTurno extends Component {
        
         )
     }
-           
-    
     else{
 
         if(this.state.estadoTurnos==1){
@@ -349,14 +347,14 @@ export default class SolicitarTurno extends Component {
                     data={this.state.profesionales}
                     initValue="Seleccione profesional"
                     keyExtractor={item=>item.Medico_especialidad.medico_id}
-                    labelExtractor={item=>item.datos.nombre}
+                    labelExtractor={item=> (item.datos.genero === 'femenino' ? 'DRA.' : 'DR.')+' '+item.datos.apellido}
                     //supportedOrientations={['landscape']}
                    // optionTextStyle={color:'red'}
                     animationType={'none'}
                     accessible={true}
                     scrollViewAccessibilityLabel={'Scrollable options'}
                     cancelButtonAccessibilityLabel={'Cancel Button'}
-                    onChange={(option)=>{ this.setState({profesional:option.datos.nombre,textInputValuePr:option,estadoTurnos:0})}}>
+                    onChange={(option)=>{ this.setState({profesional:option.datos.apellido,textInputValuePr:option,estadoTurnos:0})}}>
                  <View style={{flexDirection:'row',marginBottom:10,justifyContent:'space-between' }}> 
                       <TextInput
                             style={{borderWidth:1,borderColor:'white', fontSize:14,paddingLeft:8}}
