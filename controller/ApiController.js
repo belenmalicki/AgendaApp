@@ -1,4 +1,4 @@
-//const urlHeroku = "http://192.168.0.69:8000"
+//const urlHeroku = "http://192.168.0.6:8000"
 const urlHeroku = "https://centro-medico-backend-h.herokuapp.com"
 
 
