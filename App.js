@@ -15,6 +15,7 @@ import InicioMedico from './Medico/InicioMedico'
 import PerfilMedico from './Medico/PerfilMedico'
 import AgregarTurno from './Medico/AgregarTurno'
 import ModificarTurno from './Medico/ModificarTurno'
+import TurnosAsignados from './Medico/TurnosAsignados'
 import OlvidoContraseña from './Usuario/OlvidoContraseña'
 import NuevaContraseña from './Usuario/NuevaContraseña'
 import { Container, Header, Content, Item, Input } from 'native-base';
@@ -224,6 +225,12 @@ const StMedico = createStackNavigator({
     screen: ModificarTurno,
     navigationOptions: () => {
       return { headerTitle: 'TURNOS' }
+    }
+  },
+  TurnosAsignados:{
+    screen:TurnosAsignados,
+    navigationOptions: () => {
+      return { headerTitle: 'TURNOS ASIGNADOS' }
     }
   }
 }, {

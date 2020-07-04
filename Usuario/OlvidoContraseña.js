@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import ApiController from '../controller/ApiController';
 import { Text, View,TextInput,TouchableOpacity, Dimensions } from 'react-native';
 const { width } = Dimensions.get('window');
-
+const { height } = Dimensions.get('screen');
+console.log(height)
 
 
 export default class OlvidoContraseña extends Component {
@@ -52,8 +53,8 @@ export default class OlvidoContraseña extends Component {
     }
     render(){
         return(
-            <View style={{flex:1}} >
-            <View style={{flex:1}} >
+            <View style={{flex:1, height:height}} >
+            <View style={{ height:height*0.8}}>
               <Text style={{textAlign:"center", marginVertical:20}}>¿OLVIDÓ SU CONTRASEÑA?</Text>
               <Text style={{fontSize:14,textAlign:'justify', marginHorizontal:10, marginBottom:20}}>
                 Por Favor ingrese los siguientes datos para que pueda generar una nueva contraseña o comuniquese al +54 (011) 5777-3200.
@@ -90,7 +91,8 @@ export default class OlvidoContraseña extends Component {
                     value={this.state.Legajo}
                     onChangeText={(e)=>{this.onChangeNum(e)}}
                   />
-              </View>
+                  </View>
+
               <View style={{marginBottom:40}}>
                   <TouchableOpacity  onPress={() => { this.checkData() }}
                     style={{ width: 230, justifyContent: 'center', alignSelf: 'center', backgroundColor: '#e93922' }}>

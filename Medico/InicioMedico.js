@@ -196,9 +196,14 @@ export default class InicioMedico extends Component {
                                                 <Text style={{ fontSize: 14, fontWeight: 'bold' }} ><Ionicons name='md-calendar' size={18} color='#1f77a5'></Ionicons> {item.time}</Text>
                                                 <Text style={{ fontSize: 14, marginTop: 10, marginLeft: 16 }}>{item.esp}</Text>
                                             </Col>
-                                            <Col>
+                                            <Col style={{alignItems:"center"}}>
+
                                                 <TouchableOpacity onPress={() => { this.props.navigation.navigate('ModificarTurno', {turnos: item.turnos, fecha: this.state.date}) }} style={{ marginRight: 10 }}>
-                                                    <Text style={{ color: "#1f77a5", fontWeight: "bold", fontSize: 12 }}>MODIFICAR</Text>
+                                                    <Text style={{ color: "#e93923", fontWeight: "bold", fontSize: 12 }}>MODIFICAR</Text>
+                                                </TouchableOpacity>
+
+                                                <TouchableOpacity  onPress={() => { this.props.navigation.navigate('TurnosAsignados', {turnos: item.turnos, fecha: this.state.date, especialidad:item.esp}) }} style={{ marginRight: 10, marginTop:10 }}>
+                                                    <Text style={{ color: "#1f77a5", fontWeight: "bold", fontSize: 12, textAlign:'center' }}>VER TURNOS</Text>
                                                 </TouchableOpacity>
                                             </Col>
                                         </CardItem>
