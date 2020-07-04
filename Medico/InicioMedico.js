@@ -29,7 +29,12 @@ export default class InicioMedico extends Component {
             date: undefined
         }
     }
-
+    static navigationOptions = {
+        title: 'Agenda',
+       drawerIcon: ({ focused }) => (
+          <Ionicons name="md-home" size={24} color={focused ? '#e93923' : 'black'} />
+        ),}
+  
 
     componentDidMount(){
         this.update();
