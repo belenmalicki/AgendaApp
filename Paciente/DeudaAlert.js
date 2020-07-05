@@ -1,8 +1,5 @@
 import React, { Component } from 'react';
-import { Platform, StyleSheet, Text, View, Image,TextInput, Dimensions, TouchableOpacity  } from 'react-native';
-import {createSwitchNavigator,createAppContainer } from 'react-navigation'
-const { width } = Dimensions.get('window');
-
+import { Text, View,TouchableOpacity  } from 'react-native';
 
 export default class DeudaAlert extends Component {
   render() {

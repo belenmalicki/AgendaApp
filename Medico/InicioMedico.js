@@ -1,10 +1,9 @@
-import { Calendar, CalendarList, Agenda,LocaleConfig } from 'react-native-calendars';
+import { Agenda,LocaleConfig } from 'react-native-calendars';
 import React, { Component } from 'react';
 import { Ionicons } from '@expo/vector-icons';
-import { Platform, StyleSheet, Text, View, Image, TextInput, Dimensions, TouchableOpacity, ScrollView, ActivityIndicator } from 'react-native';
-import { Footer, FooterTab, Container, Card, CardItem, Col, Accordion, Content } from 'native-base';
+import { Text, View, Image, Dimensions, TouchableOpacity, ActivityIndicator } from 'react-native';
+import { Container, Card, CardItem, Col} from 'native-base';
 import { Overlay } from 'react-native-elements';
-import AsyncStorage from '@react-native-community/async-storage';
 import ApiController from '../controller/ApiController';
 import utils from '../utils/utils';
 
@@ -133,12 +132,6 @@ export default class InicioMedico extends Component {
             <Container>
 
                 <Text style={{ fontSize: 17, textAlign: 'center', marginVertical: 20 }}>{bienvenida}</Text>
-                {/* 
-            <Card style={{width:width*0.95, alignSelf:"center", paddingVertical:10, paddingHorizontal:8, marginBottom:15}}>
-                <Text style={{fontSize:14, margin:8, textAlign:"justify",lineHeight:18 }}><Ionicons name='md-information-circle' size={18} color='#e93922'></Ionicons> Estimado: Le recordamos que solo podrá modificar los turnos una semana pasada a la fecha actual y aquellos que no hayan sido solicitados por algún paciente. </Text>
-                <Text style={{fontSize:14, margin:8, textAlign:"justify",lineHeight:18 }}> Solo podrá crear la agenda de los dos dos meses siguientes al corriente. </Text>
-            </Card>
-           */ }
                 <View style={{ flexDirection: "row" }}>
                     <Text style={{ fontSize: 14, marginLeft: '4%', color: '#e93922', marginBottom: 15 }}> <Ionicons name='md-calendar' size={16} color='#e93922'></Ionicons> AGENDA DE TURNOS</Text>
                     <TouchableOpacity onPress={() => this.abrirPop()} style={{ marginLeft: 5 }}><Image source={require('../assets/Images/question.png')} style={{ height: 18, width: 18 }} /></TouchableOpacity>
@@ -223,6 +216,12 @@ export default class InicioMedico extends Component {
                                             <Col size={2}>
                                                 <Text style={{ fontSize: 14, fontWeight: 'bold' }} ><Ionicons name='md-calendar' size={18} color='#1f77a5'></Ionicons> {item.time}</Text>
                                                 <Text style={{ fontSize: 14, marginTop: 10, marginLeft: 16 }}>{utils.mayusPrimerLetra(item.esp)}</Text>
+                                            </Col>
+                                            <Col style={{alignItems:"center"}}>
+
+                                                <TouchableOpacity  onPress={() => { this.props.navigation.navigate('TurnosAsignados', {turnos: item.turnos, fecha: this.state.date, especialidad:item.esp}) }} style={{ marginRight: 10, marginTop:10 }}>
+                                                    <Text style={{ color: "#1f77a5", fontWeight: "bold", fontSize: 12, textAlign:'center' }}>VER TURNOS</Text>
+                                                </TouchableOpacity>
                                             </Col>
                                         </CardItem>
                                     </Card>

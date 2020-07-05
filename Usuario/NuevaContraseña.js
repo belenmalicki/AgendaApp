@@ -48,8 +48,7 @@ export default class NuevaContraseña extends Component {
     } else {
       response.json().then(usuario => {
         this.storeUsuario(usuario).then(() => {
-          this.setState({ cargando: false })
-          //console.log(usuario)        
+          this.setState({ cargando: false })        
           ToastAndroid.show('Se ha actualizado la contraseña correctamente.', ToastAndroid.LONG)
           if (!usuario.medico && usuario.paciente) { //por ahora para debug, despues va al revés
             this.props.navigation.navigate('InicioPaciente', { usuario: usuario })

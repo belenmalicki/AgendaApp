@@ -1,17 +1,14 @@
-import React, { Component, useState } from 'react';
-import { Ionicons } from '@expo/vector-icons';
-import { Text, View, Image, TextInput, Dimensions, TouchableOpacity, ScrollView, Button, Platform } from 'react-native';
-import { Card, CardItem, Col, DatePicker, Icon } from 'native-base'
+import React, { Component} from 'react';
+import { Text, View, TextInput, Dimensions, TouchableOpacity, ScrollView} from 'react-native';
+import { Icon } from 'native-base'
 import { Divider } from 'react-native-elements';
 import CardSolicitarTurno from "./CardsSolicitarTurno"
 import CardDisponibilidadTurno from './CardDisponibilidadTurno'
-import AwesomeAlert from 'react-native-awesome-alerts';
 import ModalSelector from 'react-native-modal-selector'
-import DateTimePicker from '@react-native-community/datetimepicker';
 import { Overlay } from 'react-native-elements';
 import ApiController from '../controller/ApiController'
 import AsyncStorage from '@react-native-community/async-storage'
-import { Calendar, CalendarList, Agenda, LocaleConfig } from 'react-native-calendars';
+import { Calendar} from 'react-native-calendars';
 import utils from '../utils/utils';
 
 /*ESTADOS DE estadoTurnos
@@ -194,7 +191,6 @@ export default class SolicitarTurno extends Component {
 
 
   render() {
-    console.log("Estado turnos: ", this.state.estadoTurnos)
     var date = new Date().getDate(); //Current Date
     var monthFut = new Date().getMonth() + 2; //Current Month + 2
     var year = new Date().getFullYear(); //Current Year
@@ -213,8 +209,6 @@ export default class SolicitarTurno extends Component {
     }
     let cambio = this.state.dia === 'Seleccione fecha' ? 'rgba(0,0,0,0.22)' : 'black'
     return (
-      //style no funciona con ScrollView, debe ser contentContainerStyle
-      //flex:1 hacia que la pantalla no se moviera con el scrollview
       <ScrollView>
         <Text style={{ fontSize: 17, textAlign: 'center', marginTop: 20, marginBottom: 10 }}>SOLICITAR TURNO</Text>
         {/*Modal selector*/}
@@ -225,8 +219,6 @@ export default class SolicitarTurno extends Component {
             initValue="Seleccione especialidad"
             keyExtractor={item => item.id}
             labelExtractor={item => utils.mayusPrimerLetra(item.titulo)}
-            //supportedOrientations={['landscape']}
-            //  optionTextStyle={color:'red'}
             animationType={'none'}
             accessible={true}
             scrollViewAccessibilityLabel={'Scrollable options'}
@@ -251,8 +243,6 @@ export default class SolicitarTurno extends Component {
             initValue="Seleccione profesional"
             keyExtractor={item => item.id}
             labelExtractor={item => item.datos.apellido + ' ' + item.datos.nombre}
-            //supportedOrientations={['landscape']}
-            // optionTextStyle={color:'red'}
             animationType={'none'}
             accessible={true}
             scrollViewAccessibilityLabel={'Scrollable options'}
@@ -313,7 +303,7 @@ export default class SolicitarTurno extends Component {
           <Text style={{ marginVertical: 10, fontSize: 11, color: 'white', textAlign: 'center', fontWeight: 'bold' }}>BUSCAR</Text>
         </TouchableOpacity>
         {this.state.buscar && this.buscar2()}
-        <Overlay overlayStyle={{ height: 140 }} isVisible={this.state.showAlert} >
+        <Overlay overlayStyle={{ height: 130 }} isVisible={this.state.showAlert} >
           <View>
             <Text style={{ fontSize: 14, lineHeight: 18, color: 'black', textAlign: 'center', marginTop: 20, marginHorizontal: 8 }}>POR FAVOR, COMPLETE TODOS LOS CAMPOS</Text>
             <TouchableOpacity style={{ backgroundColor: "#e93922", width: 100, marginTop: 20, alignSelf: "center" }} onPress={() => this.cerrarPop()}>

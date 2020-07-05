@@ -1,17 +1,10 @@
-import React, { Component, useState } from 'react';
+import React, { Component} from 'react';
 import { Ionicons } from '@expo/vector-icons';
-import { Platform, StyleSheet, Text, View, Image, Alert, Dimensions, TouchableOpacity, ScrollView, ActivityIndicator } from 'react-native';
-import { Footer, FooterTab, Container,Card, CardItem } from 'native-base'
+import {Text, View, Image, Dimensions, TouchableOpacity, ScrollView, ActivityIndicator } from 'react-native';
+import { Footer, Container,Card, CardItem } from 'native-base'
 import CardTurno from './CardsTurno'
 import AwesomeAlert from 'react-native-awesome-alerts';
 import ApiController from '../controller/ApiController';
-import AsyncStorage from '@react-native-community/async-storage'
-import CalendarioTurnos from '../Paciente/CalendarioTurno'
-//import DateTimePicker from '@react-native-community/datetimepicker';
-
-
-const { width } = Dimensions.get('window');
-
 
 
 export default class InicioPaciente extends Component {
@@ -39,7 +32,6 @@ export default class InicioPaciente extends Component {
 
   handleTurnos(response) {
     response.json().then((turnos) => {
-      //console.log(turnos)
       this.setState({ turnos: turnos, cargado: true });
     })
   }
@@ -50,7 +42,6 @@ export default class InicioPaciente extends Component {
       paciente_id: usuario.paciente.id,
     }
     this.setState({usuario: usuario, es_deudor:usuario.paciente.es_deudor})
-    //console.log('usuario.paciente.es_deudor', usuario.paciente.es_deudor)
     ApiController.getTurnosPaciente(data, this.handleTurnos.bind(this))
   }
 
@@ -87,19 +78,8 @@ export default class InicioPaciente extends Component {
   showTurnos() {
     if (this.state.cargado) {
       if (this.state.turnos.length > 0) {
-        //console.log(this.state.turnos)
         return this.state.turnos.map((turno, i) => {
-        /*  let nom = turno.medico.datos.nombre.toUpperCase();
-          let gen = turno.medico.datos.genero;
-          let id = turno.id;
-          let med = gen === 'femenino' ? `DRA. ${turno.medico.datos.nombre.toUpperCase()}` : `DR. ${turno.medico.datos.nombre.toUpperCase()}`
-          let esp = turno.especialidad.titulo;
-          let hora = new Date(turno.fecha_inicio).getHours()+'.'+new Date(turno.fecha_inicio).getMinutes(); 
-          let fecha = turno.fecha_inicio;
-          let dia = new Date(turno.fecha_inicio).getDate();
-          let dianombre = this.state.dias[new Date(turno.fecha_inicio).getDay()];
-          let mes = this.state.meses[new Date(turno.fecha_inicio).getMonth()];*/
-          return <CardTurno forzar={this.update} turno={turno} key={i} />//todavia no se pasa la fecha y hora correcta
+          return <CardTurno forzar={this.update} turno={turno} key={i}  />//todavia no se pasa la fecha y hora correcta
         })
       } else {
         return <View style={{alignItems: 'center'}}>
@@ -111,7 +91,7 @@ export default class InicioPaciente extends Component {
           <Text style={{textAlign: 'center', marginTop: '4%', fontSize: 14, marginVertical:10}}>No tenés ningún turno solicitado.</Text>
           </CardItem>
         </Card>
-        </View> //embellecer en otra oportunidad (tal vez poner una imagen tipo las de flaticon)
+        </View> 
       }
     } else {
       return (<View style={{ marginTop: '2%' }}>

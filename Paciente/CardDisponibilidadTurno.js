@@ -1,7 +1,6 @@
-import React, { Component,useState } from 'react';
-import { Ionicons } from '@expo/vector-icons';
-import { Platform, StyleSheet, Text, View, Image,TextInput, Dimensions, TouchableOpacity, ScrollView,TouchableHighlight  } from 'react-native';
-import {Card, CardItem, Col, DatePicker, Icon} from 'native-base'
+import React, {useState } from 'react';
+import { Text, View, TouchableOpacity } from 'react-native';
+import {Card, CardItem,} from 'native-base'
 import { Overlay } from 'react-native-elements';
 import {withNavigation} from 'react-navigation';
 import ApiController from '../controller/ApiController';
@@ -12,7 +11,6 @@ import ApiController from '../controller/ApiController';
 
     const toggleOverlay = () => {
         registrarListaEspera()
-      //console.log('No confirmó')
     };
 
     const registrarListaEspera = () => {
@@ -43,7 +41,6 @@ import ApiController from '../controller/ApiController';
     const toggleOverlayConf = () => {
       setVisible(!visible);
       props.navigation.navigate('InicioPaciente')
-      //console.log('Confirmó')
     };
     if(props.nro==2){
         var titulo = 'NO HAY TURNOS DISPONIBLES'

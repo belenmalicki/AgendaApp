@@ -1,9 +1,7 @@
-import {Calendar, CalendarList, Agenda} from 'react-native-calendars';
 import React, { Component } from 'react';
 import { Ionicons } from '@expo/vector-icons';
-import { Platform, StyleSheet, Text, View, Image,TextInput, Dimensions, TouchableOpacity, ScrollView  } from 'react-native';
-import { Divider,CheckBox, Overlay  } from 'react-native-elements';
-import {Card, CardItem, Col, Row, Grid} from 'native-base'
+import {Text, View, Image,Dimensions} from 'react-native';
+import {Card, CardItem, Col} from 'native-base'
 import utils from '../utils/utils';
 
 const { width } = Dimensions.get('window');

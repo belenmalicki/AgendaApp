@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Ionicons } from '@expo/vector-icons';
-import { Platform, StyleSheet, Text, View, Image,TextInput, Dimensions, TouchableOpacity, ScrollView  } from 'react-native';
+import { Text, View,Dimensions, TouchableOpacity} from 'react-native';
 import {Card, CardItem, Col} from 'native-base'
 import {withNavigation  } from 'react-navigation';
 
