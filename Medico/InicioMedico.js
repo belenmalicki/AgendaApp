@@ -13,7 +13,7 @@ LocaleConfig.locales['es'] = {
     monthNames: ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'],
     monthNamesShort: ['Ene.','Feb.','Mar.','Abr.','May..','Jun','Jul.','Ago.','Sep.','Oct.','Nov.','Dic.'],
     dayNames: ['Domingo','Lunes','Martes','Miércoles','Jueves','Viernes','Sábado'],
-    dayNamesShort: ['Dom.','Lun.','Mar.','Mie.','Jue.','Vie.','Sabb.'],
+    dayNamesShort: ['Dom.','Lun.','Mar.','Mie.','Jue.','Vie.','Sab.'],
     today: 'Hoy'
   };
   LocaleConfig.defaultLocale = 'es';
@@ -29,7 +29,12 @@ export default class InicioMedico extends Component {
             date: undefined
         }
     }
-
+    static navigationOptions = {
+        title: 'Agenda',
+       drawerIcon: ({ focused }) => (
+          <Ionicons name="md-home" size={24} color={focused ? '#e93923' : 'black'} />
+        ),}
+  
 
     componentDidMount(){
         this.update();
@@ -192,13 +197,18 @@ export default class InicioMedico extends Component {
                                 <View style={{ marginTop: 20, marginRight: 5 }}>
                                     <Card>
                                         <CardItem>
-                                            <Col size={2} style={{}}>
+                                            <Col size={2} >
                                                 <Text style={{ fontSize: 14, fontWeight: 'bold' }} ><Ionicons name='md-calendar' size={18} color='#1f77a5'></Ionicons> {item.time}</Text>
-                                                <Text style={{ fontSize: 14, marginTop: 10, marginLeft: 16 }}>{item.esp}</Text>
+                                                <Text style={{ fontSize: 14, marginTop: 10, marginLeft: 16 }}>{utils.mayusPrimerLetra(item.esp)}</Text>
                                             </Col>
-                                            <Col>
+                                            <Col style={{alignItems:"center"}}>
+
                                                 <TouchableOpacity onPress={() => { this.props.navigation.navigate('ModificarTurno', {turnos: item.turnos, fecha: this.state.date, jornada_id: item.id}) }} style={{ marginRight: 10 }}>
-                                                    <Text style={{ color: "#1f77a5", fontWeight: "bold", fontSize: 12 }}>MODIFICAR</Text>
+                                                    <Text style={{ color: "#e93923", fontWeight: "bold", fontSize: 12 }}>MODIFICAR</Text>
+                                                </TouchableOpacity>
+
+                                                <TouchableOpacity  onPress={() => { this.props.navigation.navigate('TurnosAsignados', {turnos: item.turnos, fecha: this.state.date, especialidad:item.esp}) }} style={{ marginRight: 10, marginTop:10 }}>
+                                                    <Text style={{ color: "#1f77a5", fontWeight: "bold", fontSize: 12, textAlign:'center' }}>VER TURNOS</Text>
                                                 </TouchableOpacity>
                                             </Col>
                                         </CardItem>
@@ -212,7 +222,7 @@ export default class InicioMedico extends Component {
                                         <CardItem>
                                             <Col size={2}>
                                                 <Text style={{ fontSize: 14, fontWeight: 'bold' }} ><Ionicons name='md-calendar' size={18} color='#1f77a5'></Ionicons> {item.time}</Text>
-                                                <Text style={{ fontSize: 14, marginTop: 10, marginLeft: 16 }}>{item.esp}</Text>
+                                                <Text style={{ fontSize: 14, marginTop: 10, marginLeft: 16 }}>{utils.mayusPrimerLetra(item.esp)}</Text>
                                             </Col>
                                         </CardItem>
                                     </Card>
@@ -226,9 +236,9 @@ export default class InicioMedico extends Component {
                     theme={{
                         agendaDayTextColor: '#1f77a5',
                         agendaDayNumColor: '#1f77a5',
-                        todayTextColor: '#e93922',
+                        todayTextColor: '#e93923',
                         agendaKnobColor: 'grey',
-                        dotColor: '#1f77a5',
+                        dotColor: '#e93923',
 
                         selectedDayBackgroundColor: '#1f77a5',
                     }}
