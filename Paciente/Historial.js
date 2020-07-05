@@ -5,6 +5,7 @@ import { Card, CardItem } from 'native-base';
 import CardHistorial from './CardHistorial'
 import ApiController from '../controller/ApiController'
 import AsyncStorage from '@react-native-community/async-storage'
+import utils from '../utils/utils';
 const { width } = Dimensions.get('window');
 
 
@@ -17,13 +18,12 @@ export default class Historial extends Component {
       usuario: {},
       cargado: false,
       historial: [],
-      meses: ["enero", "febrero", "marzo", "abril", "mayo", "junio", "julio", "agosto", "septiembre", "octubre", "noviembre", "diciembre"],
       completado: false
     }
   }
 
   componentDidMount() {
-    this.getUsuario()//al hdp no le gusta que ponga el apicontroller.gethistorialpaciente aca
+    this.getUsuario()
   }
 
   obtenerHistorial() {
@@ -36,7 +36,6 @@ export default class Historial extends Component {
   handleHistorial(response) {
     response.json().then((historial) => {
       this.setState({ historial: historial, cargado: true });
-      //console.log(this.state.historial)
     })
   }
 
@@ -89,7 +88,7 @@ export default class Historial extends Component {
     } else {
       const array = this.state.historial.slice(0, this.state.actual)
       return (<View>
-        {array.map((item, i) => <CardHistorial key={i} dia={new Date(item.fecha_inicio).getDate()} mes={this.state.meses[new Date(item.fecha_inicio).getMonth()]} med={item.medico.datos.apellido.toUpperCase()} esp={item.especialidad.titulo} fecha={item.fecha_inicio} />)}
+        {array.map((item, i) => <CardHistorial key={i} dia={new Date(item.fecha_inicio).getDate()} mes={utils.getStringMes(item.fecha_inicio)} med={item.medico.datos} esp={item.especialidad.titulo} fecha={item.fecha_inicio} />)}
         {this.showButton()}
       </View>
       );
@@ -100,10 +99,8 @@ export default class Historial extends Component {
     return (
       <ScrollView style={{ flex: 1 }}>
         <Text style={{ fontSize: 16,textAlign: 'center', marginTop: 20, marginBottom: 10 }}>Historial de turnos </Text>
-        {/*todavia no se como pasar este formato de fecha a un numero normal*/}
 
         {this.renderTurnos()}
-
 
       </ScrollView>
     )

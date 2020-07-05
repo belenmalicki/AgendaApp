@@ -13,22 +13,15 @@ class CardSolicitarTurno extends Component {
   };
  
     render() {
-      //var med=this.props.med
-      //var hora=this.props.hora
-       var esp= this.props.espe
-     // var fecha = this.props.fecha
-    // var id=this.props.id
-      var min= this.props.min
-        if(min==0)
-          min="00"
+      const dr = this.props.med.genero === 'femenino' ? 'Dra.' : 'Dr.'
 
       return (
         <View>
           <Card style={{width:width*0.9, alignSelf:"center"}}>
             <CardItem style={{marginVertical:5}}>
               <Col size={3} >
-                  <Text style={{fontSize:12, fontWeight:'bold', color:'#1f77a5'}}><Ionicons name='md-time' size={12} color='#1f77a5'></Ionicons> {this.props.hora}.{min} Hs.</Text>
-                  <Text style={{fontSize:14, marginTop:5}}>{this.props.med.apellido.toUpperCase()}, {this.props.med.nombre.toUpperCase()}</Text>
+                  <Text style={{fontSize:12, fontWeight:'bold', color:'#1f77a5'}}><Ionicons name='md-time' size={12} color='#1f77a5'></Ionicons> {this.props.hora} Hs</Text>
+                  <Text style={{fontSize:14, marginTop:5}}>{dr} {this.props.med.apellido.toUpperCase()}, {this.props.med.nombre}</Text>
               </Col>
               <Col>
                 <TouchableOpacity onPress={() => {this.props.navigation.navigate('ConfirmarTurno', {id:this.props.id,med:this.props.med, esp:esp, fecha:this.props.fecha, hora:this.props.hora, min:min})}}>
