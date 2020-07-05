@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
-import { Platform, ScrollView, Text, View, Image,TextInput, Dimensions, TouchableOpacity  } from 'react-native';
+import {ScrollView, Text, View, Image, TouchableOpacity  } from 'react-native';
 import {StackActions,NavigationActions } from 'react-navigation'
 import { Ionicons } from '@expo/vector-icons';
 import { Overlay } from 'react-native-elements';
 import ApiController from '../controller/ApiController'
 import AsyncStorage from '@react-native-community/async-storage'
-const { width } = Dimensions.get('window');
+
 
 
 export default class ConfirmarTurno extends Component {
@@ -52,7 +52,6 @@ export default class ConfirmarTurno extends Component {
           actions: [NavigationActions.navigate({ routeName: 'InicioPaciente',params:{usuario:this.state.usuario} })],
           });
           this.props.navigation.dispatch(resetAction); 
-        //this.props.navigation.replace('InicioPaciente',{usuario:this.state.usuario})
       }
     
   render() {
@@ -61,13 +60,9 @@ export default class ConfirmarTurno extends Component {
     var esp  = navigation.getParam( 'esp' , '');
     const fechaComp  = navigation.getParam( 'fecha' , '');
     const hora  = navigation.getParam( 'hora' ,'');
-    //const options = { weekday: 'short', year: 'numeric', month: 'short', day: 'numeric' };//long month y weekday 
-    //fechaComp.toLocaleDateString is not a fuction?
     const dia = new Date(fechaComp).getDate()
     const mes = this.state.meses[new Date(fechaComp).getMonth()]
     const dianombre = this.state.dias[(new Date(fechaComp).getDate()-1)%7]
-    //const dia = fechaComp.toLocaleDateString('es-ES', options).substr(0,3);
-    //const fecha = fechaComp.toLocaleDateString('es-ES', options).substr(5,6);
     
     return (
       <ScrollView style={{flex:1}}>

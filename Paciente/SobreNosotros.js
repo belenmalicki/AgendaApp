@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
-import { Platform, StyleSheet, Text, View, Image,TextInput, Dimensions, TouchableOpacity, ScrollView  } from 'react-native';
-import {createSwitchNavigator,createAppContainer } from 'react-navigation'
+import { StyleSheet, Text, View, Image, Dimensions, ScrollView  } from 'react-native';
 const { width } = Dimensions.get('window');
-
 
 export default class DeudaAlert extends Component {
   render() {
@@ -24,9 +22,3 @@ export default class DeudaAlert extends Component {
     );
   }
 }
-
-const style = StyleSheet.create({
-  text:{
-    fontSize:14
-  }
-})

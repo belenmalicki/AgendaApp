@@ -1,10 +1,7 @@
-import {Calendar, CalendarList, Agenda} from 'react-native-calendars';
 import React, { Component } from 'react';
-import { Ionicons } from '@expo/vector-icons';
-import { Platform, StyleSheet, Text, View, Image,TextInput, Dimensions, TouchableOpacity, ScrollView  } from 'react-native';
-import { Divider,CheckBox, Overlay  } from 'react-native-elements';
+import {View, Dimensions } from 'react-native';
+import {CheckBox} from 'react-native-elements';
 
-const { width } = Dimensions.get('window');
 export default class Check extends Component {
     constructor(props){
         super(props)

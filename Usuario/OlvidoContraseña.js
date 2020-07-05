@@ -3,8 +3,6 @@ import ApiController from '../controller/ApiController';
 import { Text, View,TextInput,TouchableOpacity, Dimensions } from 'react-native';
 const { width } = Dimensions.get('window');
 const { height } = Dimensions.get('screen');
-console.log(height)
-
 
 export default class OlvidoContraseña extends Component {
   constructor(props) {
@@ -29,7 +27,6 @@ export default class OlvidoContraseña extends Component {
   handleData(response) {
     if (response.status == 200) {
       response.json().then(usuario => {
-        //console.log(usuario)
         this.props.navigation.navigate('NuevaContraseña', {usuario: usuario})
       })
     } else {

@@ -1,12 +1,10 @@
 import React, { Component } from 'react';
-import { Platform, ScrollView, Text, View, Image, TextInput, Dimensions, TouchableOpacity, ActivityIndicator, ImageBackground } from 'react-native';
-import { createSwitchNavigator, createAppContainer } from 'react-navigation'
+import { ScrollView, Text, View, Image,  Dimensions, TouchableOpacity, ActivityIndicator} from 'react-native';
 import { Card, CardItem } from 'native-base';
 import CardHistorial from './CardHistorial'
 import ApiController from '../controller/ApiController'
 import AsyncStorage from '@react-native-community/async-storage'
 import utils from '../utils/utils';
-const { width } = Dimensions.get('window');
 
 
 export default class Historial extends Component {

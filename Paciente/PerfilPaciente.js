@@ -1,13 +1,8 @@
 import React, { Component } from 'react';
 import { Text, View, Image, ActivityIndicator, Dimensions, TouchableOpacity, ScrollView, ImageBackground } from 'react-native';
-import { Footer, FooterTab, Container, Col, Row } from 'native-base'
 import { Divider } from 'react-native-elements'
-import { Ionicons } from '@expo/vector-icons';
 import AsyncStorage from '@react-native-community/async-storage'
 import utils from '../utils/utils';
-
-const { width } = Dimensions.get('window');
-
 
 export default class PerfilPaciente extends Component {
   constructor(props) {
@@ -24,7 +19,6 @@ export default class PerfilPaciente extends Component {
       const jsonValue = await AsyncStorage.getItem('usuario')
       const usuario = jsonValue != null ? JSON.parse(jsonValue) : null;
       this.setState({ usuario: usuario, cargado: true })
-      console.log(usuario)
     } catch (e) {
       console.log(e)
     }
@@ -92,23 +86,9 @@ export default class PerfilPaciente extends Component {
         <ScrollView style={{ flex: 1 }}>
 
           <Text style={{ fontSize: 16, textAlign: 'center', marginTop: '5%' }}>Mi Perfil </Text>
-
-          {/*}  <View style={{backgroundColor:'pink', width:300, alignSelf: "center", height:195, marginTop:20, borderRadius:20}}>
-            <Row size={40} style={{alignSelf:'flex-end'}}>
-                <Text  style={{textAlign:'right',marginTop:30, marginRight:30, fontSize:20 }}><Ionicons  name="ios-globe" size={24} color={'black'} /> OSDE </Text>
-            </Row>
-            <Text  style={{ marginLeft:30, fontSize:18, marginTop:10, fontWeight:'bold' }}> 61  759666  1  02  </Text>
-            <Text  style={{ marginLeft:30, fontSize:11, marginTop:10, fontWeight:'bold' }}> PANZA MATIAS EZEQUIEL  </Text>
-            <View style={{ flexDirection:'row', marginBottom:10}}>
-                <Text  style={{ marginLeft:25, fontSize:9, marginTop:12 }}>plan </Text>
-                <Text  style={{ marginLeft:2, fontSize:11, marginTop:10, fontWeight:'bold' }}> 2  310  </Text>
-                <Text  style={{ marginLeft:15, fontSize:9, marginTop:12 }}>vto  </Text>
-                <Text  style={{ marginLeft:2, fontSize:11, marginTop:10, fontWeight:'bold' }}> 31/10/2020 </Text>
-            </View>
-      </View>*/}
           <ImageBackground style={{ height: 195, width: 300, marginTop: 20, alignSelf: "center" }} source={img} >
             <View style={{ flex: 1, alignItems: "center" }}>
-              <Text style={{ fontSize: 18, marginTop: 10, fontWeight: 'bold', marginTop: 120, letterSpacing: 3 }}> {this.state.usuario.paciente.os_nro}  </Text>
+              <Text style={{ fontSize: 18, marginTop: 10, fontWeight: 'bold', marginTop: 120, letterSpacing: 5 }}> {this.state.usuario.paciente.os_nro}  </Text>
               <Text style={{ fontSize: 11, marginTop: 10, fontWeight: 'bold', letterSpacing: 3 }}> {this.state.usuario.apellido.toUpperCase()} {this.state.usuario.nombre.toUpperCase()}  </Text>
               <View style={{ flexDirection: 'row', marginBottom: 10 }}>
                 <Text style={{ fontSize: 9, marginTop: 12 }}>dni </Text>

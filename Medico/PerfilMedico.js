@@ -1,11 +1,8 @@
 import React, { Component } from 'react';
-import { Platform, StyleSheet, Text, View, ImageBackground, TextInput, Dimensions, TouchableOpacity, ScrollView } from 'react-native';
-import {Footer, FooterTab, Container, Col, Row} from 'native-base'
+import { Platform, StyleSheet, Text, View, ImageBackground, Dimensions, TouchableOpacity, ScrollView } from 'react-native';
 import { Divider } from 'react-native-elements' 
-import { Ionicons } from '@expo/vector-icons';
 import AsyncStorage from '@react-native-community/async-storage'
 import utils from '../utils/utils';
-const { width } = Dimensions.get('window');
 
 
 export default class Perfil extends Component {
@@ -23,14 +20,12 @@ export default class Perfil extends Component {
       const jsonValue = await AsyncStorage.getItem('usuario')
       const usuario = jsonValue != null ? JSON.parse(jsonValue) : null;
       this.setState({ usuario: usuario, cargado: true })
-      //console.log(usuario)
     } catch (e) {
       console.log(e)
     }
   }
 
   mostrarBoton() {
-    //
     if (this.state.usuario.paciente != null) {
       return (<View style={{ marginTop: 20,marginBottom:20 }}>
       <Text style={{marginHorizontal:15, fontSize:13, marginBottom:10, textAlign:"justify" }}>Si desea ver sus turnos solicitados, diríjase a su cuenta de paciente</Text>
