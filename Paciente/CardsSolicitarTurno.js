@@ -24,7 +24,7 @@ class CardSolicitarTurno extends Component {
                   <Text style={{fontSize:14, marginTop:5}}>{dr} {this.props.med.apellido.toUpperCase()}, {this.props.med.nombre}</Text>
               </Col>
               <Col>
-                <TouchableOpacity onPress={() => {this.props.navigation.navigate('ConfirmarTurno', {id:this.props.id,med:this.props.med, esp:this.props.espe, fecha:this.props.fecha, hora:this.props.hora})}}>
+                <TouchableOpacity onPress={() => {this.props.navigation.navigate('ConfirmarTurno', {id:this.props.id,med:this.props.med, esp:this.props.espe, fecha:this.props.fecha, hora:this.props.hora, usuario: this.props.usuario})}}>
                    <Text style={{color:"#e93922" ,fontWeight:"bold", fontSize:12 }}>SOLICITAR</Text>
                 </TouchableOpacity>
               </Col>   

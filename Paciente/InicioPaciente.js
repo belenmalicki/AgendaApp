@@ -68,8 +68,9 @@ export default class InicioPaciente extends Component {
 
   solTurno() {
     if (this.state.es_deudor === false) {
+      const usuario = this.props.navigation.getParam('usuario', {})
       return (
-        <TouchableOpacity onPress={() => { this.props.navigation.navigate('SolicitarTurno',{turnosPaciente:this.state.turnos})}}
+        <TouchableOpacity onPress={() => { this.props.navigation.navigate('SolicitarTurno',{turnosPaciente:this.state.turnos, usuario: usuario})}}
           style={{ width: 230, alignSelf: 'center', backgroundColor: '#e93922' }}>
           <Text style={{ marginVertical: 10, fontSize: 11, color: 'white', textAlign: 'center', fontWeight: 'bold' }}>SOLICITAR TURNO</Text>
         </TouchableOpacity>)
@@ -98,7 +99,7 @@ export default class InicioPaciente extends Component {
           let dia = new Date(turno.fecha_inicio).getDate();
           let dianombre = this.state.dias[new Date(turno.fecha_inicio).getDay()];
           let mes = this.state.meses[new Date(turno.fecha_inicio).getMonth()];*/
-          return <CardTurno forzar={this.update} turno={turno} key={i}  />//todavia no se pasa la fecha y hora correcta
+          return <CardTurno forzar={this.update} turno={turno} key={i} />//todavia no se pasa la fecha y hora correcta
         })
       } else {
         return <View style={{alignItems: 'center'}}>
