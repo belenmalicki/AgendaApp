@@ -87,8 +87,9 @@ export default class TurnosHoy extends Component {
   
     render() {
       var especialidad= ' '
-     if(this.state.cargado)
-      {especialidad =this.state.jornadas[0].especialidad.titulo}
+     if(this.state.cargado && this.state.jornadas.length != 0){
+       especialidad = this.state.jornadas[0].especialidad.titulo
+      }
       return (
         <View>
             <Text style={{fontSize:16 , marginTop:20, marginLeft:10}}><Image style={{height:18, width:18}} source={require('../assets/Images/time.png')}/> TURNOS DE HOY:</Text>
