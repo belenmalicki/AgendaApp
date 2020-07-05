@@ -59,8 +59,9 @@ export default class InicioPaciente extends Component {
 
   solTurno() {
     if (this.state.es_deudor === false) {
+      const usuario = this.props.navigation.getParam('usuario', {})
       return (
-        <TouchableOpacity onPress={() => { this.props.navigation.navigate('SolicitarTurno',{turnosPaciente:this.state.turnos})}}
+        <TouchableOpacity onPress={() => { this.props.navigation.navigate('SolicitarTurno',{turnosPaciente:this.state.turnos, usuario: usuario})}}
           style={{ width: 230, alignSelf: 'center', backgroundColor: '#e93922' }}>
           <Text style={{ marginVertical: 10, fontSize: 11, color: 'white', textAlign: 'center', fontWeight: 'bold' }}>SOLICITAR TURNO</Text>
         </TouchableOpacity>)

@@ -5,7 +5,7 @@ const { width } = Dimensions.get('window');
 export default class DeudaAlert extends Component {
   render() {
     return (
-      <ScrollView style={{flex:1}}>
+      <ScrollView >
         <Text style={{fontSize:16, textAlign:"center", marginTop: 15}}>Acerca de Clinica Arduino</Text>
         <Image source={require('../assets/Images/clinica.jpg')} style={{height:width*0.4 ,width:width*0.8, alignSelf:'center',marginVertical:12 }}></Image>
         <Text style={{fontSize:14, color:'#E93923', marginLeft: 15, fontWeight:'bold'}}>Mision</Text>

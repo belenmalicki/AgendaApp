@@ -18,8 +18,14 @@ export default class ConfirmarTurno extends Component {
             meses:["enero", "febrero", "marzo", "abril", "mayo", "junio", "julio", "agosto", "septiembre", "octubre", "noviembre", "diciembre"]
         }
     }
+
     componentDidMount(){
-      this.getUsuario()
+      const usuario = this.props.navigation.getParam('usuario', null)
+      if(usuario){
+        this.setState({usuario: usuario})
+      }else{
+        this.getUsuario()
+      }      
     }
 
     getUsuario = async () => {

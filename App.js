@@ -238,7 +238,7 @@ const contenedorPerfilMed = createStackNavigator({
   defaultNavigationOptions: ({ navigation }) => {
     return {
       headerStyle: { backgroundColor: '#e93923' },
-      headerTitleStyle: { color: 'white', fontSize: 14 },
+      headerTitleStyle: { color: 'white', fontSize: 14, textAlign: 'center' },
       headerTintColor: ('white'),
       headerRight: (<TouchableWithoutFeedback onPress={() => navigation.openDrawer()}><Ionicons name='ios-menu' size={28} color='white' style={{ marginRight: 12 }}></Ionicons></TouchableWithoutFeedback>)
     }
@@ -248,7 +248,7 @@ const StMedico = createStackNavigator({
   InicioMedico: {
     screen: BottomTab,
     navigationOptions: () => {
-      return { headerTitle: 'INICIO' }
+      return { headerTitle: 'INICIO',      headerTitleAlign:'center' }
     }
   },
   AgregarTurno: {
@@ -274,6 +274,7 @@ const StMedico = createStackNavigator({
     return {
       headerStyle: { backgroundColor: '#e93922' },
       headerTitleStyle: { color: 'white', fontSize: 14 },
+
       headerTintColor: ('white'),
       headerRight: (<TouchableOpacity onPress={() => { navigation.openDrawer() }}><Ionicons name='ios-menu' size={28} color='white' style={{ marginRight: 12 }}></Ionicons></TouchableOpacity>)
     }
@@ -409,7 +410,7 @@ const StPaciente = createStackNavigator({
   InicioPaciente: {
     screen: InicioPaciente,
     navigationOptions: () => {
-      return { headerTitle: 'INICIO' }
+      return { headerTitle: 'INICIO'}
     }
   },
   SolicitarTurno: {
@@ -428,7 +429,7 @@ const StPaciente = createStackNavigator({
   defaultNavigationOptions: ({ navigation }) => {
     return {
       headerStyle: { backgroundColor: '#e93922' },
-      headerTitleStyle: { color: 'white', fontSize: 14 },
+      headerTitleStyle: { color: 'white', fontSize: 14},
       headerTintColor: ('white'),
       headerRight: (<TouchableWithoutFeedback onPress={() => navigation.openDrawer()}><Ionicons name='ios-menu' size={28} color='white' style={{ marginRight: 12 }}></Ionicons></TouchableWithoutFeedback>)
     }

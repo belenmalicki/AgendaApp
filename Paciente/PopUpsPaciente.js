@@ -21,28 +21,30 @@ export default function PopUp(props){
     //console.log('No confirmó')
   };
   const toggleOverlayConf = () => {
-    setVisible(!visible);
-    //console.log('Confirmó')
     let data={
-      turno_id:props.id
+      turno_id: props.id
     }
-    ApiController.confirmarTurno(data,handleConfirmar.bind(this))//aun no maneja la respuesta
+    ApiController.confirmarTurno(data,handleConfirmar.bind(this))
   };
   const toggleOverlayCanc = () => {
-    setVisible(!visible);
-    //console.log('Confirmó')
     let data={
-      turno_id:props.id// buscar el id del turno
+      turno_id: props.id
     }
-    ApiController.cancelarTurno(data,handleCancelar.bind(this))//aun no maneja la respuesta
-
-    props.update()
+    ApiController.cancelarTurno(data,handleCancelar.bind(this))    
   };
+
+  
   function handleCancelar(response){
     if(response.status==200){
-      if(new Date().getHours()>new Date(props.turno.fecha_inicio).getHours()-12){
+      setVisible(!visible);
+      props.update()
+      const fechaHoy = new Date();
+      const fechaTurno = new Date(props.turno.fecha_inicio);
+      fechaTurno.setHours(fechaHoy.getHours() - 12)
+      if(fechaHoy.getTime() > fechaTurno.getTime()){
         let data={
-          paciente_id:props.turnos.paciente_id
+          paciente_id:props.turno.paciente_id,
+          turno_id: props.id
         }
         ApiController.registrarDeuda(data,handleDeuda.bind(this))
       }else{
@@ -55,6 +57,8 @@ export default function PopUp(props){
   }
   function handleConfirmar(response){
     if(response.status==200){
+      setVisible(!visible);
+      props.update()
      // alert("se ha registrado una deuda por la cancelacion en su cuenta")
     }else{
      // alert("algo salio mal")

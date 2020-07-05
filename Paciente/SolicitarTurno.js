@@ -46,7 +46,12 @@ export default class SolicitarTurno extends Component {
   }
 
   componentDidMount() {
-    this.getUsuario()
+    const usuario = this.props.navigation.getParam('usuario', null)
+    if(usuario){
+      this.setState({usuario: usuario})
+    }else{
+      this.getUsuario()
+    }
     ApiController.getEspecialidades(this.handleEspecialidades.bind(this))
   }
 
@@ -177,7 +182,7 @@ export default class SolicitarTurno extends Component {
             </Text>
           </View>
 
-          {turnosDisp.map((item, i) => <CardSolicitarTurno key={i} id={item.id} hora={utils.formatHora(item.fecha_inicio)} med={item.medico.datos} espe={item.especialidad.titulo} fecha={item.fecha_inicio} />)}
+          {turnosDisp.map((item, i) => <CardSolicitarTurno key={i} id={item.id} hora={utils.formatHora(item.fecha_inicio)} med={item.medico.datos} espe={item.especialidad.titulo} fecha={item.fecha_inicio} usuario={this.state.usuario}/>)}
 
         </View>
       )
@@ -298,7 +303,7 @@ export default class SolicitarTurno extends Component {
           <Text style={{ marginVertical: 10, fontSize: 11, color: 'white', textAlign: 'center', fontWeight: 'bold' }}>BUSCAR</Text>
         </TouchableOpacity>
         {this.state.buscar && this.buscar2()}
-        <Overlay overlayStyle={{ height: 140 }} isVisible={this.state.showAlert} >
+        <Overlay overlayStyle={{ height: 130 }} isVisible={this.state.showAlert} >
           <View>
             <Text style={{ fontSize: 14, lineHeight: 18, color: 'black', textAlign: 'center', marginTop: 20, marginHorizontal: 8 }}>POR FAVOR, COMPLETE TODOS LOS CAMPOS</Text>
             <TouchableOpacity style={{ backgroundColor: "#e93922", width: 100, marginTop: 20, alignSelf: "center" }} onPress={() => this.cerrarPop()}>
