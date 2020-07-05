@@ -1,4 +1,4 @@
-//const urlHeroku = "http://192.168.0.69:8000"
+//const urlHeroku = "http://192.168.0.6:8000"
 const urlHeroku = "https://centro-medico-backend-h.herokuapp.com"
 
 
@@ -239,6 +239,48 @@ class ApiController {
     registrarDeuda(data, callback){
         const endpoint = `${urlHeroku}/api/registrarDeuda`;
         console.log('registrando deuda');
+        fetch(endpoint, {
+            method: 'POST',
+            mode: "cors",
+            headers:{ 'Content-Type': 'application/json'},
+            body: JSON.stringify(data)
+        }).then((response) => {
+            console.log('listo!');
+            callback(response)
+        }).catch(err => console.log(err))
+    }
+
+    registrarListaDeEsperaEspec(data, callback){
+        const endpoint = `${urlHeroku}/api/registrarListaDeEsperaEspec`;
+        console.log('registrando lista de espera');
+        fetch(endpoint, {
+            method: 'POST',
+            mode: "cors",
+            headers:{ 'Content-Type': 'application/json'},
+            body: JSON.stringify(data)
+        }).then((response) => {
+            console.log('listo!');
+            callback(response)
+        }).catch(err => console.log(err))
+    }
+
+    registrarListaDeEsperaMedico(data, callback){
+        const endpoint = `${urlHeroku}/api/registrarListaDeEsperaMedico`;
+        console.log('registrando lista de espera del medico');
+        fetch(endpoint, {
+            method: 'POST',
+            mode: "cors",
+            headers:{ 'Content-Type': 'application/json'},
+            body: JSON.stringify(data)
+        }).then((response) => {
+            console.log('listo!');
+            callback(response)
+        }).catch(err => console.log(err))
+    }
+
+    getJornadaHoy(data,callback){
+        const endpoint = `${urlHeroku}/api/getJornadaHoy`;
+        console.log('obteniendo Jornadas de hoy');
         fetch(endpoint, {
             method: 'POST',
             mode: "cors",

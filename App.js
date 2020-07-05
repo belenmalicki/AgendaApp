@@ -3,6 +3,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { Platform, StyleSheet, ActivityIndicator, Text, View, Image, TextInput, Dimensions, TouchableOpacity, ScrollView, TouchableWithoutFeedback } from 'react-native';
 import { createSwitchNavigator, createAppContainer, SafeAreaView } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
+import { createBottomTabNavigator } from 'react-navigation-tabs';
 import { createDrawerNavigator, DrawerItems } from 'react-navigation-drawer';
 import DeudaAlert from './Paciente/DeudaAlert';
 import InicioPaciente from './Paciente/InicioPaciente'
@@ -15,6 +16,8 @@ import InicioMedico from './Medico/InicioMedico'
 import PerfilMedico from './Medico/PerfilMedico'
 import AgregarTurno from './Medico/AgregarTurno'
 import ModificarTurno from './Medico/ModificarTurno'
+import TurnosHoy from './Medico/TurnosHoy'
+import TurnosAsignados from './Medico/TurnosAsignados'
 import OlvidoContraseña from './Usuario/OlvidoContraseña'
 import NuevaContraseña from './Usuario/NuevaContraseña'
 import { Container, Header, Content, Item, Input } from 'native-base';
@@ -71,11 +74,11 @@ class App extends Component {
       response.json().then(usuario => {
         this.storeUsuario(usuario).then(() => {
           this.setState({cargando: false})
-          if (usuario.medico && !usuario.paciente) { //por ahora para debug, despues va al revés
-            this.props.navigation.navigate('InicioMedico', { usuario: usuario })
+          if (!usuario.medico && usuario.paciente) { //por ahora para debug, despues va al revés
+            this.props.navigation.navigate('InicioPaciente', { usuario: usuario })
           }
           else {
-            this.props.navigation.navigate('InicioPaciente', { usuario: usuario })
+            this.props.navigation.navigate('InicioMedico', { usuario: usuario })
           }
         })
       })
@@ -122,11 +125,11 @@ class App extends Component {
     const jsonValue = await AsyncStorage.getItem('usuario')
     if(jsonValue != null){
       const usuario = JSON.parse(jsonValue)
-      if (usuario.medico && !usuario.paciente) { //por ahora para debug, despues va al revés
-        this.props.navigation.navigate('InicioMedico', { usuario: usuario })
+      if (!usuario.medico && usuario.paciente) { //por ahora para debug, despues va al revés
+        this.props.navigation.navigate('InicioPaciente', { usuario: usuario })
       }
       else {
-        this.props.navigation.navigate('InicioPaciente', { usuario: usuario })
+        this.props.navigation.navigate('InicioMedico', { usuario: usuario })
       }
     }
   }
@@ -189,6 +192,40 @@ const CustomDrawerContentComponent = (props) => (
 
 );
 
+const BottomTab = createBottomTabNavigator({
+  InicioMedico:{
+    screen:InicioMedico,
+  },
+  TurnosHoy:{
+    screen:TurnosHoy
+  }},{
+    defaultNavigationOptions: ({ navigation }) => ({
+      tabBarIcon: ({ focused, horizontal, tintColor }) => {
+        const { routeName } = navigation.state;
+        let IconComponent = Ionicons;
+        let iconName;
+        if (routeName === 'InicioMedico') {
+          iconName = focused
+            ? 'md-calendar'
+            : 'ios-calendar';
+          // Sometimes we want to add badges to some icons.
+          // You can check the implementation below.   
+        } 
+        else if (routeName === 'TurnosHoy') {
+          iconName = focused ? 'md-alarm' : 'ios-alarm';
+        }
+
+        // You can return any component that you like here!
+        return <IconComponent name={iconName} size={25} color={tintColor}  />;
+      },
+    }),
+    tabBarOptions: {
+      activeTintColor: '#e93923',
+      inactiveTintColor: 'gray',
+    },
+
+  })
+
 const contenedorPerfilMed = createStackNavigator({
   Historial: {
     screen: PerfilMedico,
@@ -200,7 +237,7 @@ const contenedorPerfilMed = createStackNavigator({
 }, {
   defaultNavigationOptions: ({ navigation }) => {
     return {
-      headerStyle: { backgroundColor: '#e93922' },
+      headerStyle: { backgroundColor: '#e93923' },
       headerTitleStyle: { color: 'white', fontSize: 14 },
       headerTintColor: ('white'),
       headerRight: (<TouchableWithoutFeedback onPress={() => navigation.openDrawer()}><Ionicons name='ios-menu' size={28} color='white' style={{ marginRight: 12 }}></Ionicons></TouchableWithoutFeedback>)
@@ -209,7 +246,7 @@ const contenedorPerfilMed = createStackNavigator({
 })
 const StMedico = createStackNavigator({
   InicioMedico: {
-    screen: InicioMedico,
+    screen: BottomTab,
     navigationOptions: () => {
       return { headerTitle: 'INICIO' }
     }
@@ -224,6 +261,12 @@ const StMedico = createStackNavigator({
     screen: ModificarTurno,
     navigationOptions: () => {
       return { headerTitle: 'TURNOS' }
+    }
+  },
+  TurnosAsignados:{
+    screen:TurnosAsignados,
+    navigationOptions: () => {
+      return { headerTitle: 'TURNOS ASIGNADOS' }
     }
   }
 }, {

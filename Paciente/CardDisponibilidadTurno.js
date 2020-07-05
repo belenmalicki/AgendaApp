@@ -4,14 +4,42 @@ import { Platform, StyleSheet, Text, View, Image,TextInput, Dimensions, Touchabl
 import {Card, CardItem, Col, DatePicker, Icon} from 'native-base'
 import { Overlay } from 'react-native-elements';
 import {withNavigation} from 'react-navigation';
+import ApiController from '../controller/ApiController';
+
 
  function CardDisponibilidadTurno(props) {
     const [visible, setVisible] = useState(false);
 
     const toggleOverlay = () => {
-      setVisible(!visible);
+        registrarListaEspera()
       //console.log('No confirmó')
     };
+
+    const registrarListaEspera = () => {
+        let data;
+        if(props.nro === 5){
+            data = {
+                paciente_id: props.paciente_id,
+                especialidad_id: props.especialidad_id
+            }
+            ApiController.registrarListaDeEsperaEspec(data, handleResponse)
+        }else if(props.nro === 3){
+            data = {
+                paciente_id: props.paciente_id,
+                medico_id: props.medico_id
+            }
+            ApiController.registrarListaDeEsperaMedico(data, handleResponse)
+        }       
+    }
+
+    const handleResponse = (response) => {
+        if(response.status === 400){
+            alert('Ha ocurrido un error')
+        }else{
+            setVisible(!visible);
+        }
+    }
+
     const toggleOverlayConf = () => {
       setVisible(!visible);
       props.navigation.navigate('InicioPaciente')
@@ -19,7 +47,7 @@ import {withNavigation} from 'react-navigation';
     };
     if(props.nro==2){
         var titulo = 'NO HAY TURNOS DISPONIBLES'
-        var texto= ' Lo sentimos, no hay turnos disponibles en la fecha seleccionada, le ofrecemos los turnos mas próximos a la misma.'
+        var texto= ' Lo sentimos, no hay turnos disponibles en la fecha seleccionada.'
     }
     if(props.nro==3){
         var titulo = 'NO HAY TURNOS DISPONIBLES'
@@ -27,8 +55,8 @@ import {withNavigation} from 'react-navigation';
         var boton = 'SOLICITAR LISTA DE ESPERA DEL MÉDICO'
     }
     if(props.nro==4){
-        var titulo = 'TURNOS NO DISPONIBLE'
-        var texto= 'Lo sentimos, no puede solicitar un turno para esa especialidad en ese día debido a que ya solicitó uno.'
+        var titulo = 'TURNOS NO DISPONIBLES'
+        var texto= 'Lo sentimos, en el día seleccionado ya tiene un turno asignado para la misma especialidad.'
     }
     if(props.nro==5){
         var titulo = 'NO HAY TURNOS DISPONIBLES'

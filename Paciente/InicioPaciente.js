@@ -21,6 +21,7 @@ export default class InicioPaciente extends Component {
       showAlert: false,
       es_deudor: false,
       cargado: false,
+      usuario: {},
       turnos: [],
       dias:['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'],
       meses:["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"],
@@ -30,6 +31,10 @@ export default class InicioPaciente extends Component {
 
   componentDidMount() {
     this.update()
+    const usuario = this.props.navigation.getParam('usuario', {})
+    if(usuario.paciente.es_deudor){
+      this.setState({showAlert: true})
+    }
   }
 
   handleTurnos(response) {
@@ -44,7 +49,7 @@ export default class InicioPaciente extends Component {
     const data = {
       paciente_id: usuario.paciente.id,
     }
-    this.setState({es_deudor:usuario.paciente.es_deudor})
+    this.setState({usuario: usuario, es_deudor:usuario.paciente.es_deudor})
     //console.log('usuario.paciente.es_deudor', usuario.paciente.es_deudor)
     ApiController.getTurnosPaciente(data, this.handleTurnos.bind(this))
   }
@@ -117,9 +122,6 @@ export default class InicioPaciente extends Component {
   render() {
     const { navigation } = this.props;
     const usuario = navigation.getParam('usuario', {})
-    if (usuario.paciente.es_deudor) {
-      this.showAlert()
-    }
     const { showAlert } = this.state;
     let genero = usuario.genero === 'femenino' ? 'A' : 'O'
     let nombre = usuario.nombre.toUpperCase()

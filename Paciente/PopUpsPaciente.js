@@ -24,7 +24,7 @@ export default function PopUp(props){
     setVisible(!visible);
     //console.log('Confirmó')
     let data={
-      turno_id:props.id// buscar el id del turno
+      turno_id:props.id
     }
     ApiController.confirmarTurno(data,handleConfirmar.bind(this))//aun no maneja la respuesta
   };
@@ -35,17 +35,33 @@ export default function PopUp(props){
       turno_id:props.id// buscar el id del turno
     }
     ApiController.cancelarTurno(data,handleCancelar.bind(this))//aun no maneja la respuesta
+
     props.update()
   };
   function handleCancelar(response){
     if(response.status==200){
-      //alert("se ha cancelado el turno correctamente")
+      if(new Date().getHours()>new Date(props.turno.fecha_inicio).getHours()-12){
+        let data={
+          paciente_id:props.turnos.paciente_id
+        }
+        ApiController.registrarDeuda(data,handleDeuda.bind(this))
+      }else{
+        //alert("se ha cancelado el turno correctamente")
+      }
     }else{
       //alert("algo salio mal")
     }
     
   }
   function handleConfirmar(response){
+    if(response.status==200){
+     // alert("se ha registrado una deuda por la cancelacion en su cuenta")
+    }else{
+     // alert("algo salio mal")
+    }
+    
+  }
+  function handleDeuda(response){
     if(response.status==200){
      // alert("se ha confirmado el turno correctamente")
     }else{
