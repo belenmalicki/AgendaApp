@@ -26,7 +26,7 @@ export default class CardTurnoPaciente extends Component {
                                 </Col>
                                 <Col size={1} style={{flexDirection:'column', marginLeft:20}}>
                                     <Text style={{marginTop:5, fontSize:14, fontWeight:'bold'}}><Ionicons name='ios-person' size={16} color='black'></Ionicons>  {turno.paciente.datos.nombre} {turno.paciente.datos.apellido}</Text>
-                                    <Text style={{marginTop:5, fontSize:12}}><Ionicons name='md-card' size={16} color='black'></Ionicons>  {turno.paciente.obra_social} {turno.paciente.plan} </Text>
+                                    <Text style={{marginTop:5, fontSize:12}}><Ionicons name='md-card' size={16} color='black'></Ionicons>  {utils.formatObraSocial(turno.paciente.obra_social)} {utils.mayusPrimerLetra(turno.paciente.plan)} </Text>
                                     <Text style={{marginTop:5, fontSize:12, marginBottom:10}}><Image style={{height:14, width:14}} source={require('../assets/Images/pin.png')}/>  Sede {turno.sede}</Text>
                                 </Col>
                             </CardItem>

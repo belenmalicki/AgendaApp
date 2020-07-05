@@ -13,7 +13,7 @@ LocaleConfig.locales['es'] = {
     monthNames: ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'],
     monthNamesShort: ['Ene.','Feb.','Mar.','Abr.','May..','Jun','Jul.','Ago.','Sep.','Oct.','Nov.','Dic.'],
     dayNames: ['Domingo','Lunes','Martes','Miércoles','Jueves','Viernes','Sábado'],
-    dayNamesShort: ['Dom.','Lun.','Mar.','Mie.','Jue.','Vie.','Sabb.'],
+    dayNamesShort: ['Dom.','Lun.','Mar.','Mie.','Jue.','Vie.','Sab.'],
     today: 'Hoy'
   };
   LocaleConfig.defaultLocale = 'es';
@@ -197,9 +197,9 @@ export default class InicioMedico extends Component {
                                 <View style={{ marginTop: 20, marginRight: 5 }}>
                                     <Card>
                                         <CardItem>
-                                            <Col size={2} style={{}}>
+                                            <Col size={2} >
                                                 <Text style={{ fontSize: 14, fontWeight: 'bold' }} ><Ionicons name='md-calendar' size={18} color='#1f77a5'></Ionicons> {item.time}</Text>
-                                                <Text style={{ fontSize: 14, marginTop: 10, marginLeft: 16 }}>{item.esp}</Text>
+                                                <Text style={{ fontSize: 14, marginTop: 10, marginLeft: 16 }}>{utils.mayusPrimerLetra(item.esp)}</Text>
                                             </Col>
                                             <Col style={{alignItems:"center"}}>
 
@@ -222,7 +222,7 @@ export default class InicioMedico extends Component {
                                         <CardItem>
                                             <Col size={2}>
                                                 <Text style={{ fontSize: 14, fontWeight: 'bold' }} ><Ionicons name='md-calendar' size={18} color='#1f77a5'></Ionicons> {item.time}</Text>
-                                                <Text style={{ fontSize: 14, marginTop: 10, marginLeft: 16 }}>{item.esp}</Text>
+                                                <Text style={{ fontSize: 14, marginTop: 10, marginLeft: 16 }}>{utils.mayusPrimerLetra(item.esp)}</Text>
                                             </Col>
                                         </CardItem>
                                     </Card>
