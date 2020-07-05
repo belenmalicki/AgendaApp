@@ -236,9 +236,9 @@ export default class InicioMedico extends Component {
                     theme={{
                         agendaDayTextColor: '#1f77a5',
                         agendaDayNumColor: '#1f77a5',
-                        todayTextColor: '#e93922',
+                        todayTextColor: '#e93923',
                         agendaKnobColor: 'grey',
-                        dotColor: '#1f77a5',
+                        dotColor: '#e93923',
 
                         selectedDayBackgroundColor: '#1f77a5',
                     }}
