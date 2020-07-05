@@ -5,6 +5,7 @@ import {Card, CardItem, Col, Row, Grid} from 'native-base'
 import PopUp from './PopUpsPaciente'
 import {  Overlay } from 'react-native-elements';
 import utils from '../utils/utils';
+import ApiController from '../controller/ApiController';
 const { width } = Dimensions.get('window');
 
 export default class CardTurno extends Component {
@@ -21,8 +22,20 @@ export default class CardTurno extends Component {
 
 cerrarPop=()=>{
   this.setState({ showAlert: false});
-
+  let data = {
+    jornada_id: this.props.turno.jornada_id,
+    turnos: [this.props.turno.id]
+  }
+  ApiController.eliminarTurnos(data, this.handleResponse.bind(this))
 }
+
+  handleResponse(response){
+    if(response.status===400){
+      alert('Ha ocurrido un error')
+    }else{
+      this.props.forzar()
+    }
+  }
   mostrarBotonConf(){
     let turno= new Date(this.props.turno.fecha_inicio)
     turno.setHours(turno.getHours()-12)
@@ -32,7 +45,9 @@ cerrarPop=()=>{
     if(today >= turno){
       if(this.props.turno.estado !== 'canceladoCM'){
         console.log('estado',this.props.turno.estado)
-        return <PopUp update={this.props.forzar} id={this.props.turno.id} key='1' tipo='1' alto='18%' nombre='CONFIRMAR' col='#1f77a5' titulo='¿DESEA CONFIRMAR SU TURNO?'/>
+        if(this.props.turno.estado !== 'confirmado'){
+          return <PopUp update={this.props.forzar} id={this.props.turno.id} key='1' tipo='1' alto='18%' nombre='CONFIRMAR' col='#1f77a5' titulo='¿DESEA CONFIRMAR SU TURNO?'/>
+        }
       }
       else{
        return <View>
