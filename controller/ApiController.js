@@ -250,6 +250,34 @@ class ApiController {
         }).catch(err => console.log(err))
     }
 
+    registrarListaDeEsperaEspec(data, callback){
+        const endpoint = `${urlHeroku}/api/registrarListaDeEsperaEspec`;
+        console.log('registrando lista de espera');
+        fetch(endpoint, {
+            method: 'POST',
+            mode: "cors",
+            headers:{ 'Content-Type': 'application/json'},
+            body: JSON.stringify(data)
+        }).then((response) => {
+            console.log('listo!');
+            callback(response)
+        }).catch(err => console.log(err))
+    }
+
+    registrarListaDeEsperaMedico(data, callback){
+        const endpoint = `${urlHeroku}/api/registrarListaDeEsperaMedico`;
+        console.log('registrando lista de espera del medico');
+        fetch(endpoint, {
+            method: 'POST',
+            mode: "cors",
+            headers:{ 'Content-Type': 'application/json'},
+            body: JSON.stringify(data)
+        }).then((response) => {
+            console.log('listo!');
+            callback(response)
+        }).catch(err => console.log(err))
+    }
+
 
 };
 

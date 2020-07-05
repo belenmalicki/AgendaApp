@@ -71,11 +71,11 @@ class App extends Component {
       response.json().then(usuario => {
         this.storeUsuario(usuario).then(() => {
           this.setState({cargando: false})
-          if (usuario.medico && !usuario.paciente) { //por ahora para debug, despues va al revés
-            this.props.navigation.navigate('InicioMedico', { usuario: usuario })
+          if (!usuario.medico && usuario.paciente) { //por ahora para debug, despues va al revés
+            this.props.navigation.navigate('InicioPaciente', { usuario: usuario })
           }
           else {
-            this.props.navigation.navigate('InicioPaciente', { usuario: usuario })
+            this.props.navigation.navigate('InicioMedico', { usuario: usuario })
           }
         })
       })
@@ -122,11 +122,11 @@ class App extends Component {
     const jsonValue = await AsyncStorage.getItem('usuario')
     if(jsonValue != null){
       const usuario = JSON.parse(jsonValue)
-      if (usuario.medico && !usuario.paciente) { //por ahora para debug, despues va al revés
-        this.props.navigation.navigate('InicioMedico', { usuario: usuario })
+      if (!usuario.medico && usuario.paciente) { //por ahora para debug, despues va al revés
+        this.props.navigation.navigate('InicioPaciente', { usuario: usuario })
       }
       else {
-        this.props.navigation.navigate('InicioPaciente', { usuario: usuario })
+        this.props.navigation.navigate('InicioMedico', { usuario: usuario })
       }
     }
   }

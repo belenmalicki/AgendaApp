@@ -71,7 +71,7 @@ export default class SolicitarTurno extends Component {
 
   onChangeChoose(option) {
     this.setState({ textInputValueEs: option, buscar: false })
-    this.setState({ profesional: '', espe: option.titulo, estadoTurnos: 0, select: '', dia: 'Seleccione fecha' })
+    this.setState({ profesional: '', espe: utils.mayusPrimerLetra(option.titulo), estadoTurnos: 0, select: '', dia: 'Seleccione fecha' })
     const profesionales = option.medicos;
     if (profesionales[0].id !== 0) {
       profesionales.unshift({ id: 0, datos: { apellido: 'Todos los', nombre: 'profesionales' } })
@@ -82,18 +82,18 @@ export default class SolicitarTurno extends Component {
 
   onChangeProfesionales(option) {
     this.setState({ profesional: option.datos.apellido + ' ' + option.datos.nombre, textInputValuePr: option, estadoTurnos: 0, buscar: false, select: '', dia: 'Seleccione fecha', cargandoTurnos: true });
-    this.buscarTurnos();
+    this.buscarTurnos(option);
   }
 
-  buscarTurnos = () => {
+  buscarTurnos = (option) => {
     if (this.state.espe == '') {
       this.setState({ showAlert: true });
     } else {
       let data = {
         especialidad_id: this.state.textInputValueEs.id
       }
-      if (this.state.profesional !== '' && this.state.textInputValuePr.id !== 0) {
-        data.medico_id = this.state.textInputValuePr.id;
+      if (option.id !== 0) {
+        data.medico_id = option.id;
       }
       ApiController.getTurnos(data, this.handleTurnos.bind(this))
     }
@@ -104,11 +104,21 @@ export default class SolicitarTurno extends Component {
     const { select } = this.state;
 
     let hayTurnos = turnosPaciente.find((turno) => {
-      return utils.dayEquals(select, turno.fecha_inicio)
+      return utils.dayEquals(select, turno.fecha_inicio) && this.state.espe === turno.especialidad.titulo
     })
     if (hayTurnos !== undefined) {
       this.setState({ estadoTurnos: 4 })
+    }else{
+      if(this.state.estadoTurnos !== 5 && this.state.estadoTurnos !== 3){
+        const turnosDisp = this.state.turnos.filter((turno) => utils.dayEquals(turno.fecha_inicio, this.state.select));
+        if(turnosDisp.length === 0){
+          this.setState({ estadoTurnos: 2 })
+        }else{
+          this.setState({estadoTurnos: 1})
+        }
+      }
     }
+
   }
 
   abrirPop2 = () => { this.setState({ showAlert2: true, buscar: false }) }
@@ -146,10 +156,13 @@ export default class SolicitarTurno extends Component {
   buscar2() {
     if (this.state.estadoTurnos != 1) {
       return (<View>
-        <CardDisponibilidadTurno nro={this.state.estadoTurnos} />
+        <CardDisponibilidadTurno nro={this.state.estadoTurnos} especialidad_id={this.state.textInputValueEs.id} medico_id={this.state.textInputValuePr.id} paciente_id={this.state.usuario.paciente.id}/>
       </View>)
     } else {
-      const turnosDisp = this.state.turnos.filter((turno) => utils.dayEquals(turno.fecha_inicio, this.state.select));
+      let turnosPaciente = this.props.navigation.getParam('turnosPaciente', [])
+      turnosPaciente = turnosPaciente.map((turno) => turno.fecha_inicio)
+
+      const turnosDisp = this.state.turnos.filter((turno) => utils.dayEquals(turno.fecha_inicio, this.state.select) && !turnosPaciente.includes(turno.fecha_inicio));
       return (
         <View>
           <View style={{ backgroundColor: '#1f77a5', marginHorizontal: 10, paddingLeft: 8 }}>
@@ -189,12 +202,11 @@ export default class SolicitarTurno extends Component {
         return ({ [fechastring]: { marked: true } })
       }
       ))
-      if (this.state.dia != 'Seleccione fecha') {
-        item[this.state.dia] = { ...item[this.state.dia], selected: true }
-      }
+    }
+    if (this.state.dia != 'Seleccione fecha') {
+      item[this.state.dia] = { ...item[this.state.dia], selected: true }
     }
     let cambio = this.state.dia === 'Seleccione fecha' ? 'rgba(0,0,0,0.22)' : 'black'
-    console.log('selec', this.state.select)
     return (
       //style no funciona con ScrollView, debe ser contentContainerStyle
       //flex:1 hacia que la pantalla no se moviera con el scrollview
@@ -207,7 +219,7 @@ export default class SolicitarTurno extends Component {
             data={this.state.especialidades}
             initValue="Seleccione especialidad"
             keyExtractor={item => item.id}
-            labelExtractor={item => item.titulo}
+            labelExtractor={item => utils.mayusPrimerLetra(item.titulo)}
             //supportedOrientations={['landscape']}
             //  optionTextStyle={color:'red'}
             animationType={'none'}
@@ -263,7 +275,6 @@ export default class SolicitarTurno extends Component {
         <Overlay key={i++} overlayStyle={{ height: width + 60, width: width }} isVisible={this.state.showAlert2}>
           <View>
             <Calendar
-              current={new Date()}
               minDate={new Date()}
               maxDate={new Date(year, monthFut, date)}
               onDayPress={(day) => { this.setState({ dia: day.dateString, select: new Date(day.year, day.month - 1, day.day) }) }}

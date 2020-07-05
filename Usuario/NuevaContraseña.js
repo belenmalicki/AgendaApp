@@ -51,11 +51,11 @@ export default class NuevaContraseña extends Component {
           this.setState({ cargando: false })
           //console.log(usuario)        
           ToastAndroid.show('Se ha actualizado la contraseña correctamente.', ToastAndroid.LONG)
-          if (usuario.medico && !usuario.paciente) { //por ahora para debug, despues va al revés
-            this.props.navigation.navigate('InicioMedico', { usuario: usuario })
+          if (!usuario.medico && usuario.paciente) { //por ahora para debug, despues va al revés
+            this.props.navigation.navigate('InicioPaciente', { usuario: usuario })
           }
           else {
-            this.props.navigation.navigate('InicioPaciente', { usuario: usuario })
+            this.props.navigation.navigate('InicioMedico', { usuario: usuario })
           }
         })
       })

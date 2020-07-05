@@ -72,7 +72,7 @@ export default class AgregarTurno extends Component {
 
   }
   onCancel2() {
-    this.TimePicker.close();
+    this.TimePicker2.close();
   }
 
   onConfirm2(hour, minute) {
@@ -89,7 +89,7 @@ export default class AgregarTurno extends Component {
   }
 
   onCancel3() {
-    this.TimePicker.close();
+    this.TimePicker3.close();
   }
 
   onConfirm3(hour, minute) {
