@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Text, View, TextInput, TouchableOpacity, ActivityIndicator, ToastAndroid, Dimensions } from 'react-native';
 import * as Crypto from 'expo-crypto'
 import ApiController from '../controller/ApiController';
+import AsyncStorage from '@react-native-community/async-storage';
 
 const { width } = Dimensions.get('window');
 export default class NuevaContraseña extends Component {

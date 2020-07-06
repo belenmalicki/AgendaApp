@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import ApiController from '../controller/ApiController';
-import { Text, View,TextInput,TouchableOpacity, Dimensions } from 'react-native';
+import { Text, View,TextInput,TouchableOpacity, Dimensions, ActivityIndicator } from 'react-native';
 const { width } = Dimensions.get('window');
 const { height } = Dimensions.get('screen');
 
@@ -10,11 +10,13 @@ export default class OlvidoContraseña extends Component {
     this.state = {
       email: '',
       dni: '',
-      nrosoc: ''
+      nrosoc: '',
+      cargando: false
     }
   };
 
   checkData() {
+    this.setState({cargando: true})
     const data = {
       email: this.state.email,
       dni: this.state.dni,
@@ -27,9 +29,11 @@ export default class OlvidoContraseña extends Component {
   handleData(response) {
     if (response.status == 200) {
       response.json().then(usuario => {
+        this.setState({cargando: false})
         this.props.navigation.navigate('NuevaContraseña', {usuario: usuario})
       })
     } else {
+      this.setState({cargando: false})
       alert('Los datos ingresados no son válidos.')
     }
   }
@@ -48,10 +52,22 @@ export default class OlvidoContraseña extends Component {
     if (/^[0-9]+$/.test(e[e.length-1])) 
       this.setState({nrosoc: e})
     }
+
+    showLoading(){
+      if(this.state.cargando){
+        return (<ActivityIndicator size="large" color={'#e93923'}></ActivityIndicator>)
+      }else{
+        return (<TouchableOpacity  onPress={() => { this.checkData() }}
+        style={{ width: 230, justifyContent: 'center', alignSelf: 'center', backgroundColor: '#e93922' }}>
+            <Text style={{ marginVertical: 10, fontSize: 11, color: 'white', textAlign: 'center', fontWeight: 'bold' }}>CONFIRMAR</Text>
+      </TouchableOpacity>)
+      }
+    }
+
     render(){
         return(
             <View style={{flex:1, height:height}} >
-            <View style={{ height:height*0.8}}>
+            <View style={{ height:height*0.7}}>
               <Text style={{textAlign:"center", marginVertical:20}}>¿OLVIDÓ SU CONTRASEÑA?</Text>
               <Text style={{fontSize:14,textAlign:'justify', marginHorizontal:10, marginBottom:20}}>
                 Por Favor ingrese los siguientes datos para que pueda generar una nueva contraseña o comuniquese al +54 (011) 5777-3200.
@@ -90,11 +106,8 @@ export default class OlvidoContraseña extends Component {
                   />
                   </View>
 
-              <View style={{marginBottom:40}}>
-                  <TouchableOpacity  onPress={() => { this.checkData() }}
-                    style={{ width: 230, justifyContent: 'center', alignSelf: 'center', backgroundColor: '#e93922' }}>
-                        <Text style={{ marginVertical: 10, fontSize: 11, color: 'white', textAlign: 'center', fontWeight: 'bold' }}>CONFIRMAR</Text>
-                  </TouchableOpacity>
+              <View style={{marginBottom: 60}}>
+                  {this.showLoading()}
                 </View>
             </View>
     )

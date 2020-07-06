@@ -186,9 +186,7 @@ export default class AgregarTurno extends Component {
 
       const {especialidades} = this.state
 
-      const items = especialidades.map((esp, i) => {return {key: i+1, label: esp.titulo}})
-
-      items.unshift({key: 0, section: true, label: 'Especialidad'})
+      const items = especialidades.map((esp, i) => {return {key: i+1, label: utils.mayusPrimerLetra(esp.titulo)}})
 
       const { showAlert, showAlert2, showAlert3 } = this.state;
       const {usuario} = this.state
@@ -266,7 +264,7 @@ export default class AgregarTurno extends Component {
               <Image style={{ height: 16, width: 16 }} source={require('../assets/Images/information.png')} />
             </TouchableOpacity>
           </View>
-          <Overlay overlayStyle={{ height: '28%' }} isVisible={showAlert} onBackdropPress={() => this.hideAlert()}>
+          <Overlay overlayStyle={{ height: '30%' }} isVisible={showAlert} onBackdropPress={() => this.hideAlert()}>
             <View>
 
               <Text style={{ textAlign: "center", marginTop: 20 }}>HORA DE ALMUERZO</Text>
@@ -309,7 +307,7 @@ export default class AgregarTurno extends Component {
             style={{ width: 180, alignSelf: 'center', backgroundColor: '#e93923', marginTop: 20 }}>
             <Text style={{ marginVertical: 10, fontSize: 11, color: 'white', textAlign: 'center', fontWeight: 'bold' }}>CONFIRMAR</Text>
           </TouchableOpacity>
-          <Overlay overlayStyle={{ height: '18%' }} isVisible={showAlert2}>
+          <Overlay overlayStyle={{ height: '20%' }} isVisible={showAlert2}>
             <View>
               <Text style={{ textAlign: "center", marginTop: 20 }}>SE HA AGREGADO SU TURNO CON ÉXITO</Text>
               <TouchableOpacity style={{ backgroundColor: '#1F77A5', width: 140, alignSelf: 'center', marginTop: 30 }} onPress={() => this.llevarIn()} >
@@ -317,7 +315,7 @@ export default class AgregarTurno extends Component {
               </TouchableOpacity>
             </View>
           </Overlay>
-          <Overlay overlayStyle={{ height: '18%' }} isVisible={showAlert3}>
+          <Overlay overlayStyle={{ height: '20%' }} isVisible={showAlert3}>
             <View>
               <Text style={{ textAlign: "center", marginTop: 20 }}>POR FAVOR, COMPLETE TODOS LOS CAMPOS</Text>
               <TouchableOpacity style={{ backgroundColor: '#e93923', width: 140, alignSelf: 'center', marginTop: 30 }} onPress={() => this.llevarIn()} >

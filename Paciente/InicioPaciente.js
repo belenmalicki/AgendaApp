@@ -15,9 +15,7 @@ export default class InicioPaciente extends Component {
       es_deudor: false,
       cargado: false,
       usuario: {},
-      turnos: [],
-      dias:['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'],
-      meses:["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"],
+      turnos: []
     };
     this.update=this.update.bind(this)
   };
