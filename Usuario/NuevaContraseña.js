@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Text, View, TextInput, TouchableOpacity, ActivityIndicator, ToastAndroid, Dimensions } from 'react-native';
 import * as Crypto from 'expo-crypto'
 import ApiController from '../controller/ApiController';
+import AsyncStorage from '@react-native-community/async-storage';
 
 const { width } = Dimensions.get('window');
 export default class NuevaContraseña extends Component {
@@ -48,8 +49,7 @@ export default class NuevaContraseña extends Component {
     } else {
       response.json().then(usuario => {
         this.storeUsuario(usuario).then(() => {
-          this.setState({ cargando: false })
-          //console.log(usuario)        
+          this.setState({ cargando: false })        
           ToastAndroid.show('Se ha actualizado la contraseña correctamente.', ToastAndroid.LONG)
           if (!usuario.medico && usuario.paciente) { //por ahora para debug, despues va al revés
             this.props.navigation.navigate('InicioPaciente', { usuario: usuario })

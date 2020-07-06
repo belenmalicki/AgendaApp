@@ -1,10 +1,9 @@
-import { Calendar, CalendarList, Agenda } from 'react-native-calendars';
+
 import React, { Component } from 'react';
 import { Ionicons } from '@expo/vector-icons';
-import { Platform, Text, View, Image, TextInput, Dimensions, TouchableOpacity, ScrollView } from 'react-native';
-import { Footer, FooterTab, Container, Card, CardItem, Col, Icon, Content } from 'native-base'
+import { Text, View, Image, TextInput, Dimensions, TouchableOpacity, ScrollView } from 'react-native';
+import {Icon} from 'native-base'
 import { Divider, CheckBox, Overlay } from 'react-native-elements';
-import PopUp from '../Paciente/PopUpsPaciente'
 import ModalSelector from 'react-native-modal-selector'
 import TimePicker from "react-native-24h-timepicker";
 import ApiController from '../controller/ApiController';
@@ -64,10 +63,9 @@ export default class AgregarTurno extends Component {
       this.setState({ entrada: `${hour}:${minute}` });
       this.setState({ hourEnt: hour });
       this.setState({ colTx: 'black' });
-      //console.log("confirm1", hour, minute)
       this.TimePicker.close();
     } else {
-      console.log('no perro')
+      console.log('Hora mal seleccionada')
     }
 
   }
@@ -76,15 +74,13 @@ export default class AgregarTurno extends Component {
   }
 
   onConfirm2(hour, minute) {
-    //console.log('hour2',this.state.hour)
     var HsEntrada = parseInt(this.state.hourEnt)
-    //console.log('hour', parseInt(entrada))
     if (hour > HsEntrada) {
       this.setState({ salida: `${hour}:${minute}` });
       this.setState({ colTx2: 'black' });
       this.TimePicker2.close();
     } else {
-      console.log('no perro 2')
+      console.log('Hora mal seleccionada')
     }
   }
 
@@ -96,10 +92,9 @@ export default class AgregarTurno extends Component {
     if (hour >= 8 && hour <= 19) {
       this.setState({ almuerzo: `${hour}:${minute}` });
       this.setState({ colTx3: 'black' });
-      //console.log("confirm1", hour, minute)
       this.TimePicker3.close();
     } else {
-      console.log('no perro 3')
+      console.log('Hora mal seleccionada')
     }
   }
 
@@ -128,10 +123,6 @@ export default class AgregarTurno extends Component {
     const fecha_inicio = formatFecha(fecha, entrada)
     const fecha_fin = formatFecha(fecha, salida)
     const horario_almuerzo = formatFecha(fecha, almuerzo)
-    
-    console.log(fecha_inicio);
-    console.log(fecha_fin);
-    console.log(horario_almuerzo);
 
     let data = {
       fecha_inicio: fecha_inicio,
@@ -195,14 +186,10 @@ export default class AgregarTurno extends Component {
 
       const {especialidades} = this.state
 
-      const items = especialidades.map((esp, i) => {return {key: i+1, label: esp.titulo}})
-
-      items.unshift({key: 0, section: true, label: 'Especialidad'})
+      const items = especialidades.map((esp, i) => {return {key: i+1, label: utils.mayusPrimerLetra(esp.titulo)}})
 
       const { showAlert, showAlert2, showAlert3 } = this.state;
-      //const {showAlert2} = this.state;
       const {usuario} = this.state
-      //console.log(usuario.medico)
       return (
         <ScrollView style={{}}>
 
@@ -213,8 +200,6 @@ export default class AgregarTurno extends Component {
             <ModalSelector
               data={items}
               initValue="Seleccione especialidad"
-              //supportedOrientations={['landscape']}
-              //  optionTextStyle={color:'red'}
               animationType={'none'}
               accessible={true}
               scrollViewAccessibilityLabel={'Scrollable options'}
@@ -269,7 +254,6 @@ export default class AgregarTurno extends Component {
               }}
               onCancel={() => this.onCancel2()}
               minuteInterval={30}
-              //maxHour={16}
               selectedHour={"8"}
               onConfirm={(hour, minute) => this.onConfirm2(hour, minute)}
             /></View>
@@ -280,7 +264,7 @@ export default class AgregarTurno extends Component {
               <Image style={{ height: 16, width: 16 }} source={require('../assets/Images/information.png')} />
             </TouchableOpacity>
           </View>
-          <Overlay overlayStyle={{ height: '28%' }} isVisible={showAlert} onBackdropPress={() => this.hideAlert()}>
+          <Overlay overlayStyle={{ height: '30%' }} isVisible={showAlert} onBackdropPress={() => this.hideAlert()}>
             <View>
 
               <Text style={{ textAlign: "center", marginTop: 20 }}>HORA DE ALMUERZO</Text>
@@ -304,7 +288,6 @@ export default class AgregarTurno extends Component {
               }}
               onCancel={() => this.onCancel3()}
               minuteInterval={30}
-              //maxHour={16}
               selectedHour={"8"}
               onConfirm={(hour, minute) => this.onConfirm3(hour, minute)}
             />
@@ -314,19 +297,17 @@ export default class AgregarTurno extends Component {
           <CheckBox
             title={stringCheck}
             checked={this.state.checked}
-            //checked={false}
             onPress={() => this.setState({ checked: !this.state.checked })}
             checkedColor='#1F77A5'
             containerStyle={{ backgroundColor: 'white', borderColor: 'white' }}
             textStyle={{ fontWeight: 'normal', fontSize: 12 }}
-          //checkedIcon={<Ionicons name='md-checkbox' size={16} color='#e93922'></Ionicons> }
           />
           <TouchableOpacity
             onPress={() => this.AbrirPop()}
             style={{ width: 180, alignSelf: 'center', backgroundColor: '#e93923', marginTop: 20 }}>
             <Text style={{ marginVertical: 10, fontSize: 11, color: 'white', textAlign: 'center', fontWeight: 'bold' }}>CONFIRMAR</Text>
           </TouchableOpacity>
-          <Overlay overlayStyle={{ height: '18%' }} isVisible={showAlert2}>
+          <Overlay overlayStyle={{ height: '20%' }} isVisible={showAlert2}>
             <View>
               <Text style={{ textAlign: "center", marginTop: 20 }}>SE HA AGREGADO SU TURNO CON ÉXITO</Text>
               <TouchableOpacity style={{ backgroundColor: '#1F77A5', width: 140, alignSelf: 'center', marginTop: 30 }} onPress={() => this.llevarIn()} >
@@ -334,7 +315,7 @@ export default class AgregarTurno extends Component {
               </TouchableOpacity>
             </View>
           </Overlay>
-          <Overlay overlayStyle={{ height: '18%' }} isVisible={showAlert3}>
+          <Overlay overlayStyle={{ height: '20%' }} isVisible={showAlert3}>
             <View>
               <Text style={{ textAlign: "center", marginTop: 20 }}>POR FAVOR, COMPLETE TODOS LOS CAMPOS</Text>
               <TouchableOpacity style={{ backgroundColor: '#e93923', width: 140, alignSelf: 'center', marginTop: 30 }} onPress={() => this.llevarIn()} >

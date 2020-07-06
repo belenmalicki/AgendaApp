@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
-import { Platform, ScrollView, Text, View, Image,TextInput, Dimensions, TouchableOpacity  } from 'react-native';
+import {ScrollView, Text, View, Image, TouchableOpacity, ActivityIndicator  } from 'react-native';
 import {StackActions,NavigationActions } from 'react-navigation'
 import { Ionicons } from '@expo/vector-icons';
 import { Overlay } from 'react-native-elements';
 import ApiController from '../controller/ApiController'
 import AsyncStorage from '@react-native-community/async-storage'
-const { width } = Dimensions.get('window');
+import utils from '../utils/utils';
+
 
 
 export default class ConfirmarTurno extends Component {
@@ -14,10 +15,9 @@ export default class ConfirmarTurno extends Component {
         this.state={
             showAlert: false,
             usuario:{},
-            dias:['Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes', 'Sabado', 'Domingo'],
-            meses:["enero", "febrero", "marzo", "abril", "mayo", "junio", "julio", "agosto", "septiembre", "octubre", "noviembre", "diciembre"]
+            cargando: false
         }
-    }
+      }
 
     componentDidMount(){
       const usuario = this.props.navigation.getParam('usuario', null)
@@ -39,6 +39,7 @@ export default class ConfirmarTurno extends Component {
     }
     
     abrirPop=()=>{
+      this.setState({cargando: true})
           const id=this.props.navigation.getParam('id','')
           let data ={
             turno_id:id,
@@ -48,7 +49,7 @@ export default class ConfirmarTurno extends Component {
       }
       handlePedido(response){
         if (response.status==200){
-          this.setState({ showAlert: true});
+          this.setState({ cargando: false, showAlert: true});
         }
       }
       cerrarPop=()=>{
@@ -58,8 +59,18 @@ export default class ConfirmarTurno extends Component {
           actions: [NavigationActions.navigate({ routeName: 'InicioPaciente',params:{usuario:this.state.usuario} })],
           });
           this.props.navigation.dispatch(resetAction); 
-        //this.props.navigation.replace('InicioPaciente',{usuario:this.state.usuario})
       }
+
+    showLoading(){
+      if(this.state.cargando){
+        return (<ActivityIndicator size="large" color={'#e93923'}></ActivityIndicator>)
+      }else{
+        return (<TouchableOpacity onPress={() => this.abrirPop()}
+        style={{marginTop:20, width:130 ,alignSelf:'flex-end', backgroundColor:'#e93922', marginRight:20}}>
+        <Text style={{marginVertical:10,fontSize:11, color:'white', textAlign:'center', fontWeight:'bold'}}>CONFIRMAR</Text>
+    </TouchableOpacity>)
+      }
+    }
     
   render() {
     const { navigation } = this.props;
@@ -67,13 +78,9 @@ export default class ConfirmarTurno extends Component {
     var esp  = navigation.getParam( 'esp' , '');
     const fechaComp  = navigation.getParam( 'fecha' , '');
     const hora  = navigation.getParam( 'hora' ,'');
-    //const options = { weekday: 'short', year: 'numeric', month: 'short', day: 'numeric' };//long month y weekday 
-    //fechaComp.toLocaleDateString is not a fuction?
-    const dia = new Date(fechaComp).getDate()
-    const mes = this.state.meses[new Date(fechaComp).getMonth()]
-    const dianombre = this.state.dias[(new Date(fechaComp).getDate()-1)%7]
-    //const dia = fechaComp.toLocaleDateString('es-ES', options).substr(0,3);
-    //const fecha = fechaComp.toLocaleDateString('es-ES', options).substr(5,6);
+    const dia = new Date(fechaComp).getDate();
+    const mes = utils.getStringMes(fechaComp);
+    const dianombre = utils.getStringWeekday(fechaComp);
     
     return (
       <ScrollView style={{flex:1}}>
@@ -86,10 +93,9 @@ export default class ConfirmarTurno extends Component {
          <Text style={{fontSize:12, marginLeft:19, marginBottom:10 }}><Image style={{height:14, width:14}} source={require('../assets/Images/list.png')}/> Requisitos: </Text>
          <Text style={{fontSize:12, marginLeft:22, marginBottom:10, marginRight:15 }}>- Presentarse 15 minutos antes del turno para realizar los trámites administrativos. </Text>
          <Text style={{fontSize:12, marginLeft:22, marginBottom:10, marginRight:15 }}>- Portar los estudios solicitados por el médico en caso de que haya alguno.</Text>
-         <TouchableOpacity onPress={() => this.abrirPop()}
-            style={{marginTop:20, width:130 ,alignSelf:'flex-end', backgroundColor:'#e93922', marginRight:20}}>
-            <Text style={{marginVertical:10,fontSize:11, color:'white', textAlign:'center', fontWeight:'bold'}}>CONFIRMAR</Text>
-        </TouchableOpacity>
+         
+        {this.showLoading()}
+
         <Overlay overlayStyle={{height:120}} isVisible={this.state.showAlert} >
             <View>
                 <Text style={{fontSize:13, lineHeight:18,color:'black',textAlign:'center', marginTop:20, marginHorizontal:8}}>SE HA CONFIRMADO SU TURNO CON ÉXITO</Text>

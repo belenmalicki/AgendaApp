@@ -1,16 +1,14 @@
-import { Calendar, CalendarList, Agenda } from 'react-native-calendars';
 import React, { Component } from 'react';
 import { Ionicons } from '@expo/vector-icons';
-import { Platform, StyleSheet, Text, View, Image, TextInput, Dimensions, TouchableOpacity, ScrollView } from 'react-native';
-import { Footer, FooterTab, Container, Card, CardItem, Col, Accordion, Content } from 'native-base'
-import { Divider, CheckBox, Overlay } from 'react-native-elements';
+import { Text, View, Image, Dimensions, TouchableOpacity, ScrollView } from 'react-native';
+import { Footer,  Container } from 'native-base'
+import {  Overlay } from 'react-native-elements';
 import Check from './Check';
 import AsyncStorage from '@react-native-community/async-storage';
 import utils from '../utils/utils';
 import ApiController from '../controller/ApiController';
 
 
-const { width } = Dimensions.get('window');
 
 const crearArray = (turnos) => {
     //crea el array de horarios que no tengan turnos asignados
@@ -57,7 +55,6 @@ export default class ModificarTurno extends Component {
       const jsonValue = await AsyncStorage.getItem('usuario')
       const usuario = jsonValue != null ? JSON.parse(jsonValue) : null;
       this.setState({ usuario: usuario, especialidades: usuario.medico.especialidades, cargado: true })
-      //console.log(usuario)
     } catch (e) {
       console.log(e)
     }
@@ -98,7 +95,6 @@ export default class ModificarTurno extends Component {
       jornada_id: jornada_id,
       turnos: array
     }
-    //console.log(data)
     ApiController.eliminarTurnos(data, this.handleResponse.bind(this))
   }
 
@@ -109,7 +105,6 @@ export default class ModificarTurno extends Component {
       jornada_id: jornada_id,
       horarios: array
     }
-    //console.log(data)
     ApiController.agregarTurnos(data, this.handleResponse.bind(this))
   }
 
