@@ -83,7 +83,7 @@ export default class ConfirmarTurno extends Component {
     const dianombre = utils.getStringWeekday(fechaComp);
     
     return (
-      <ScrollView style={{flex:1}}>
+      <ScrollView style={{flex:1, backgroundColor:'#fbfbfb'}}>
          <Text style={{fontSize:14, marginLeft:10,marginTop:20,}}>Datos del turno: </Text>
          <Text style={{fontSize:14, marginLeft:14,marginTop:20, marginBottom:10, color:'#1F77A5', fontWeight:'bold' }}>{med.apellido} {med.nombre}</Text>
          <Text style={{fontSize:14, marginLeft:14, marginBottom:20, color:'#1F77A5' }}>{esp}</Text>

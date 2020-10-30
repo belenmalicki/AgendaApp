@@ -209,7 +209,7 @@ export default class SolicitarTurno extends Component {
     }
     let cambio = this.state.dia === 'Seleccione fecha' ? 'rgba(0,0,0,0.22)' : 'black'
     return (
-      <ScrollView>
+      <ScrollView style={{backgroundColor:'#fbfbfb'}}>
         <Text style={{ fontSize: 17, textAlign: 'center', marginTop: 20, marginBottom: 10 }}>SOLICITAR TURNO</Text>
         {/*Modal selector*/}
         <Text style={{ fontSize: 12, marginTop: 20, marginBottom: 20, marginLeft: 20 }}>Especialidad:</Text>
@@ -230,7 +230,7 @@ export default class SolicitarTurno extends Component {
                 editable={false}
                 placeholder="Seleccione especialidad"
                 value={this.state.espe} />
-              <Icon name={'caret-down'} type='FontAwesome' style={{ color: "rgba(0, 0, 0, .38)", fontSize: 18, alignSelf: 'flex-end' }}></Icon>
+              <Icon name={'caret-down'} type='FontAwesome' style={{ color: "rgba(0, 0, 0, .38)", fontSize: 18, alignSelf: 'flex-end', marginRight:8 }}></Icon>
             </View>
             <Divider style={{ backgroundColor: "rgba(0, 0, 0, .38)", alignSelf: 'center', width: width * 0.9 }} />
           </ModalSelector>
@@ -254,7 +254,7 @@ export default class SolicitarTurno extends Component {
                 editable={false}
                 placeholder="Seleccione profesional"
                 value={this.state.profesional} />
-              <Icon name={'caret-down'} type='FontAwesome' style={{ color: "rgba(0, 0, 0, .38)", fontSize: 18, alignSelf: 'flex-end' }}></Icon>
+              <Icon name={'caret-down'} type='FontAwesome' style={{ color: "rgba(0, 0, 0, .38)", fontSize: 18, alignSelf: 'flex-end', marginRight:8 }}></Icon>
             </View>
             <Divider style={{ backgroundColor: "rgba(0, 0, 0, .38)", alignSelf: 'center', width: width * 0.9 }} />
           </ModalSelector>

@@ -83,9 +83,9 @@ export default class PerfilPaciente extends Component {
       }
      
       return (
-        <ScrollView style={{ flex: 1 }}>
+        <ScrollView style={{ flex: 1, backgroundColor:'#fbfbfb' }}>
 
-          <Text style={{ fontSize: 16, textAlign: 'center', marginTop: '5%' }}>Mi Perfil </Text>
+          <Text style={{ fontSize: 18, textAlign: 'center', marginTop: '5%' }}>Mi Perfil </Text>
           <ImageBackground style={{ height: 195, width: 300, marginTop: 20, alignSelf: "center" }} source={img} >
             <View style={{ flex: 1, alignItems: "center" }}>
               <Text style={{ fontSize: 18, marginTop: 10, fontWeight: 'bold', marginTop: 120, letterSpacing: 5 }}> {this.state.usuario.paciente.os_nro}  </Text>

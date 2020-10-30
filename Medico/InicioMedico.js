@@ -100,9 +100,9 @@ export default class InicioMedico extends Component {
         var today = new Date();
 
         if (date.length == 1) {
-            var endDate = year + '-0' + monthFut.toString() + '-0' + date
+            var endDate = year  + monthFut.toString() + '-0' + date
         } else {
-            var endDate = year + '-0' + monthFut.toString() + '-' + date
+            var endDate = year  + monthFut.toString() + '-' + date
         }
 
         const { jornadas } = this.state;

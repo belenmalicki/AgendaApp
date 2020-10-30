@@ -138,7 +138,7 @@ class App extends Component {
   render() {
     
     return (
-      <ScrollView contentContainerStyle={{ flex: 1, backgroundColor: 'white' }}>
+      <ScrollView contentContainerStyle={{ flex: 1, backgroundColor: '#fcfcfc' }}>
         <View style={{ justifyContent: 'center', alignItems: 'center' }}>
           <Image style={{ justifyContent: 'center', alignItems: 'center', height: width * 0.15, width: width * 0.8, marginTop: '45%', marginBottom: '20%' }} source={require('./assets/Images/Logo.png')} />
           <TextInput
@@ -300,7 +300,7 @@ const dwMedico = createDrawerNavigator({
       return {
         title: ('Perfil'),
         drawerIcon: ({ focused }) => (
-          <Ionicons name="md-person" size={24} color={focused ? "#e93922" : 'black'} />
+          <Ionicons name="md-person" size={24} color={focused ? "#e93922" : ''} />
 
         ),
       }

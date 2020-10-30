@@ -95,8 +95,8 @@ export default class Historial extends Component {
 
   render() {
     return (
-      <ScrollView style={{ flex: 1 }}>
-        <Text style={{ fontSize: 16,textAlign: 'center', marginTop: 20, marginBottom: 10 }}>Historial de turnos </Text>
+      <ScrollView style={{ flex: 1, backgroundColor:'#fcfcfbfbfbfc' }}>
+        <Text style={{ fontSize: 18,textAlign: 'center', marginTop: 20, marginBottom: 10 }}>Historial de turnos </Text>
 
         {this.renderTurnos()}
 
