@@ -191,7 +191,7 @@ export default class AgregarTurno extends Component {
       const { showAlert, showAlert2, showAlert3 } = this.state;
       const {usuario} = this.state
       return (
-        <ScrollView style={{}}>
+        <ScrollView style={{backgroundColor:'#fbfbfb'}}>
 
           <Text style={{ fontSize: 18, textAlign: 'center', marginVertical: 20 }}>AGREGAR TURNO </Text>
           <Text style={{ fontSize: 14, marginLeft: '4%', color: '#e93922', marginBottom: 15 }}> <Ionicons name='md-calendar' size={16} color='#e93922'></Ionicons> {stringDia} <Text style={{ fontSize: 14, color: 'black' }}> {stringMes} </Text></Text>
@@ -299,7 +299,7 @@ export default class AgregarTurno extends Component {
             checked={this.state.checked}
             onPress={() => this.setState({ checked: !this.state.checked })}
             checkedColor='#1F77A5'
-            containerStyle={{ backgroundColor: 'white', borderColor: 'white' }}
+            containerStyle={{ backgroundColor: '#fbfbfb', borderColor: '#fbfbfb' }}
             textStyle={{ fontWeight: 'normal', fontSize: 12 }}
           />
           <TouchableOpacity

@@ -89,7 +89,7 @@ export default class TurnosHoy extends Component {
        especialidad = this.state.jornadas[0].especialidad.titulo
       }
       return (
-        <ScrollView>
+        <ScrollView style={{backgroundColor:'#fbfbfb'}}>
             <Text style={{fontSize:16 , marginTop:20, marginLeft:10}}><Image style={{height:18, width:18}} source={require('../assets/Images/time.png')}/> TURNOS DE HOY:</Text>
             <Text style={{fontSize:14, color:'#000000', marginTop:15, marginLeft:10}}><Ionicons name='md-calendar' size={16} color='black'></Ionicons> <Text style={{ fontWeight:'bold'}}>{new Date().getDate()} de {utils.getStringMes(new Date())}</Text> {utils.getStringWeekday(new Date())}</Text>    
             <Text  style={{fontSize:14, color:'#e93923', marginTop:10,marginLeft:15, fontWeight: 'bold', marginBottom:10}}>{utils.mayusPrimerLetra(especialidad)} </Text> 

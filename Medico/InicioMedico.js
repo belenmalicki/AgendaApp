@@ -6,6 +6,7 @@ import { Container, Card, CardItem, Col} from 'native-base';
 import { Overlay } from 'react-native-elements';
 import ApiController from '../controller/ApiController';
 import utils from '../utils/utils';
+import moment from 'moment'
 
 const { width } = Dimensions.get('window');
 LocaleConfig.locales['es'] = {
@@ -93,17 +94,11 @@ export default class InicioMedico extends Component {
             return (<View style={{ marginTop: '8%' }}>
             <ActivityIndicator size="large" color={'#e93923'}></ActivityIndicator>
           </View>)
-        }else{
-        var date = new Date().getDate().toString(); //Current Date
-        var monthFut = new Date().getMonth() + 3; //Current Month
-        var year = new Date().getFullYear().toString(); //Current Year
-        var today = new Date();
-
-        if (date.length == 1) {
-            var endDate = year  + monthFut.toString() + '-0' + date
         } else {
-            var endDate = year  + monthFut.toString() + '-' + date
-        }
+
+            var today = moment();
+            const endDate = moment().add(2, "months").endOf('month').format("YYYY-MM-DD")
+            const dateAdd = moment(today).add(7, "days").endOf("day");
 
         const { jornadas } = this.state;
 
@@ -115,12 +110,6 @@ export default class InicioMedico extends Component {
         }
         ))
 
-        function addDays(date, days) {
-            const copy = new Date(Number(date))
-            copy.setDate(date.getDate() + days)
-            return copy
-        }
-        const dateAdd = addDays(today, 7);
 
         const usuario = this.props.navigation.getParam('usuario', {});
         let genero = usuario.genero === 'femenino' ? 'A' : 'O';
@@ -129,7 +118,7 @@ export default class InicioMedico extends Component {
         //let apellido= ' ' 
         let bienvenida = `¡BIENVENID${genero} ${dr} ${apellido}!`
         return (
-            <Container>
+            <Container style={{backgroundColor:'#fefeff'}}>
 
                 <Text style={{ fontSize: 17, textAlign: 'center', marginVertical: 20 }}>{bienvenida}</Text>
                 <View style={{ flexDirection: "row" }}>
@@ -155,7 +144,7 @@ export default class InicioMedico extends Component {
                     maxDate={endDate}
                     onDayPress={(day) => {
                         var selec = new Date(day.year, (day.month - 1), day.day, 0, 0, 0, 0);
-                        if (selec.getTime() < dateAdd.getTime()) {
+                        if (dateAdd.isAfter(moment(selec))) {
                             this.setState({ fecha: false, date: selec });
                         }
                         else {

@@ -45,7 +45,7 @@ export default class Perfil extends Component {
       const {usuario} = this.state;
       const dr = usuario.genero === 'femenino' ? 'DRA.' : 'DR.';
       return (
-        <ScrollView style={{ flex: 1 }}>
+        <ScrollView style={{ flex: 1, backgroundColor:'#fbfbfb' }}>
 
           <Text style={{ fontSize: 18, textAlign: 'center', marginTop: '5%' }}>Mi Perfil </Text>
 

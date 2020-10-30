@@ -195,7 +195,7 @@ export default class ModificarTurno extends Component {
       const addItems = crearArray(turnos)
       return (
         <Container>
-          <ScrollView >
+          <ScrollView style={{backgroundColor:'#fbfbfb'}} >
             <Text style={{ fontSize: 18, textAlign: 'center', marginVertical: 20 }}>MODIFICAR TURNO </Text>
             <Text style={{ fontSize: 14, marginLeft: '4%', color: '#e93922', marginBottom: 15 }}> <Ionicons name='md-calendar' size={16} color='#e93922'></Ionicons> {stringDia}<Text style={{ fontSize: 14, color: 'black' }}> {stringMes}</Text></Text>
             <Text style={{ fontSize: 14, fontWeight: 'bold', marginBottom: 10, marginLeft: 20 }}>Agregar turnos</Text>
@@ -237,7 +237,7 @@ export default class ModificarTurno extends Component {
             )})}
 
           </ScrollView>
-          <Footer style={{ backgroundColor: 'white' }}>
+          <Footer style={{ backgroundColor: '#fbfbfb', borderTopColor:'grey' }}>
             <TouchableOpacity onPress={() => this.showAlert3()}
               style={{ width: 180, alignSelf: 'center', backgroundColor: '#e93922' }}>
               <Text style={{ marginVertical: 10, fontSize: 11, color: 'white', textAlign: 'center', fontWeight: 'bold' }}>CONFIRMAR</Text>
